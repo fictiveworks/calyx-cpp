@@ -69,7 +69,35 @@ public:
 
 struct StringConverters
 {
+    /**
+     * @brief The converter for standard strings.
+     * 
+     */
     static const StdStringConverter STD_STRING_CONVERTER;
 
-    static const StringConverter<CalyxString>& DEFAULT_STRING_CONVERTER;
+    /**
+     * @brief A reference to a string converter for `CalyxString`s. If the CalyxString type is redefined
+     * (e.g. to UE's FString), then the object this is referencing will also need to be changed.
+     * 
+     * This is the default string converter passed as an argument to any methods of Calyx that require
+     * reading/modifying strings. It should do this by overloading, like so:
+     * 
+     * @code {.cpp}
+     * 
+     * void doSomething(const CalyString& stringIn, const StringConverter<CalyxString>& converter)
+     * {
+     *      std::string string = converter.toString(stringIn);
+     *      /// do something to string, read/write, etc
+     * }
+     * 
+     * void doSomething(const CalyString& stringIn)
+     * {
+     *      doSomething(stringIn, StringConverters::CALYX_STRING_CONVERTER);
+     * }
+     * 
+     * @endcode
+     * 
+     * 
+     */
+    static const StringConverter<CalyxString>& CALYX_STRING_CONVERTER;
 };

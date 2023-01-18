@@ -25,4 +25,4 @@ StringConverters::STD_STRING_CONVERTER = StdStringConverter();
 
 
 const StringConverter<CalyxString>& 
-StringConverters::DEFAULT_STRING_CONVERTER = STD_STRING_CONVERTER;
+StringConverters::CALYX_STRING_CONVERTER = STD_STRING_CONVERTER;
