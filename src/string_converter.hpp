@@ -1,6 +1,14 @@
 #include <string>
 
 /**
+ * The string type used by this version of Calyx. This should be preferred whenever interacting with strings in the Calyx API.
+ *
+ * If std::string is ever needed in implementation, it should first be converted to a std::string using, the relevant string conveter,
+ * and then converted back to CalyxString when done with the std::string using the same.
+ */
+typedef std::string CalyxString;
+
+/**
  * @brief Converts a string-like type S into a std::string
  * 
  * @tparam S A string-like that can be converted into a std::string
@@ -36,4 +44,6 @@ public:
 struct StringConverters
 {
     static const StringConverter<std::string> STD_STRING_CONVERTER;
+
+    static const StringConverter<CalyxString>& DEFAULT_STRING_CONVERTER;
 };
