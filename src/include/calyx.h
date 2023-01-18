@@ -12,19 +12,21 @@
 
 #include "registry.hpp"
 
+#include "string_converter.hpp"
+
 class Result
 {
 public:
-    Result(std::string txt);
+    Result(CalyxString txt);
 
     /**
      * [toString description]
      * @return [description]
      */
-    std::string text();
+    CalyxString text();
 
 private:
-    std::string _text;
+    CalyxString _text;
 };
 
 class Grammar
@@ -34,27 +36,27 @@ public:
      * [start description]
      * @param production  [description]
      */
-    void start(std::string production);
+    void start(CalyxString production);
 
     /**
      * [start description]
      * @param production  [description]
      */
-    void start(std::vector<std::string> production);
+    void start(std::vector<CalyxString> production);
 
     /**
      * [rule description]
      * @param term        [description]
      * @param production  [description]
      */
-    void rule(std::string term, std::string production);
+    void rule(CalyxString term, CalyxString production);
 
     /**
      * [start description]
      * @param term        [description]
      * @param production  [description]
      */
-    void rule(std::vector<std::string> term, std::vector<std::string> production);
+    void rule(std::vector<CalyxString> term, std::vector<CalyxString> production);
 
     /**
      * [generate description]

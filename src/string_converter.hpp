@@ -3,8 +3,8 @@
 /**
  * The string type used by this version of Calyx. This should be preferred whenever interacting with strings in the Calyx API.
  *
- * If std::string is ever needed in implementation, it should first be converted to a std::string using, the relevant string conveter,
- * and then converted back to CalyxString when done with the std::string using the same.
+ * If a std::string is ever needed in implementation, CalyStrings should first be converted to a std::string using the relevant 
+ * string converter, and then converted back to CalyxString when done with the std::string using the same.
  */
 typedef std::string CalyxString;
 
@@ -41,9 +41,35 @@ public:
 
 };
 
+class StdStringConverter : public StringConverter<std::string>
+{
+public:
+
+    StdStringConverter();
+
+    ~StdStringConverter();
+
+    /**
+     * @brief Converts an instance of the string-like std::string into a std::string.
+     * 
+     * @param stringLike The string-like object to be converted
+     * @return const std::string& Returns the stringLike input as it is already a std::string
+     */
+    virtual const std::string& toString(const std::string& stringLike) const override;
+
+    /**
+     * @brief Converts a std::string into an instance of the string-like std::string
+     * 
+     * @param stdString The std::string to be converted
+     * @return const std::string& Returns the stdString input as it is already a string-like std::string
+     */
+    virtual const std::string& fromString(const std::string& stdString) const override;
+
+};
+
 struct StringConverters
 {
-    static const StringConverter<std::string> STD_STRING_CONVERTER;
+    static const StdStringConverter STD_STRING_CONVERTER;
 
     static const StringConverter<CalyxString>& DEFAULT_STRING_CONVERTER;
 };
