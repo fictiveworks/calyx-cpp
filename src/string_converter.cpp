@@ -7,14 +7,14 @@ StdStringConverter::StdStringConverter()
 StdStringConverter::~StdStringConverter()
 {}
 
-const std::string& 
+const std::string 
 StdStringConverter::toString(const std::string& stringLike) const
 {
     return stringLike;
 }
 
 
-const std::string& 
+const std::string 
 StdStringConverter::fromString(const std::string& stdString) const
 {
     return stdString;
