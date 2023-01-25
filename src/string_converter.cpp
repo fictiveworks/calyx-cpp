@@ -1,5 +1,6 @@
 #include "string_converter.hpp"
 
+using namespace calyx;
 
 StdStringConverter::StdStringConverter()
 {}
@@ -24,5 +25,5 @@ const StdStringConverter
 StringConverters::STD_STRING_CONVERTER = StdStringConverter();
 
 
-const StringConverter<CalyxString>& 
+const StringConverter<String_t>& 
 StringConverters::CALYX_STRING_CONVERTER = STD_STRING_CONVERTER;
