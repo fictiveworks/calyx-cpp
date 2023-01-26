@@ -6,55 +6,71 @@
 
 #include "calyx.h"
 
-class Registry;
-
-class UniformBranch
+namespace calyx
 {
-public:
-    UniformBranch(std::vector<std::string> production, Registry& registry)
-    : _registry(registry)
+    class Registry;
+
+    class UniformBranch
     {
-        _choices = production; // TODO: parse into syntax tree
-    }
+    public:
+        UniformBranch(std::vector<String_t> production, Registry &registry)
+            : _registry(registry)
+        {
+            _choices = production; // TODO: parse into syntax tree
+        }
 
-    std::string evaluate()
+        String_t evaluate()
+        {
+            return _choices[0]; // TODO: evaluate syntax tree
+        }
+
+        UniformBranch& operator=(const UniformBranch& other)
+        {
+            _registry = other._registry;
+            _choices = other._choices;
+        }
+
+    private:
+        Registry &_registry;
+        std::vector<String_t> _choices;
+    };
+
+    class Rule
     {
-        return _choices[0]; // TODO: evaluate syntax tree
-    }
+    public:
+        Rule(String_t term, std::vector<String_t> production, Registry &registry)
+            : _production(production, registry)
+        {
+            _term = term;
+        }
 
-private:
-    Registry& _registry;
-    std::vector<std::string> _choices;
-};
+        String_t evaluate()
+        {
+            return _production.evaluate();
+        }
 
-class Rule
-{
-public:
-    Rule(std::string term, std::vector<std::string> production, Registry& registry)
-    : _production(production, registry)
+        Rule& operator=(const Rule& other) 
+        {
+            _term = other._term;
+            _production = other._production;
+            return *this;
+        }
+
+    private:
+        String_t _term;
+        UniformBranch _production;
+    };
+
+    class Registry
     {
-        _term = term;
-    }
+    public:
+        void defineRule(String_t term, std::vector<String_t> production)
+        {
+            Rule rule = Rule(term, production, *this);
+            _rules[term] = rule;
+        }
 
-    std::string evaluate()
-    {
-        return _production.evaluate();
-    }
-
-private:
-    std::string _term;
-    UniformBranch _production;
-};
-
-class Registry
-{
-public:
-    void defineRule(std::string term, std::vector<std::string> production)
-    {
-        Rule rule = Rule(term, production, this);
-        _rules[term] = rule;
-    }
-
-private:
-    std::map<std::string, Rule> _rules;
-};
+    private:
+        std::map<String_t, Rule> _rules;
+    };
+}
