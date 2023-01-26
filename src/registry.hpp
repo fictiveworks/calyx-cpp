@@ -24,11 +24,11 @@ namespace calyx
             return _choices[0]; // TODO: evaluate syntax tree
         }
 
-        UniformBranch& operator=(const UniformBranch& other)
+        UniformBranch &operator=(const UniformBranch &other)
         {
             _registry = other._registry;
             _choices = other._choices;
-            
+
             return *this;
         }
 
@@ -51,10 +51,11 @@ namespace calyx
             return _production.evaluate();
         }
 
-        Rule& operator=(const Rule& other) 
+        Rule &operator=(const Rule &other)
         {
             _term = other._term;
             _production = other._production;
+            
             return *this;
         }
 
