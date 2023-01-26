@@ -28,6 +28,8 @@ namespace calyx
         {
             _registry = other._registry;
             _choices = other._choices;
+            
+            return *this;
         }
 
     private:
