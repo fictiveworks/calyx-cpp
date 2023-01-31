@@ -67,6 +67,13 @@ namespace calyx
     class Registry
     {
     public:
+
+        Registry();
+
+        Registry(Options options);
+
+        ~Registry();
+
         void defineRule(String_t term, std::vector<String_t> production)
         {
             Rule rule = Rule(term, production, *this);
