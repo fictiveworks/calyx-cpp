@@ -5,6 +5,7 @@
 #include <map>
 
 #include "calyx.h"
+#include "options.hpp"
 
 namespace calyx
 {
@@ -74,13 +75,12 @@ namespace calyx
 
         ~Registry();
 
-        void defineRule(String_t term, std::vector<String_t> production)
-        {
-            Rule rule = Rule(term, production, *this);
-            _rules[term] = rule;
-        }
+        Registry& operator=(const Registry& other);
+
+        void defineRule(String_t term, std::vector<String_t> production);
 
     private:
         std::map<String_t, Rule> _rules;
+        Options* _options;
     };
 }

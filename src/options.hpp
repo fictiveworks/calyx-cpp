@@ -42,6 +42,8 @@ namespace calyx
          */
         Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
 
+        Options(const Options& old);
+
         ~Options();
 
         /**

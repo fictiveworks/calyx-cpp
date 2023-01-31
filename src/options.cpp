@@ -26,6 +26,12 @@ Options::Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const S
     _rng(rng)
 {}
 
+Options::Options(const Options& old):
+    _strict(old._strict),
+    _converter(old._converter),
+    _rng(old._rng)
+{}
+
 Options::~Options()
 {}
 
