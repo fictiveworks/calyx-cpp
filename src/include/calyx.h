@@ -11,7 +11,7 @@
 #include <string>
 
 #include "registry.hpp"
-
+#include "options.hpp"
 #include "string_converter.hpp"
 
 namespace calyx
@@ -35,6 +35,19 @@ namespace calyx
     class Grammar
     {
     public:
+
+        Grammar();
+
+        Grammar(Options opts);
+
+        Grammar(bool strict=Options::DEFAULT_STRICT);
+
+        Grammar(std::function<int()> rng, bool strict=Options::DEFAULT_STRICT);
+
+        Grammar(unsigned int seed, bool strict=Options::DEFAULT_STRICT);
+
+        ~Grammar();
+
         /**
          * [start description]
          * @param production  [description]
