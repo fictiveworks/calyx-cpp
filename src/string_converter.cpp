@@ -26,4 +26,4 @@ StringConverters::STD_STRING_CONVERTER = StdStringConverter();
 
 
 const StringConverter<String_t>& 
-StringConverters::CALYX_STRING_CONVERTER = STD_STRING_CONVERTER;
+StringConverters::DEFAULT_STRING_CONVERTER = STD_STRING_CONVERTER;

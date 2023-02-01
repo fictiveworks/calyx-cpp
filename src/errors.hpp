@@ -11,11 +11,11 @@ namespace calyx
      */
     class Errors
     {
-        static String_t undefinedRule(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        static String_t undefinedRule(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
-        static String_t undefinedFilter(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        static String_t undefinedFilter(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
-        static String_t incorrectFilterSignature(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        static String_t incorrectFilterSignature(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
     };
 
     /**

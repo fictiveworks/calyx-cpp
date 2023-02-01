@@ -6,13 +6,13 @@ using namespace calyx;
 const bool
 Options::DEFAULT_STRICT = false;
 
-Options::Options(bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER):
+Options::Options(bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER):
     _strict(strict),
     _converter(converter),
     _rng(std::rand) // TODO: Find actual implementation for rng
 {}
 
-Options::Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER):
+Options::Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER):
     _strict(strict),
     _converter(converter),
     _rng(std::rand) // TODO: Find actual implementation for rng
@@ -20,7 +20,7 @@ Options::Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringCo
     std::srand(seed); // TODO: Find actual implementation for seeded rng
 }
 
-Options::Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER):
+Options::Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER):
     _strict(strict),
     _converter(converter),
     _rng(rng)

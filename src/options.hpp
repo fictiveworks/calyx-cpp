@@ -22,7 +22,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        Options(bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
         /**
          * @brief Construct a new Options object with a specified random seed
@@ -31,7 +31,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
         /**
          * @brief Construct a new Options object with a specific random number generator
@@ -40,7 +40,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
+        Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
         Options(const Options& old);
 
