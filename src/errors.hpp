@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include "string_converter.hpp"
 
 namespace calyx
@@ -12,11 +11,11 @@ namespace calyx
      */
     class Errors
     {
-        static const std::function<String_t(const String_t &, const StringConverter<String_t> &)> undefinedRule;
+        static String_t undefinedRule(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
 
-        static const std::function<String_t(const String_t &, const StringConverter<String_t> &)> undefinedFilter;
+        static String_t undefinedFilter(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
 
-        static const std::function<String_t(const String_t &, const StringConverter<String_t> &)> incorrectFilterSignature;
+        static String_t incorrectFilterSignature(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::CALYX_STRING_CONVERTER);
     };
 
     /**
