@@ -12,12 +12,14 @@ Registry::Registry(Options options):
 
 Registry::~Registry()
 {
+    delete _options;
 }
 
 Registry&
 Registry::operator=(const Registry& other)
 {
     _rules = other._rules;
+    delete _options;
     _options = new Options(other._options);
 
     return *this;
