@@ -28,24 +28,24 @@ Errors::incorrectFilterSignature(const String_t &symbol, const StringConverter<S
     return converter.fromString(stream.str());
 }
 
-Error::Error():
+ErrorHolder::ErrorHolder():
     _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
     _hasError(false)
 {
 }
 
-bool Error::hasError() const
+bool ErrorHolder::hasError() const
 {
     return _hasError;
 }
 
 const String_t &
-Error::getMessage() const
+ErrorHolder::getMessage() const
 {
     return _message;
 }
 
-void Error::setError(String_t message)
+void ErrorHolder::setError(String_t message)
 {
     _message = message;
     _hasError = true;

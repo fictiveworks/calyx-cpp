@@ -3,6 +3,7 @@
 #include <functional>
 #include <random>
 #include "string_converter.hpp"
+#include "errors.hpp"
 
 namespace calyx
 {
@@ -54,20 +55,54 @@ namespace calyx
         int randInt();
 
         /**
-         * @brief Generated a random number with a maximum bound
+         * @brief Generated a random number with a maximum bound and ignores errors.
+         * 
+         * Only use this when confident that errors will never be generated!
+         * 
+         * Max must be greater than 0!
          * 
          * @param max The maximum bound of the random number (exclusive)
+         * @param errorHolder Reference to error holder 
          * @return int Returns a random int between 0 (inclusive) and max (exclusive)
          */
         int randInt(int max);
 
         /**
-         * @brief Generated a random number with minimum and maximum bounds
+         * @brief Generated a random number with a maximum bound
+         * 
+         * Max must be greater than 0.
+         * 
+         * @param max The maximum bound of the random number (exclusive)
+         * @param errorHolder Reference to error holder 
+         * @return int Returns a random int between 0 (inclusive) and max (exclusive)
+         */
+        int randInt(int max, ErrorHolder& errorHolder);
+
+        
+        /**
+         * @brief Generated a random number with minimum and maximum bounds, and ignores errors.
+         * 
+         * Only use this when confident that errors will never be generated!
+         * 
+         * Max must be greater than 0 and min!
          * 
          * @param min The minimum bound of the random number (inclusive)
          * @param max The maximum bound of the random number (exclusive)
+         * @param errorHolder Reference to error holder
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
         int randInt(int min, int max);
+
+        /**
+         * @brief Generated a random number with minimum and maximum bounds
+         * 
+         * Max must be greater than 0 and min.
+         * 
+         * @param min The minimum bound of the random number (inclusive)
+         * @param max The maximum bound of the random number (exclusive)
+         * @param errorHolder Reference to error holder
+         * @return int Returns a random int between min (inclusive) and max (exclusive)
+         */
+        int randInt(int min, int max, ErrorHolder& errorHolder);
     };
 }

@@ -6,7 +6,7 @@ namespace calyx
 {
 
     /**
-     * @brief Stores commonly used error message factories. Note that these are not proper error objects!
+     * @brief Stores commonly used error message factories. Note that these are not proper error holders!
      *
      */
     class Errors
@@ -26,23 +26,23 @@ namespace calyx
      *
      * Should always be passed by reference.
      */
-    class Error
+    class ErrorHolder
     {
     public:
         /**
          * @brief Construct a new Error object with no errors
          *
          */
-        Error();
+        ErrorHolder();
 
-        ~Error();
+        ~ErrorHolder();
 
         /**
          * @brief Errors should be passed by reference. The copy constructor is deleted to enforce this.
          *
          * @param old
          */
-        Error(const Error &old) = delete;
+        ErrorHolder(const ErrorHolder &old) = delete;
 
         /**
          * @brief Errors should be passed by reference. The assignment operator is deleted to enforce this.
@@ -50,7 +50,7 @@ namespace calyx
          * @param other
          * @return Error&
          */
-        Error &operator=(const Error &other) = delete;
+        ErrorHolder &operator=(const ErrorHolder &other) = delete;
 
         /**
          * @brief Determine if errors are present. Errors are present if and only if setError() has been called on this instance.
