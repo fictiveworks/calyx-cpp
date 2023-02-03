@@ -57,7 +57,7 @@ namespace calyx
         /**
          * @brief Generated a random number with a maximum bound and ignores errors.
          * 
-         * Only use this when confident that errors will never be generated!
+         * **Only use this when confident that errors will never be generated!** 
          * 
          * Max must be greater than 0!
          * 
@@ -82,7 +82,7 @@ namespace calyx
         /**
          * @brief Generated a random number with minimum and maximum bounds, and ignores errors.
          * 
-         * Only use this when confident that errors will never be generated!
+         * **Only use this when confident that errors will never be generated!**
          * 
          * Max must be greater than 0 and min!
          * 
