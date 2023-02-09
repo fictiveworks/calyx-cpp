@@ -80,13 +80,11 @@ int Options::randInt(int min, int max, ErrorHolder &errorHolder)
 
 int Options::randInt(int max)
 {
-    ErrorHolder ignored = ErrorHolder();
-    return randInt(max, ignored);
+    IGNORE_ERRORS(return randInt, max);
 }
 
 
 int Options::randInt(int min, int max)
 {
-    ErrorHolder ignored = ErrorHolder();
-    return randInt(min, max, ignored);
+    IGNORE_ERRORS(return randInt, min, max);
 }
