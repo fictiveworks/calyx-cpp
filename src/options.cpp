@@ -55,7 +55,8 @@ int Options::randInt(int max, ErrorHolder &errorHolder)
         return 0;
     }
 
-    return randInt() % max; // TODO: modulo isnt the best way to bound random numbers
+    int random = randInt();
+    return ((random % max) + max) % max; // TODO: modulo isnt the best way to bound random numbers
 }
 
 int Options::randInt(int min, int max, ErrorHolder &errorHolder)
