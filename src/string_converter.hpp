@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 namespace calyx
@@ -81,6 +83,6 @@ namespace calyx
          * This is the default string converter passed as an argument to any methods of Calyx that require
          * reading/modifying strings. It should do this in the `Options` argument for API methods.
          */
-        static const StringConverter<String_t> &CALYX_STRING_CONVERTER;
+        static const StringConverter<String_t> &DEFAULT_STRING_CONVERTER;
     };
 }

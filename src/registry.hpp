@@ -9,7 +9,26 @@
 
 namespace calyx
 {
-    class Registry;
+
+    class Rule;
+
+    class Registry
+    {
+    public:
+        Registry();
+
+        Registry(Options options);
+
+        ~Registry();
+
+        Registry &operator=(const Registry &other);
+
+        void defineRule(String_t term, std::vector<String_t> production);
+
+    private:
+        std::map<String_t, Rule> _rules;
+        Options *_options;
+    };
 
     class UniformBranch
     {
@@ -56,31 +75,12 @@ namespace calyx
         {
             _term = other._term;
             _production = other._production;
-            
+
             return *this;
         }
 
     private:
         String_t _term;
         UniformBranch _production;
-    };
-
-    class Registry
-    {
-    public:
-
-        Registry();
-
-        Registry(Options options);
-
-        ~Registry();
-
-        Registry& operator=(const Registry& other);
-
-        void defineRule(String_t term, std::vector<String_t> production);
-
-    private:
-        std::map<String_t, Rule> _rules;
-        Options* _options;
     };
 }
