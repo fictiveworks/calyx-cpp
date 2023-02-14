@@ -18,3 +18,9 @@ int UniformBranch::length() const
 {
     return _choices.size();
 }
+
+ProductionBranch* 
+UniformBranch::deepcopyBranch() const 
+{
+    return new UniformBranch(*this);
+}

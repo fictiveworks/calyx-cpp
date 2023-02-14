@@ -34,7 +34,8 @@ ErrorHolder::ErrorHolder()
 {
 }
 
-bool ErrorHolder::hasError() const
+bool
+ErrorHolder::hasError() const
 {
     return _hasError;
 }
@@ -45,7 +46,8 @@ ErrorHolder::getMessage() const
     return _message;
 }
 
-void ErrorHolder::setError(String_t message)
+void
+ErrorHolder::setError(String_t message)
 {
     _message = message;
     _hasError = true;

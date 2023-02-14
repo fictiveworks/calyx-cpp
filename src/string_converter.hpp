@@ -32,7 +32,7 @@ namespace calyx
          * @return const std::string Returns a std::string derived from the stringLike input.
          * Note: this may be the same object as the input!
          */
-        virtual const std::string toString(const S &stringLike) const = 0;
+        virtual const std::string toString(const S& stringLike) const = 0;
 
         /**
          * @brief Converts a std::string into an instance of the string-like type S
@@ -41,10 +41,10 @@ namespace calyx
          * @return const S Returns a string-like S derived from the std::string input.
          * Note: this may the same object as the input!
          */
-        virtual const S fromString(const std::string &stdString) const = 0;
+        virtual const S fromString(const std::string& stdString) const = 0;
     };
 
-    class StdStringConverter : public StringConverter<std::string>
+    class StdStringConverter: public StringConverter<std::string>
     {
     public:
         StdStringConverter();
@@ -57,7 +57,7 @@ namespace calyx
          * @param stringLike The string-like object to be converted
          * @return const std::string Returns the stringLike input as it is already a std::string
          */
-        virtual const std::string toString(const std::string &stringLike) const override;
+        virtual const std::string toString(const std::string& stringLike) const override;
 
         /**
          * @brief Converts a std::string into an instance of the string-like std::string
@@ -65,7 +65,7 @@ namespace calyx
          * @param stdString The std::string to be converted
          * @return const std::string Returns the stdString input as it is already a string-like std::string
          */
-        virtual const std::string fromString(const std::string &stdString) const override;
+        virtual const std::string fromString(const std::string& stdString) const override;
     };
 
     struct StringConverters
@@ -83,6 +83,6 @@ namespace calyx
          * This is the default string converter passed as an argument to any methods of Calyx that require
          * reading/modifying strings. It should do this in the `Options` argument for API methods.
          */
-        static const StringConverter<String_t> &DEFAULT_STRING_CONVERTER;
+        static const StringConverter<String_t>& DEFAULT_STRING_CONVERTER;
     };
 }

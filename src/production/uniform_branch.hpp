@@ -5,17 +5,20 @@
 
 namespace calyx
 {
-    class UniformBranch : public ProductionBranch
+    class UniformBranch: public ProductionBranch
     {
     public:
-        Expansion evaluate(Options &options) const override;
+        Expansion evaluate(Options& options) const override;
 
-        Expansion evaluateAt(int index, Options &options) const override;
+        Expansion evaluateAt(int index, Options& options) const override;
 
         int length() const override;
 
+    protected:
+        ProductionBranch* deepcopyBranch() const override;
+
     private:
         std::vector<Production&> _choices;
-        Registry &_registry;
+        Registry& _registry;
     };
 }

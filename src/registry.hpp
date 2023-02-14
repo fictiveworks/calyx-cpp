@@ -8,6 +8,7 @@
 #include "options.hpp"
 #include "production.hpp"
 #include "rule.hpp"
+#include "expansion.hpp"
 
 namespace calyx
 {
@@ -20,12 +21,23 @@ namespace calyx
 
         ~Registry();
 
-        Registry &operator=(const Registry &other);
+        Registry& operator=(const Registry& other);
+
+        inline Options& getOptions() const; 
 
         void defineRule(String_t term, std::vector<String_t> production);
 
+        Expansion evaluate(const String_t& startSymbol, ErrorHolder& errors);
+
+        void expand(const String_t& symbol, Rule& out, ErrorHolder& errors);
+
+        void resetEvaluationContext();
+
     private:
         std::map<String_t, Rule> _rules;
-        Options *_options;
+        std::map<String_t, Rule> _context;
+        std::map<String_t, Expansion> _memos;
+
+        Options* _options;
     };
 }

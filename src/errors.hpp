@@ -4,7 +4,7 @@
 
 namespace calyx
 {
-// Macros from https://stackoverflow.com/questions/1082192/how-to-generate-random-variable-names-in-c-using-macros
+    // Macros from https://stackoverflow.com/questions/1082192/how-to-generate-random-variable-names-in-c-using-macros
 #define CONCAT(a, b) CONCAT_INNER(a, b)
 #define CONCAT_INNER(a, b) a##b
 #define LINE_UNIQUE_NAME(base) CONCAT(base, __LINE__)
@@ -36,13 +36,13 @@ namespace calyx
      * @brief Stores commonly used error message factories. Note that these are not proper error holders!
      *
      */
-    class Errors
+    struct Errors
     {
-        static String_t undefinedRule(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
-        static String_t undefinedFilter(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
 
-        static String_t incorrectFilterSignature(const String_t &symbol, const StringConverter<String_t> &converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
     };
 
     /**
@@ -69,7 +69,7 @@ namespace calyx
          *
          * @param old
          */
-        ErrorHolder(const ErrorHolder &old) = delete;
+        ErrorHolder(const ErrorHolder& old) = delete;
 
         /**
          * @brief Errors should be passed by reference. The assignment operator is deleted to enforce this.
@@ -77,7 +77,7 @@ namespace calyx
          * @param other
          * @return Error&
          */
-        ErrorHolder &operator=(const ErrorHolder &other) = delete;
+        ErrorHolder& operator=(const ErrorHolder& other) = delete;
 
         /**
          * @brief Determine if errors are present. Errors are present if and only if {@link ErrorHolder#setError} has been called on this instance.
@@ -92,7 +92,7 @@ namespace calyx
          *
          * @return const String_t& Returns the message if an error is present, otherwise returns an empty string.
          */
-        const String_t &getMessage() const;
+        const String_t& getMessage() const;
 
         /**
          * @brief Sets an error message to the given message, and also sets hasError to true.
