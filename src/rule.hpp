@@ -33,6 +33,8 @@ namespace calyx
 
         Expansion evaluateAt(int index, Options& options) const;
 
+        int length() const;
+
         Rule& operator=(const Rule& other);
 
         Rule& operator=(Rule&& other) = default;

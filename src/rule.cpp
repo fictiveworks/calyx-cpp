@@ -27,18 +27,27 @@ Rule::~Rule()
 
 }
 
-Expansion Rule::evaluate(Options& options) const
+Expansion 
+Rule::evaluate(Options& options) const
 {
     return _production->evaluate(options);
 }
 
-Expansion Rule::evaluateAt(int index, Options& options) const
+Expansion 
+Rule::evaluateAt(int index, Options& options) const
 {
 
     return _production->evaluateAt(index, options);
 }
 
-Rule& Rule::operator=(const Rule& other)
+int
+Rule::length() const
+{
+    return _production->length();
+}
+
+Rule& 
+Rule::operator=(const Rule& other)
 {
     _term = other._term;
     _production = other._production->cloneBranch();
