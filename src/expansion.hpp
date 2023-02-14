@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <vector>
 
 #include "string_converter.hpp"
 #include "options.hpp"
@@ -27,22 +28,26 @@ namespace calyx
     class Expansion
     {
     public:
-        Expansion(const Expansion &old);
+        Expansion(const Expansion& old);
 
         Expansion(Exp symbol, Expansion tail);
 
+        Expansion(Exp symbol, std::shared_ptr<Expansion> tail);
+
         Expansion(Exp symbol, String_t term);
 
-        Expansion(Exp symbol, std::vector<Expansion> tail);
+        Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail);
 
-        Expansion &operator=(const Expansion &other);
+        Expansion(Exp symbol, std::vector<Expansion&> tail);
 
-        String_t flatten(Options &options) const;
+        Expansion& operator=(const Expansion& other);
 
-        void collectAtoms(String_t &concat) const;
+        String_t flatten(Options& options) const;
+
+        void collectAtoms(String_t& concat) const;
 
     private:
-        std::vector<Expansion> _tail;
+        std::vector<std::shared_ptr<Expansion>> _tail;
         String_t _term;
         Exp _symbol;
     };

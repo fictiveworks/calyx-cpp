@@ -53,10 +53,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return Expansion(ERROR, _options->_converter.fromString(""));
     }
 
-    Expansion root = Expansion(
-        RESULT,
-        rule.evaluate(getOptions())
-    );
+    Expansion root = Expansion(RESULT, std::make_shared<Expansion>(rule.evaluate(getOptions())));
 
     return root;
 }
@@ -67,7 +64,7 @@ Registry::expand(const String_t& symbol, Rule& out, ErrorHolder& errors)
     if (_rules.contains(symbol))
     {
         out = _rules[symbol];
-    } 
+    }
     else if (_context.contains(symbol))
     {
         out = _context[symbol];
