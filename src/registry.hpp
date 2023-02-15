@@ -29,7 +29,7 @@ namespace calyx
 
         Expansion evaluate(const String_t& startSymbol, ErrorHolder& errors);
 
-        void expand(const String_t& symbol, Rule& out, ErrorHolder& errors);
+        void expand(const String_t& symbol, Rule& out, ErrorHolder& errors) const;
 
         void resetEvaluationContext();
 

@@ -59,15 +59,15 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 }
 
 void
-Registry::expand(const String_t& symbol, Rule& out, ErrorHolder& errors)
+Registry::expand(const String_t& symbol, Rule& out, ErrorHolder& errors) const
 {
     if (_rules.contains(symbol))
     {
-        out = _rules[symbol];
+        out = _rules.at(symbol);
     }
     else if (_context.contains(symbol))
     {
-        out = _context[symbol];
+        out = _context.at(symbol);
     }
     else
     {
