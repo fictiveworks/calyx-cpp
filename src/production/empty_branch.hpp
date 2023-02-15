@@ -8,6 +8,12 @@ namespace calyx
     {
     public:
 
+        EmptyBranch();
+
+        EmptyBranch(const EmptyBranch& old);
+
+        ~EmptyBranch();
+
         Expansion evaluate(Options& options) const override;
 
         Expansion evaluateAt(int index, Options& options) const override;

@@ -2,6 +2,18 @@
 
 using namespace calyx;
 
+EmptyBranch::EmptyBranch()
+{
+}
+
+EmptyBranch::EmptyBranch(const EmptyBranch& old)
+{
+}
+
+EmptyBranch::~EmptyBranch()
+{
+}
+
 Expansion
 EmptyBranch::evaluate(Options& options) const
 {
@@ -11,10 +23,10 @@ EmptyBranch::evaluate(Options& options) const
 Expansion
 EmptyBranch::evaluateAt(int index, Options& options) const
 {
-    return Expansion(
-        EMPTY_BRANCH,
-        std::make_shared<Expansion>(Expansion(ATOM, options._converter.fromString("")))
-    );}
+    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(Expansion(ATOM, options._converter.fromString("")));
+
+    return Expansion(EMPTY_BRANCH, tail);
+}
 
 int
 EmptyBranch::length() const

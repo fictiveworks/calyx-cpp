@@ -1,5 +1,6 @@
 #include "rule.hpp"
 #include "production/empty_branch.hpp"
+#include "production/uniform_branch.hpp"
 
 using namespace calyx;
 
@@ -10,8 +11,8 @@ Rule::Rule()
 
 }
 
-Rule::Rule(String_t term, ProductionBranch& production)
-    : _production(std::make_unique<ProductionBranch>(production)),
+Rule::Rule(String_t term, std::unique_ptr<ProductionBranch> production)
+    : _production(std::move(production)),
     _term(term)
 {
 }
@@ -27,13 +28,32 @@ Rule::~Rule()
 
 }
 
-Expansion 
+Rule 
+Rule::empty(String_t term)
+{
+    return Rule(term, std::make_unique<ProductionBranch>(EmptyBranch()));
+}
+
+Rule 
+Rule::build(String_t term, std::vector<String_t> productions, Registry& registry)
+{
+    UniformBranch production = UniformBranch::parse(productions, registry);
+    return Rule(term, std::make_unique<ProductionBranch>(production));
+}
+
+// Rule 
+// Rule::build(String_t term, std::map<String_t, int> productions, Registry& registry)
+// {
+    
+// }
+
+Expansion
 Rule::evaluate(Options& options) const
 {
     return _production->evaluate(options);
 }
 
-Expansion 
+Expansion
 Rule::evaluateAt(int index, Options& options) const
 {
 
@@ -46,7 +66,7 @@ Rule::length() const
     return _production->length();
 }
 
-Rule& 
+Rule&
 Rule::operator=(const Rule& other)
 {
     _term = other._term;

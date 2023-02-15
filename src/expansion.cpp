@@ -9,12 +9,11 @@ Expansion::Expansion(const Expansion& old)
 {
 }
 
-Expansion::Expansion(Exp symbol, Expansion tail)
+Expansion::Expansion(Exp symbol, String_t term)
     : _symbol(symbol),
-    _term(),
-    _tail(1)
+    _term(term),
+    _tail()
 {
-    _tail.push_back(std::make_shared<Expansion>(tail));
 }
 
 Expansion::Expansion(Exp symbol, std::shared_ptr<Expansion> tail)
@@ -25,25 +24,15 @@ Expansion::Expansion(Exp symbol, std::shared_ptr<Expansion> tail)
     _tail.push_back(tail);
 }
 
-
-Expansion::Expansion(Exp symbol, String_t term)
-    : _symbol(symbol),
-    _term(term),
-    _tail()
-{
-}
-
-Expansion::Expansion(Exp symbol, std::vector<Expansion&> tail)
+Expansion::Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail)
     : _symbol(symbol),
     _term(),
-    _tail(tail.size())
+    _tail(tail)
 {
-    for (auto exp : tail)
-    {
-        _tail.push_back(std::make_shared<Expansion>(tail));
-    }
 
 }
+
+
 
 Expansion&
 Expansion::operator=(const Expansion& other)

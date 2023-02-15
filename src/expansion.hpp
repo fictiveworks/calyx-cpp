@@ -30,15 +30,11 @@ namespace calyx
     public:
         Expansion(const Expansion& old);
 
-        Expansion(Exp symbol, Expansion tail);
+        Expansion(Exp symbol, String_t term);
 
         Expansion(Exp symbol, std::shared_ptr<Expansion> tail);
 
-        Expansion(Exp symbol, String_t term);
-
         Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail);
-
-        Expansion(Exp symbol, std::vector<Expansion&> tail);
 
         Expansion& operator=(const Expansion& other);
 

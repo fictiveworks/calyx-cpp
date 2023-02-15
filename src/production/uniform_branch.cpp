@@ -2,16 +2,36 @@
 
 using namespace calyx;
 
-Expansion UniformBranch::evaluate(Options &options) const
+UniformBranch::UniformBranch(std::vector<std::shared_ptr<Production>> choices, Registry& registry)
+    : _choices(choices),
+    _registry(registry)
+{
+
+}
+
+UniformBranch::UniformBranch(const UniformBranch& old)
+    : _choices(old._choices),
+    _registry(old._registry)
+{
+
+}
+
+UniformBranch::~UniformBranch()
+{
+
+}
+
+Expansion UniformBranch::evaluate(Options& options) const
 {
     int index = options.randInt(_choices.size());
     return evaluateAt(index, options);
 }
 
-Expansion UniformBranch::evaluateAt(int index, Options &options) const
+Expansion UniformBranch::evaluateAt(int index, Options& options) const
 {
-    Expansion tail = _choices.at(index).evaluate(options);
-    return Expansion(UNIFORM_BRANCH, tail);
+    auto choice = _choices.at(index);
+    Expansion tail = choice->evaluate(options);
+    return Expansion(UNIFORM_BRANCH, std::make_shared<Expansion>(tail));
 }
 
 int UniformBranch::length() const
@@ -19,8 +39,8 @@ int UniformBranch::length() const
     return _choices.size();
 }
 
-ProductionBranch* 
-UniformBranch::deepcopyBranch() const 
+ProductionBranch*
+UniformBranch::deepcopyBranch() const
 {
     return new UniformBranch(*this);
 }
