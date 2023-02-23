@@ -29,7 +29,7 @@ namespace calyx
     public:
         virtual Expansion evaluateAt(int index, Options& options) const = 0;
 
-        virtual int length() const = 0;
+        virtual inline size_t length() const = 0;
 
         auto cloneBranch() const
         {

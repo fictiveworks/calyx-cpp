@@ -28,7 +28,7 @@ EmptyBranch::evaluateAt(int index, Options& options) const
     return Expansion(EMPTY_BRANCH, tail);
 }
 
-int
+size_t
 EmptyBranch::length() const
 {
     return 1;

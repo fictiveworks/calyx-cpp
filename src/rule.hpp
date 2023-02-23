@@ -36,7 +36,7 @@ namespace calyx
 
         Expansion evaluateAt(int index, Options& options) const;
 
-        int length() const;
+        inline size_t length() const;
 
         Rule& operator=(const Rule& other);
 

@@ -3,12 +3,14 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "calyx.h"
 #include "options.hpp"
 #include "production.hpp"
 #include "rule.hpp"
 #include "expansion.hpp"
+#include "cycle.hpp"
 
 namespace calyx
 {
@@ -17,7 +19,7 @@ namespace calyx
     public:
         Registry();
 
-        Registry(Options options);
+        Registry(std::shared_ptr<Options> options);
 
         ~Registry();
 
@@ -33,6 +35,8 @@ namespace calyx
 
         Expansion memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
 
+        Expansion uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
+
         Rule expand(const String_t& symbol, ErrorHolder& errors) const;
 
         void resetEvaluationContext();
@@ -41,7 +45,8 @@ namespace calyx
         std::map<String_t, Rule> _rules;
         std::map<String_t, Rule> _context;
         std::map<String_t, Expansion> _memos;
+        std::map<String_t, Cycle> _cycles;
 
-        Options* _options;
+        std::shared_ptr<Options> _options;
     };
 }

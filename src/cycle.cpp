@@ -1,13 +1,24 @@
 #include "cycle.hpp"
 
+#include <algorithm>
+
 using namespace calyx;
 
-Cycle::Cycle(Options options, size_t count)
+Cycle::Cycle(std::shared_ptr<Options> options, size_t count)
     : _options(options),
     _count(count) // assume count greater than 1
 {
     _sequence = new int[count];
     _index = _count - 1;  // defer shuffling until the first poll()
+}
+
+Cycle::Cycle(const Cycle& old)
+    : _options(old._options),
+    _index(old._index),
+    _count(old._count),
+    _sequence(new int[_count])
+{
+
 }
 
 Cycle::~Cycle()
@@ -16,15 +27,31 @@ Cycle::~Cycle()
 }
 
 Cycle
-Cycle::create(Options options, size_t count, ErrorHolder& errors)
+Cycle::create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors)
 {
     if (count < 1)
     {
-        errors.setError(options._converter.fromString("'count' must be greater than zero!"));
+        errors.setError(options->_converter.fromString("'count' must be greater than zero!"));
         return Cycle(options, -1);
     }
 
     return Cycle(options, count);
+}
+
+Cycle&
+Cycle::operator=(const Cycle& other)
+{
+    delete[] _sequence;
+
+    _options = other._options;
+    _index = other._index;
+
+    _count = other._count;
+    _sequence = new int[other._count];
+    
+    std::copy(other._sequence, other._sequence + _count, _sequence);
+
+    return *this;
 }
 
 void
@@ -35,7 +62,7 @@ Cycle::shuffle()
 
     while (current > 1)
     {
-        size_t target = _options.randInt(current);
+        size_t target = _options->randInt(current);
         current--;
         std::swap(_sequence[current], _sequence[target]);
     }

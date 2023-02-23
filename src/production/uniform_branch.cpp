@@ -29,12 +29,12 @@ Expansion UniformBranch::evaluate(Options& options) const
 
 Expansion UniformBranch::evaluateAt(int index, Options& options) const
 {
-    auto choice = _choices.at(index);
+    std::shared_ptr<Production> choice = _choices.at(index);
     Expansion tail = choice->evaluate(options);
     return Expansion(UNIFORM_BRANCH, std::make_shared<Expansion>(tail));
 }
 
-int UniformBranch::length() const
+size_t UniformBranch::length() const
 {
     return _choices.size();
 }

@@ -60,7 +60,7 @@ Rule::evaluateAt(int index, Options& options) const
     return _production->evaluateAt(index, options);
 }
 
-int
+size_t
 Rule::length() const
 {
     return _production->length();

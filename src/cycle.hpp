@@ -1,6 +1,6 @@
 #pragma once
 
-#include <array>
+#include <memory>
 
 #include "options.hpp"
 
@@ -10,7 +10,11 @@ namespace calyx
     {
     public:
 
-        static Cycle create(Options options, size_t count, ErrorHolder& errors);
+        static Cycle create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors);
+
+        Cycle(const Cycle& old);
+
+        Cycle& operator=(const Cycle& other);
 
         ~Cycle();
         
@@ -19,11 +23,11 @@ namespace calyx
         int poll();
 
     protected:
-        Cycle(Options options, size_t count);
+        Cycle(std::shared_ptr<Options> options, size_t count);
 
     private:
 
-        Options _options;
+        std::shared_ptr<Options> _options;
         size_t _index;
         
         size_t _count;

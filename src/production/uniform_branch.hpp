@@ -26,7 +26,7 @@ namespace calyx
 
         Expansion evaluateAt(int index, Options& options) const override;
 
-        int length() const override;
+        inline size_t length() const override;
 
     protected:
         ProductionBranch* deepcopyBranch() const override;

@@ -2,19 +2,18 @@
 
 using namespace calyx;
 
-Registry::Registry() : Registry(Options())
+Registry::Registry() : Registry(std::make_shared<Options>(Options()))
 {
 }
 
-Registry::Registry(Options options)
-    : _options(new Options(options)),
+Registry::Registry(std::shared_ptr<Options> options)
+    : _options(options),
     _rules(std::map<String_t, Rule>())
 {
 }
 
 Registry::~Registry()
 {
-    delete _options;
 }
 
 Options&
@@ -27,8 +26,7 @@ Registry&
 Registry::operator=(const Registry& other)
 {
     _rules = other._rules;
-    delete _options;
-    _options = new Options(other._options);
+    _options = other._options;
 
     return *this;
 }
@@ -74,7 +72,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     return Expansion(RESULT, tail);
 }
 
-Expansion 
+Expansion
 Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     if (!_memos.contains(symbol))
@@ -85,6 +83,21 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
     return _memos[symbol];
 }
 
+Expansion
+Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
+{
+    //
+    if (!_cycles.contains(symbol))
+    {
+        auto prod = this->expand(symbol, errors);
+        size_t cycleLength = prod.length();
+        _cycles[symbol] = Cycle::create(_options, cycleLength, errors);
+    }
+
+    Rule rule = this->expand(symbol, errors);
+
+    return rule.evaluateAt(_cycles[symbol].poll(), *_options);
+}
 
 Rule
 Registry::expand(const String_t& symbol, ErrorHolder& errors) const
