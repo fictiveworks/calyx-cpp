@@ -44,10 +44,9 @@ Registry::defineRule(String_t term, std::vector<String_t> production)
 Expansion
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
-    resetEvaluationContext();
-
-    Rule rule;
-    expand(startSymbol, rule, errors);
+    this->resetEvaluationContext();
+    
+    Rule rule = this->expand(startSymbol, errors);
 
     if (errors.hasError()) {
         return Expansion(ERROR, _options->_converter.fromString(""));
@@ -58,16 +57,16 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
     return root;
 }
 
-void
-Registry::expand(const String_t& symbol, Rule& out, ErrorHolder& errors) const
+Rule
+Registry::expand(const String_t& symbol, ErrorHolder& errors) const
 {
     if (_rules.contains(symbol))
     {
-        out = _rules.at(symbol);
+        return _rules.at(symbol);
     }
     else if (_context.contains(symbol))
     {
-        out = _context.at(symbol);
+        return _context.at(symbol);
     }
     else
     {
@@ -78,12 +77,14 @@ Registry::expand(const String_t& symbol, Rule& out, ErrorHolder& errors) const
         }
 
         // create empty rule
-        out = Rule::empty(symbol);
+        return Rule::empty(symbol);
     }
 }
 
 void
 Registry::resetEvaluationContext()
 {
-    // todo: this shit
+    _rules.clear();
+    _context.clear();
+    _memos.clear();
 }
