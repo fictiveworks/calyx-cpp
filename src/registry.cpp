@@ -45,7 +45,7 @@ Expansion
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
-    
+
     Rule rule = this->expand(startSymbol, errors);
 
     if (errors.hasError()) {
@@ -56,6 +56,24 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 
     return root;
 }
+
+Expansion
+Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors)
+{
+    this->resetEvaluationContext();
+
+    for (const auto& rule : context)
+    {
+        // C# version has a commented-out exception for duplicate rules here, idk
+        _context[rule.first] = Rule::build(rule.first, rule.second, *this);
+    }
+
+    Rule rule = this->expand(startSymbol, errors);
+    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(rule.evaluate(this->getOptions()));
+
+    return Expansion(RESULT, tail);
+}
+
 
 Rule
 Registry::expand(const String_t& symbol, ErrorHolder& errors) const
