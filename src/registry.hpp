@@ -31,6 +31,8 @@ namespace calyx
 
         Expansion evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
 
+        Expansion memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
+
         Rule expand(const String_t& symbol, ErrorHolder& errors) const;
 
         void resetEvaluationContext();

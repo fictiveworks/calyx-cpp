@@ -74,6 +74,17 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     return Expansion(RESULT, tail);
 }
 
+Expansion 
+Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
+{
+    if (!_memos.contains(symbol))
+    {
+        _memos[symbol] = this->expand(symbol, errors).evaluate(this->getOptions());
+    }
+
+    return _memos[symbol];
+}
+
 
 Rule
 Registry::expand(const String_t& symbol, ErrorHolder& errors) const
