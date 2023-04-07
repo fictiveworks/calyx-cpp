@@ -44,6 +44,14 @@ int Options::randInt()
     return _rng();
 }
 
+double 
+Options::randDouble()
+{
+    int randint = randInt(1000);
+
+    return randint / 1000.0;
+}
+
 int Options::randInt(int max, ErrorHolder& errorHolder)
 {
     if (max <= 0)

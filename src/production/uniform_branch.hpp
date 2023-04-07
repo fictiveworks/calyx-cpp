@@ -18,7 +18,7 @@ namespace calyx
 
         UniformBranch(const UniformBranch& old);
 
-        ~UniformBranch();
+        ~UniformBranch() = default;
 
         static UniformBranch parse(std::vector<String_t> raw, Registry& registry);
 

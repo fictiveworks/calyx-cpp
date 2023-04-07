@@ -16,11 +16,6 @@ UniformBranch::UniformBranch(const UniformBranch& old)
 
 }
 
-UniformBranch::~UniformBranch()
-{
-
-}
-
 Expansion UniformBranch::evaluate(Options& options) const
 {
     int index = options.randInt(_choices.size());

@@ -10,10 +10,6 @@ EmptyBranch::EmptyBranch(const EmptyBranch& old)
 {
 }
 
-EmptyBranch::~EmptyBranch()
-{
-}
-
 Expansion
 EmptyBranch::evaluate(Options& options) const
 {

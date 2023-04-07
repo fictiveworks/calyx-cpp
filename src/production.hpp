@@ -13,7 +13,7 @@ namespace calyx
     public:
         virtual Expansion evaluate(Options& options) const = 0;
 
-        auto clone() const
+        std::unique_ptr<Production> clone() const
         {
             return std::unique_ptr<Production>(deepcopy());
         }
@@ -31,7 +31,7 @@ namespace calyx
 
         virtual size_t length() const = 0;
 
-        auto cloneBranch() const
+        std::unique_ptr<ProductionBranch> cloneBranch() const
         {
             return std::unique_ptr<ProductionBranch>(deepcopyBranch());
         }

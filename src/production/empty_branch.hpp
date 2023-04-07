@@ -12,7 +12,7 @@ namespace calyx
 
         EmptyBranch(const EmptyBranch& old);
 
-        ~EmptyBranch();
+        ~EmptyBranch() = default;
 
         Expansion evaluate(Options& options) const override;
 

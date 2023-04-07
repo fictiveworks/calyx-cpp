@@ -56,15 +56,14 @@ Expansion::flatten(Options& options) const
 
 void Expansion::collectAtoms(String_t& concat) const
 {
-    if (_symbol == ATOM)
-    {
+    if (_symbol == ATOM) {
         concat += _term;
     }
-    else
-    {
-        for (auto expansions : _tail)
-        {
-            expansions->collectAtoms(concat);
+    else {
+        for (const auto& expansions : _tail) {
+            if (expansions != nullptr) {
+                expansions->collectAtoms(concat);
+            }
         }
     }
 }
