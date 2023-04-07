@@ -12,10 +12,6 @@ Registry::Registry(std::shared_ptr<Options> options)
 {
 }
 
-Registry::~Registry()
-{
-}
-
 Options&
 Registry::getOptions() const
 {
@@ -76,7 +72,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     return Expansion(RESULT, tail);
 }
 
-std::optional<Expansion>
+std::optional<std::shared_ptr<Expansion>>
 Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     if (!_memos.contains(symbol))
@@ -85,7 +81,7 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
         if (!rule || errors.hasError()) {
             return {};
         }
-        _memos[symbol] = rule->evaluate(this->getOptions());
+        _memos[symbol] = std::make_shared<Expansion>(rule->evaluate(this->getOptions()));
     }
 
     return _memos[symbol];
@@ -104,7 +100,13 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
         }
 
         size_t cycleLength = prod->length();
-        _cycles[symbol] = Cycle::create(_options, cycleLength, errors);
+
+        std::optional<Cycle> cycle = Cycle::create(_options, cycleLength, errors);
+
+        if (!cycle || errors.hasError()) {
+            return {};
+        }
+        _cycles.emplace(symbol, std::make_unique<Cycle>(cycle.value()));
     }
 
     auto rule = this->expand(symbol, errors);
@@ -112,7 +114,9 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     if (!rule || errors.hasError()) {
         return {};
     }
-    return rule->evaluateAt(_cycles[symbol].poll(), *_options);
+
+    
+    return rule->evaluateAt(_cycles[symbol]->poll(), *_options);
 }
 
 std::optional<Rule>
@@ -143,7 +147,7 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
 void
 Registry::resetEvaluationContext()
 {
-    _rules.clear();
+    _cycles.clear();
     _context.clear();
     _memos.clear();
 }

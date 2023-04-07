@@ -5,7 +5,7 @@
 using namespace calyx;
 
 Rule::Rule()
-    : _production(std::make_unique<ProductionBranch>(EmptyBranch())),
+    : _production(new EmptyBranch()),
     _term(StringConverters::DEFAULT_STRING_CONVERTER.fromString(""))
 {
 
@@ -26,14 +26,14 @@ Rule::Rule(const Rule& other)
 Rule 
 Rule::empty(String_t term)
 {
-    return Rule(term, std::make_unique<ProductionBranch>(EmptyBranch()));
+    return Rule(term, std::make_unique<EmptyBranch>());
 }
 
 Rule 
 Rule::build(String_t term, std::vector<String_t> productions, Registry& registry)
 {
     UniformBranch production = UniformBranch::parse(productions, registry);
-    return Rule(term, std::make_unique<ProductionBranch>(production));
+    return Rule(term, std::make_unique<UniformBranch>(std::move(production)));
 }
 
 // Rule 

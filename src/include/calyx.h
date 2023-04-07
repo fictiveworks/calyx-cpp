@@ -13,6 +13,7 @@
 #include "registry.hpp"
 #include "options.hpp"
 #include "string_converter.hpp"
+#include "errors.hpp"
 
 namespace calyx
 {

@@ -26,13 +26,13 @@ Cycle::~Cycle()
     delete[] _sequence;
 }
 
-Cycle
+std::optional<Cycle>
 Cycle::create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors)
 {
     if (count < 1)
     {
         errors.setError(options->_converter.fromString("'count' must be greater than zero!"));
-        return Cycle(options, -1);
+        return {};
     }
 
     return Cycle(options, count);

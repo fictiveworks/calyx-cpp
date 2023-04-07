@@ -60,9 +60,9 @@ namespace calyx
          * @brief Construct a new Error object with no errors
          *
          */
-        ErrorHolder();
+        ErrorHolder() = default;
 
-        ~ErrorHolder();
+        ~ErrorHolder() = default;
 
         /**
          * @brief Errors should be passed by reference. The copy constructor is deleted to enforce this.

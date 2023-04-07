@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 
 #include "options.hpp"
 
@@ -10,7 +11,7 @@ namespace calyx
     {
     public:
 
-        static Cycle create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors);
+        static std::optional<Cycle> create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors);
 
         Cycle(const Cycle& old);
 

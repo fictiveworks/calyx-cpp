@@ -37,9 +37,13 @@ Expansion::Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail)
 Expansion&
 Expansion::operator=(const Expansion& other)
 {
-    _symbol = other._symbol;
-    _term = other._term;
-    _tail = other._tail;
+    if (this != &other) {
+        _symbol = other._symbol;
+        _term = other._term;
+        _tail = other._tail;
+    }
+
+    return *this;
 }
 
 String_t
