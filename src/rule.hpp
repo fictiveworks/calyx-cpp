@@ -4,7 +4,6 @@
 #include <map>
 #include <memory>
 
-#include "registry.hpp"
 #include "expansion.hpp"
 #include "production.hpp"
 #include "string_converter.hpp"
@@ -12,25 +11,33 @@
 namespace calyx
 {
 
+    class Registry;
+
     class Rule
     {
     public:
 
         Rule();
 
+        /**
+         * @brief Construct a new Rule object with a term and production.
+         * 
+         * @param term 
+         * @param production 
+         */
         Rule(String_t term, std::unique_ptr<ProductionBranch> production);
 
         Rule(const Rule& other);
 
         Rule(Rule&& other) = default;
 
-        ~Rule();
+        ~Rule() = default;
 
         static Rule empty(String_t term);
 
         static Rule build(String_t term, std::vector<String_t> productions, Registry& registry);
 
-        static Rule build(String_t term, std::map<String_t, int> productions, Registry& registry);
+        //static Rule build(String_t term, std::map<String_t, int> productions, Registry& registry);
 
         Expansion evaluate(Options& options) const;
 

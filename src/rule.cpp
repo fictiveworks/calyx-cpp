@@ -23,11 +23,6 @@ Rule::Rule(const Rule& other)
 {
 }
 
-Rule::~Rule()
-{
-
-}
-
 Rule 
 Rule::empty(String_t term)
 {
