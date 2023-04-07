@@ -6,7 +6,6 @@
 #include <memory>
 #include <optional>
 
-#include "calyx.h"
 #include "options.hpp"
 #include "production.hpp"
 #include "rule.hpp"

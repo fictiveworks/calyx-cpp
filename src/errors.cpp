@@ -5,7 +5,7 @@
 using namespace calyx;
 
 String_t
-Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
     stream << "Undefined rule: '" << converter.toString(symbol) << "'";
@@ -13,7 +13,7 @@ Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& c
 }
 
 String_t
-Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
     stream << "Undefined filter: '" << converter.toString(symbol) << "'";
@@ -21,7 +21,7 @@ Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>&
 }
 
 String_t
-Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
     stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";

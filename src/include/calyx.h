@@ -40,11 +40,11 @@ namespace calyx
 
         Grammar(Options opts);
 
-        Grammar(bool strict=Options::DEFAULT_STRICT);
+        Grammar(bool strict = Options::DEFAULT_STRICT);
 
-        Grammar(std::function<int()> rng, bool strict=Options::DEFAULT_STRICT);
+        Grammar(std::function<int()> rng, bool strict = Options::DEFAULT_STRICT);
 
-        Grammar(unsigned int seed, bool strict=Options::DEFAULT_STRICT);
+        Grammar(unsigned int seed, bool strict = Options::DEFAULT_STRICT);
 
         ~Grammar();
 
@@ -81,6 +81,6 @@ namespace calyx
         Result generate();
 
     private:
-        Registry &_registry;
+        Registry& _registry;
     };
 }
