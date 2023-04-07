@@ -2,12 +2,6 @@
 
 using namespace calyx;
 
-StdStringConverter::StdStringConverter()
-{}
-
-StdStringConverter::~StdStringConverter()
-{}
-
 const std::string 
 StdStringConverter::toString(const std::string& stringLike) const
 {

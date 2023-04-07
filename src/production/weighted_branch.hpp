@@ -4,8 +4,8 @@
 #include <vector>
 #include <optional>
 
-#include "production.hpp"
-#include "registry.hpp"
+#include "../production.hpp"
+#include "../registry.hpp"
 
 namespace calyx
 {

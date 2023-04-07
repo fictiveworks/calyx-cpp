@@ -1,6 +1,7 @@
 #include "rule.hpp"
 #include "production/empty_branch.hpp"
 #include "production/uniform_branch.hpp"
+#include "production/weighted_branch.hpp"
 
 using namespace calyx;
 
@@ -28,19 +29,6 @@ Rule::empty(String_t term)
 {
     return Rule(term, std::make_unique<EmptyBranch>());
 }
-
-Rule 
-Rule::build(String_t term, std::vector<String_t> productions, Registry& registry)
-{
-    UniformBranch production = UniformBranch::parse(productions, registry);
-    return Rule(term, std::make_unique<UniformBranch>(std::move(production)));
-}
-
-// Rule 
-// Rule::build(String_t term, std::map<String_t, int> productions, Registry& registry)
-// {
-    
-// }
 
 Expansion
 Rule::evaluate(Options& options) const

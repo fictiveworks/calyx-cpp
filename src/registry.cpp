@@ -27,14 +27,6 @@ Registry::operator=(const Registry& other)
     return *this;
 }
 
-void
-Registry::defineRule(String_t term, std::vector<String_t> production)
-{
-    Rule rule = Rule::build(term, production, *this);
-
-    _rules[term] = rule;
-}
-
 std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
@@ -56,11 +48,12 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
 {
     this->resetEvaluationContext();
 
-    for (const auto& rule : context)
-    {
-        // C# version has a commented-out exception for duplicate rules here, idk
-        _context[rule.first] = Rule::build(rule.first, rule.second, *this);
-    }
+    // TODO: build context from rules
+    // for (const auto& rule : context)
+    // {
+    //     // C# version has a commented-out exception for duplicate rules here, idk
+    //     _context[rule.first] = Rule::build(rule.first, rule.second, *this);
+    // }
 
     auto rule = this->expand(startSymbol, errors);
 

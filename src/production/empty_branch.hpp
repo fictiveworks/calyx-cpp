@@ -1,6 +1,6 @@
 #pragma once
 
-#include "production.hpp"
+#include "../production.hpp"
 
 namespace calyx
 {
@@ -8,7 +8,7 @@ namespace calyx
     {
     public:
 
-        EmptyBranch();
+        EmptyBranch() = default;
 
         EmptyBranch(const EmptyBranch& old);
 

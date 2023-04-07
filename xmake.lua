@@ -6,7 +6,7 @@ add_rules("mode.debug", "mode.release")
 
 target("calyx")
     set_kind("shared")
-    add_files("src/*.cpp")
+    add_files("src/*.cpp", "src/production/*.cpp")
 
 target("calyx_test")
     set_kind("binary")

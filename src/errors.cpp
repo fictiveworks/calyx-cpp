@@ -4,6 +4,12 @@
 
 using namespace calyx;
 
+ErrorHolder::ErrorHolder()
+    : _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
+    _hasError(false)
+{
+}
+
 String_t
 Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
 {
@@ -26,12 +32,6 @@ Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<S
     std::ostringstream stream;
     stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";
     return converter.fromString(stream.str());
-}
-
-ErrorHolder::ErrorHolder()
-    : _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
-    _hasError(false)
-{
 }
 
 bool

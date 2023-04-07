@@ -60,7 +60,7 @@ namespace calyx
          * @brief Construct a new Error object with no errors
          *
          */
-        ErrorHolder() = default;
+        ErrorHolder();
 
         ~ErrorHolder() = default;
 

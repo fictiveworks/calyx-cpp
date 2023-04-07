@@ -3,10 +3,10 @@
 #include <vector>
 #include <memory>
 
-#include "production.hpp"
-#include "registry.hpp"
-#include "expansion.hpp"
-#include "string_converter.hpp"
+#include "../production.hpp"
+#include "../registry.hpp"
+#include "../expansion.hpp"
+#include "../string_converter.hpp"
 
 namespace calyx
 {
@@ -19,9 +19,7 @@ namespace calyx
         UniformBranch(const UniformBranch& old);
 
         ~UniformBranch() = default;
-
-        static UniformBranch parse(std::vector<String_t> raw, Registry& registry);
-
+        
         Expansion evaluate(Options& options) const override;
 
         Expansion evaluateAt(int index, Options& options) const override;

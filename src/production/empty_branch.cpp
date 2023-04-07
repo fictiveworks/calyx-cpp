@@ -2,10 +2,6 @@
 
 using namespace calyx;
 
-EmptyBranch::EmptyBranch()
-{
-}
-
 EmptyBranch::EmptyBranch(const EmptyBranch& old)
 {
 }

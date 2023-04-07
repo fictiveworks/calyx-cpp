@@ -21,9 +21,9 @@ namespace calyx
     class StringConverter
     {
     public:
-        StringConverter();
+        StringConverter() = default;
 
-        ~StringConverter();
+        ~StringConverter() = default;
 
         /**
          * @brief Converts an instance of the string-like type S into a std::string.
@@ -47,9 +47,9 @@ namespace calyx
     class StdStringConverter: public StringConverter<std::string>
     {
     public:
-        StdStringConverter();
+        StdStringConverter() = default;
 
-        ~StdStringConverter();
+        ~StdStringConverter() = default;
 
         /**
          * @brief Converts an instance of the string-like std::string into a std::string.
