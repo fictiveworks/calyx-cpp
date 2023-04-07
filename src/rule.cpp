@@ -56,7 +56,6 @@ Rule::evaluate(Options& options) const
 Expansion
 Rule::evaluateAt(int index, Options& options) const
 {
-
     return _production->evaluateAt(index, options);
 }
 

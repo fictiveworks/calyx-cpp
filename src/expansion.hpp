@@ -21,8 +21,7 @@ namespace calyx
         EXPRESSION,
         ATOM,
         MEMO,
-        UNIQ,
-        ERROR // used for error return
+        UNIQ
     };
 
     class Expansion

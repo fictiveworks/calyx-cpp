@@ -39,23 +39,23 @@ Registry::defineRule(String_t term, std::vector<String_t> production)
     _rules[term] = rule;
 }
 
-Expansion
+std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
 
-    Rule rule = this->expand(startSymbol, errors);
+    auto rule = this->expand(startSymbol, errors);
 
-    if (errors.hasError()) {
-        return Expansion(ERROR, _options->_converter.fromString(""));
+    if (!rule || errors.hasError()) {
+        return {};
     }
 
-    Expansion root = Expansion(RESULT, std::make_shared<Expansion>(rule.evaluate(getOptions())));
+    Expansion root = Expansion(RESULT, std::make_shared<Expansion>(rule->evaluate(getOptions())));
 
     return root;
 }
 
-Expansion
+std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
@@ -66,40 +66,56 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
         _context[rule.first] = Rule::build(rule.first, rule.second, *this);
     }
 
-    Rule rule = this->expand(startSymbol, errors);
-    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(rule.evaluate(this->getOptions()));
+    auto rule = this->expand(startSymbol, errors);
 
+    if (!rule || errors.hasError()) {
+        return {};
+    }
+
+    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(rule->evaluate(this->getOptions()));
     return Expansion(RESULT, tail);
 }
 
-Expansion
+std::optional<Expansion>
 Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     if (!_memos.contains(symbol))
     {
-        _memos[symbol] = this->expand(symbol, errors).evaluate(this->getOptions());
+        auto rule = this->expand(symbol, errors);
+        if (!rule || errors.hasError()) {
+            return {};
+        }
+        _memos[symbol] = rule->evaluate(this->getOptions());
     }
 
     return _memos[symbol];
 }
 
-Expansion
+std::optional<Expansion>
 Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     //
     if (!_cycles.contains(symbol))
     {
-        auto prod = this->expand(symbol, errors);
-        size_t cycleLength = prod.length();
+        std::optional<Rule> prod = this->expand(symbol, errors);
+
+        if (!prod || errors.hasError()) {
+            return {};
+        }
+
+        size_t cycleLength = prod->length();
         _cycles[symbol] = Cycle::create(_options, cycleLength, errors);
     }
 
-    Rule rule = this->expand(symbol, errors);
+    auto rule = this->expand(symbol, errors);
 
-    return rule.evaluateAt(_cycles[symbol].poll(), *_options);
+    if (!rule || errors.hasError()) {
+        return {};
+    }
+    return rule->evaluateAt(_cycles[symbol].poll(), *_options);
 }
 
-Rule
+std::optional<Rule>
 Registry::expand(const String_t& symbol, ErrorHolder& errors) const
 {
     if (_rules.contains(symbol))
@@ -114,8 +130,9 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
     {
         if (_options->_strict) {
             // strict - do not allow empty rules
-            // no early return since the empty rule will be returned anyway
             errors.setError(Errors::undefinedRule(symbol, _options->_converter));
+
+            return {};
         }
 
         // create empty rule

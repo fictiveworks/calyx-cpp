@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <optional>
 
 #include "calyx.h"
 #include "options.hpp"
@@ -29,15 +30,15 @@ namespace calyx
 
         void defineRule(String_t term, std::vector<String_t> production);
 
-        Expansion evaluate(const String_t& startSymbol, ErrorHolder& errors);
+        std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
 
-        Expansion evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
+        std::optional<Expansion> evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
 
-        Expansion memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
+        std::optional<Expansion> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
 
-        Expansion uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
+        std::optional<Expansion> uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
 
-        Rule expand(const String_t& symbol, ErrorHolder& errors) const;
+        std::optional<Rule> expand(const String_t& symbol, ErrorHolder& errors) const;
 
         void resetEvaluationContext();
 
