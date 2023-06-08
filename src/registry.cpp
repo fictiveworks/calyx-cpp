@@ -38,7 +38,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return {};
     }
 
-    Expansion root = Expansion(RESULT, std::make_shared<Expansion>(rule->evaluate(getOptions())));
+    Expansion root = Expansion(RESULT, std::make_unique<Expansion>(rule->evaluate(getOptions())));
 
     return root;
 }
@@ -55,14 +55,14 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     //     _context[rule.first] = Rule::build(rule.first, rule.second, *this);
     // }
 
-    auto rule = this->expand(startSymbol, errors);
+    std::optional<Rule> rule = this->expand(startSymbol, errors);
 
-    if (!rule || errors.hasError()) {
+    if (!rule) {
         return {};
     }
 
-    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(rule->evaluate(this->getOptions()));
-    return Expansion(RESULT, tail);
+    std::unique_ptr<Expansion> tail = std::make_unique<Expansion>(rule->evaluate(getOptions()));
+    return Expansion(RESULT, std::move(tail));
 }
 
 std::optional<std::shared_ptr<Expansion>>

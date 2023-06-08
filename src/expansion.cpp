@@ -1,12 +1,17 @@
 #include "expansion.hpp"
+#include <vector>
+#include <memory>
+
 
 using namespace calyx;
 
 Expansion::Expansion(const Expansion& old)
     : _symbol(old._symbol),
-    _term(old._term),
-    _tail(old._tail)
+    _term(old._term)
 {
+    for (const auto& ptr : old._tail) {
+        _tail.push_back(std::make_unique<Expansion>(*ptr));
+    }
 }
 
 Expansion::Expansion(Exp symbol, String_t term)
@@ -16,18 +21,17 @@ Expansion::Expansion(Exp symbol, String_t term)
 {
 }
 
-Expansion::Expansion(Exp symbol, std::shared_ptr<Expansion> tail)
+Expansion::Expansion(Exp symbol, std::unique_ptr<Expansion> tail)
     : _symbol(symbol),
-    _term(),
-    _tail(1)
+    _term()
 {
-    _tail.push_back(tail);
+    _tail.push_back(std::move(tail));
 }
 
-Expansion::Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail)
+Expansion::Expansion(Exp symbol, std::vector<std::unique_ptr<Expansion>> tail)
     : _symbol(symbol),
     _term(),
-    _tail(tail)
+    _tail(std::move(tail))
 {
 
 }
@@ -40,7 +44,14 @@ Expansion::operator=(const Expansion& other)
     if (this != &other) {
         _symbol = other._symbol;
         _term = other._term;
-        _tail = other._tail;
+
+        // Clear the existing _tail vector
+        _tail.clear();
+
+        // Copy the elements of other._tail into _tail
+        for (const auto& ptr : other._tail) {
+            _tail.push_back(std::make_unique<Expansion>(*ptr));
+        }
     }
 
     return *this;

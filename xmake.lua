@@ -5,7 +5,7 @@ set_languages("cxx20")
 add_rules("mode.debug", "mode.release")
 
 target("calyx")
-    set_kind("static")
+    set_kind("shared")
     add_files("src/*.cpp", "src/production/*.cpp")
 
 target("calyx_test")

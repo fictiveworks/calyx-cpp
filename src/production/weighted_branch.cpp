@@ -27,10 +27,9 @@ WeightedBranch::WeightedBranch(const WeightedBranch& old)
 Expansion
 WeightedBranch::evaluate(Options& options) const
 {
-    double waterMark = options.randDouble() * _sumOfWeights;
     const WeightedProduction& prod = this->getRandomProduction(options);
 
-    return Expansion(WEIGHTED_BRANCH, std::make_shared<Expansion>(prod.production->evaluate(options)));
+    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(prod.production->evaluate(options)));
 }
 
 const WeightedBranch::WeightedProduction&
@@ -56,7 +55,7 @@ WeightedBranch::evaluateAt(int index, Options& options) const
 {
     Expansion tail = _productions[index].production->evaluate(options);
 
-    return Expansion(WEIGHTED_BRANCH, std::make_shared<Expansion>(tail));
+    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(tail));
 }
 
 size_t

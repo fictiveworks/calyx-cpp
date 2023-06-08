@@ -15,9 +15,9 @@ EmptyBranch::evaluate(Options& options) const
 Expansion
 EmptyBranch::evaluateAt(int index, Options& options) const
 {
-    std::shared_ptr<Expansion> tail = std::make_shared<Expansion>(Expansion(ATOM, options._converter.fromString("")));
+    std::unique_ptr<Expansion> tail = std::make_unique<Expansion>(ATOM, options._converter.fromString(""));
 
-    return Expansion(EMPTY_BRANCH, tail);
+    return Expansion(EMPTY_BRANCH, std::move(tail));
 }
 
 size_t

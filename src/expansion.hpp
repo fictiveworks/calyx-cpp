@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <vector>
+#include <memory>
 
 #include "string_converter.hpp"
 #include "options.hpp"
@@ -31,9 +32,9 @@ namespace calyx
 
         Expansion(Exp symbol, String_t term);
 
-        Expansion(Exp symbol, std::shared_ptr<Expansion> tail);
+        Expansion(Exp symbol, std::unique_ptr<Expansion> tail);
 
-        Expansion(Exp symbol, std::vector<std::shared_ptr<Expansion>> tail);
+        Expansion(Exp symbol, std::vector<std::unique_ptr<Expansion>> tail);
 
         Expansion& operator=(const Expansion& other);
 
@@ -42,7 +43,7 @@ namespace calyx
         void collectAtoms(String_t& concat) const;
 
     private:
-        std::vector<std::shared_ptr<Expansion>> _tail;
+        std::vector<std::unique_ptr<Expansion>> _tail;
         String_t _term;
         Exp _symbol;
     };
