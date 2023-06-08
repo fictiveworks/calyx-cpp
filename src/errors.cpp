@@ -4,8 +4,14 @@
 
 using namespace calyx;
 
+ErrorHolder::ErrorHolder()
+    : _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
+    _hasError(false)
+{
+}
+
 String_t
-Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
     stream << "Undefined rule: '" << converter.toString(symbol) << "'";
@@ -13,7 +19,7 @@ Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& c
 }
 
 String_t
-Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
     stream << "Undefined filter: '" << converter.toString(symbol) << "'";
@@ -21,20 +27,15 @@ Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>&
 }
 
 String_t
-Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
-    stream << "Incorrect method signature for filter: " << converter.toString(symbol) << "'";
+    stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";
     return converter.fromString(stream.str());
 }
 
-ErrorHolder::ErrorHolder()
-    : _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
-    _hasError(false)
-{
-}
-
-bool ErrorHolder::hasError() const
+bool
+ErrorHolder::hasError() const
 {
     return _hasError;
 }
@@ -45,7 +46,8 @@ ErrorHolder::getMessage() const
     return _message;
 }
 
-void ErrorHolder::setError(String_t message)
+void
+ErrorHolder::setError(String_t message)
 {
     _message = message;
     _hasError = true;

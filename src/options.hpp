@@ -53,6 +53,13 @@ namespace calyx
          * @return int Returns a random int
          */
         int randInt();
+        
+        /**
+         * @brief Generates a random double between 0 and 1
+         * 
+         * @return double Returns a random double between 0 and 1
+         */
+        double randDouble();
 
         /**
          * @brief Generated a random number with a maximum bound and ignores errors.

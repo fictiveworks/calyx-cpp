@@ -3,84 +3,50 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
+#include <optional>
 
-#include "calyx.h"
 #include "options.hpp"
+#include "production.hpp"
+#include "rule.hpp"
+#include "expansion.hpp"
+#include "cycle.hpp"
 
 namespace calyx
 {
-
-    class Rule;
-
     class Registry
     {
     public:
         Registry();
 
-        Registry(Options options);
+        Registry(std::shared_ptr<Options> options);
 
-        ~Registry();
+        ~Registry() = default;
 
-        Registry &operator=(const Registry &other);
+        Registry& operator=(const Registry& other);
+
+        inline Options& getOptions() const; 
 
         void defineRule(String_t term, std::vector<String_t> production);
 
+        std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
+
+        std::optional<Expansion> evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
+
+        std::optional<std::shared_ptr<Expansion>> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
+
+        std::optional<Expansion> uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
+
+        std::optional<Rule> expand(const String_t& symbol, ErrorHolder& errors) const;
+
+        void resetEvaluationContext();
+
     private:
         std::map<String_t, Rule> _rules;
-        Options *_options;
-    };
+        std::map<String_t, Rule> _context;
+        std::map<String_t, std::shared_ptr<Expansion>> _memos;
+        std::map<String_t, std::unique_ptr<Cycle>> _cycles;
 
-    class UniformBranch
-    {
-    public:
-        UniformBranch(std::vector<String_t> production, Registry &registry)
-            : _registry(registry)
-        {
-            _choices = production; // TODO: parse into syntax tree
-        }
-
-        String_t evaluate()
-        {
-            return _choices[0]; // TODO: evaluate syntax tree
-        }
-
-        UniformBranch &operator=(const UniformBranch &other)
-        {
-            _registry = other._registry;
-            _choices = other._choices;
-
-            return *this;
-        }
-
-    private:
-        Registry &_registry;
-        std::vector<String_t> _choices;
-    };
-
-    class Rule
-    {
-    public:
-        Rule(String_t term, std::vector<String_t> production, Registry &registry)
-            : _production(production, registry)
-        {
-            _term = term;
-        }
-
-        String_t evaluate()
-        {
-            return _production.evaluate();
-        }
-
-        Rule &operator=(const Rule &other)
-        {
-            _term = other._term;
-            _production = other._production;
-
-            return *this;
-        }
-
-    private:
-        String_t _term;
-        UniformBranch _production;
+        std::shared_ptr<Options> _options;
     };
 }

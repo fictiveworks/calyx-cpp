@@ -6,14 +6,14 @@ using namespace calyx;
 
 const bool Options::DEFAULT_STRICT = false;
 
-Options::Options(bool strict = DEFAULT_STRICT, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Options::Options(bool strict, const StringConverter<String_t>& converter)
     : _strict(strict),
     _converter(converter),
     _rng(std::rand) // TODO: Find actual implementation for rng
 {
 }
 
-Options::Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Options::Options(unsigned int seed, bool strict, const StringConverter<String_t>& converter)
     : _strict(strict),
     _converter(converter),
     _rng(std::rand) // TODO: Find actual implementation for rng
@@ -21,7 +21,7 @@ Options::Options(unsigned int seed, bool strict = DEFAULT_STRICT, const StringCo
     std::srand(seed); // TODO: Find actual implementation for seeded rng
 }
 
-Options::Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER)
+Options::Options(std::function<int()> rng, bool strict, const StringConverter<String_t>& converter)
     : _strict(strict),
     _converter(converter),
     _rng(rng)
@@ -42,6 +42,14 @@ Options::~Options()
 int Options::randInt()
 {
     return _rng();
+}
+
+double 
+Options::randDouble()
+{
+    int randint = randInt(1000);
+
+    return randint / 1000.0;
 }
 
 int Options::randInt(int max, ErrorHolder& errorHolder)
