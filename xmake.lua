@@ -4,11 +4,7 @@ set_languages("cxx20")
 
 add_rules("mode.debug", "mode.release")
 
-option("tests", {default = false, description = "Enable tests"})
-
-if has_config("tests") then
-    add_requires("catch2")
-end
+add_requires("catch2")
 
 target("calyx")
     set_kind("static")

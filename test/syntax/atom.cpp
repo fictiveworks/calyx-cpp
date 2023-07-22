@@ -3,7 +3,8 @@
 #include <include/calyx.h>
 #include <syntax/atom_node.hpp>
 
-TEST_CASE("Atom tests") {
+TEST_CASE("Atom tests") 
+{
     calyx::Options ops = calyx::Options();
 
     calyx::AtomNode atom = calyx::AtomNode("T E R M");
