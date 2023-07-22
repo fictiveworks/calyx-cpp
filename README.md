@@ -17,7 +17,7 @@ xmake
 ### Run test executable
 
 ```
-xmake run calyx_test
+xmake run test
 ```
 
 ### Build for release

@@ -4,15 +4,22 @@ set_languages("cxx20")
 
 add_rules("mode.debug", "mode.release")
 
-target("calyx")
-    set_kind("shared")
-    add_files("src/*.cpp", "src/production/*.cpp")
+option("tests", {default = false, description = "Enable tests"})
 
-target("calyx_test")
+if has_config("tests") then
+    add_requires("catch2")
+end
+
+target("calyx")
+    set_kind("static")
+    add_files("src/*.cpp", "src/**/*.cpp")
+
+target("test")
     set_kind("binary")
     add_deps("calyx")
-    add_files("test/*.cpp")
-
+    add_files("test/*.cpp", "test/**/*.cpp")
+    add_packages("catch2")
+    add_includedirs("src")
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --

@@ -13,3 +13,9 @@ AtomNode::evaluate(Options& options) const
 {
     return Expansion(ATOM, _atom);
 }
+
+Production* 
+AtomNode::deepcopy() const
+{
+    return new AtomNode(_atom);
+}

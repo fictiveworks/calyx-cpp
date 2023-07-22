@@ -78,3 +78,15 @@ void Expansion::collectAtoms(String_t& concat) const
         }
     }
 }
+
+const String_t&
+Expansion::getTerm() const
+{
+    return _term;
+}
+
+const Exp& 
+Expansion::getSymbol() const
+{
+    return _symbol;
+}

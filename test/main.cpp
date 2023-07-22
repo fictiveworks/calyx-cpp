@@ -1,12 +1,2 @@
-#include <iostream>
-
-int main(int argc, char** argv)
-{
-    // Grammar g = Grammar();
-    // g.start("startrule");
-    // Result r = g.generate();
-
-    // std::cout << r.text();
-
-    return 0;
-}
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch_all.hpp>

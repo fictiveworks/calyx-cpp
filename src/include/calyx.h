@@ -14,6 +14,7 @@
 #include "../options.hpp"
 #include "../string_converter.hpp"
 #include "../errors.hpp"
+#include "../expansion.hpp"
 
 namespace calyx
 {

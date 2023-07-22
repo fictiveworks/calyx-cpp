@@ -42,6 +42,10 @@ namespace calyx
 
         void collectAtoms(String_t& concat) const;
 
+        const String_t& getTerm() const;
+
+        const Exp& getSymbol() const;
+
     private:
         std::vector<std::unique_ptr<Expansion>> _tail;
         String_t _term;

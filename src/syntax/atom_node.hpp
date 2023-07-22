@@ -16,6 +16,10 @@ namespace calyx
 
         Expansion evaluate(Options& options) const override;
 
+    protected:
+
+        Production* deepcopy() const override;
+
     private:
 
         const String_t _atom;
