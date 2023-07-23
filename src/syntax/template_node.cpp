@@ -4,39 +4,43 @@
 
 using namespace calyx;
 
-void resetFragment(std::vector<std::string>& fragments, std::string& fragment)
-{
-    
-}
+#define START_TOKEN '{'
+#define END_TOKEN '}'
 
 std::vector<std::string>
 TemplateNode::fragmentString(const std::string& raw)
 {
-    static const char startToken = '{';
-    static const char endToken = '}';
-
     std::vector<std::string> fragments;
 
-    std::string fragment = "";
-
-    for (char chr : raw)
+    std::size_t lastExpressionPos = 0;
+    std::size_t expressionPos = raw.find(START_TOKEN);
+    while (expressionPos != std::string::npos)
     {
-        if (chr == raw.back() || chr == startToken)
+        std::size_t endExpressionPos = raw.find(END_TOKEN, expressionPos);
+        if (endExpressionPos == std::string::npos)
         {
-            if (fragment.size() > 0)
-            {
-                fragments.push_back(fragment);
-            }
-            fragment = "";
+            break; // no closing bracket found, stop parsing
         }
         
-        fragment += chr;
-
-        if (chr == endToken && fragments.size() > 0)
+        if (expressionPos > lastExpressionPos)
         {
-            fragments.back() += chr;
-            fragment = "";
+            // add any atoms before the expression to the fragments
+            fragments.push_back(raw.substr(lastExpressionPos, expressionPos - lastExpressionPos));
         }
+
+        // add the expression to the fragments
+        fragments.push_back(raw.substr(expressionPos, endExpressionPos - expressionPos + 1));
+
+        lastExpressionPos = endExpressionPos + 1;
+
+        // find next expression
+        expressionPos = raw.find(START_TOKEN, lastExpressionPos);
+    }
+
+    // add remaining part if any
+    if (lastExpressionPos < raw.size())
+    {
+        fragments.push_back(raw.substr(lastExpressionPos));
     }
 
     return fragments;

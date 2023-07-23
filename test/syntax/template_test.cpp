@@ -42,7 +42,7 @@ TEST_CASE("Fragmenting tokens")
         testFragmentation("{expression} {expression}", { "{expression}", " ", "{expression}" });
     }
 
-    SECTION("Fragmenting tokens just expressions")
+    SECTION("Fragmenting tokens with just expressions")
     {
         testFragmentation("{expression1}{expression2}", { "{expression1}", "{expression2}" });
     }
@@ -50,6 +50,11 @@ TEST_CASE("Fragmenting tokens")
     SECTION("Fragmenting tokens just atoms")
     {
         testFragmentation("this is just a single atom", { "this is just a single atom" });
+    }
+
+    SECTION("Fragmenting tokens with dot chain notation")
+    {
+        testFragmentation("{expression.filter}", { "{expression.filter}" });
     }
 
     SECTION("Fragmenting tokens empty input")
