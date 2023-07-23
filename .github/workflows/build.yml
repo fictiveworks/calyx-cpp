@@ -5,13 +5,13 @@ on: [pull_request, push]
 
 jobs:
     build:
-        runs-on: ubtuntu-latest
+        runs-on: ubuntu-latest
         steps:
             -   name: checkout repo
                 uses: actions/checkout@v2
 
             -   name: build and run
                 run: xmake
-                
+
             -   name: Run tests
                 run: xmake run test
