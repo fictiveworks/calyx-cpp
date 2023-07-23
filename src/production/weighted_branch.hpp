@@ -32,7 +32,7 @@ namespace calyx
 
         Expansion evaluateAt(int index, Options& options) const override;
 
-        inline size_t length() const override;
+        size_t length() const override;
 
     protected:
 

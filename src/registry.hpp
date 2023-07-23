@@ -25,7 +25,7 @@ namespace calyx
 
         Registry& operator=(const Registry& other);
 
-        inline Options& getOptions() const; 
+        Options& getOptions() const; 
 
         void defineRule(String_t term, std::vector<String_t> production);
 
