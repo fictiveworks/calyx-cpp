@@ -20,6 +20,17 @@ namespace calyx
 
         static TemplateNode parse(const String_t& raw, const Registry& registry);
 
+        /**
+         * @brief Fragments a std string into a vector of strings tokens. For example, the string {@code "{prod} words words {prod}"}
+         * will be fragmented into {@code ["{prod}", " words words ", "{prod}"]}.
+         * 
+         * This method is used by {@link #parse} and is exposed here in the public API for testing purposes.
+         * 
+         * @param raw The raw string to fragment
+         * @return std::vector<std::string> A fragmented list of tokens and raw strings
+         */
+        static std::vector<std::string> fragmentString(const std::string& raw);
+
     protected:
         
         virtual Production* deepcopy() const override;

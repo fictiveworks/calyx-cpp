@@ -4,15 +4,40 @@
 
 using namespace calyx;
 
-static std::vector<std::string> fragmentString(const std::string& raw)
+void resetFragment(std::vector<std::string>& fragments, std::string& fragment)
 {
-    static const std::string expression = "\\{[A-Za-z0-9_@$<>.]+\\}";
-    static const std::string expressionRegex = "(?=" + expression + ")|(?<=" + expression + ")";
-    static const std::regex regex(expressionRegex);
+    
+}
 
-    std::sregex_token_iterator it{ raw.begin(), raw.end(), regex, -1 };
+std::vector<std::string>
+TemplateNode::fragmentString(const std::string& raw)
+{
+    static const char startToken = '{';
+    static const char endToken = '}';
 
-    std::vector<std::string> fragments{ it, {} };
+    std::vector<std::string> fragments;
+
+    std::string fragment = "";
+
+    for (char chr : raw)
+    {
+        if (chr == raw.back() || chr == startToken)
+        {
+            if (fragment.size() > 0)
+            {
+                fragments.push_back(fragment);
+            }
+            fragment = "";
+        }
+        
+        fragment += chr;
+
+        if (chr == endToken && fragments.size() > 0)
+        {
+            fragments.back() += chr;
+            fragment = "";
+        }
+    }
 
     return fragments;
 }
