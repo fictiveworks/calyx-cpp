@@ -8,7 +8,7 @@
 namespace calyx
 {
 
-    class AtomNode : Production
+    class AtomNode : public Production
     {
     public:
 

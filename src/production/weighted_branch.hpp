@@ -9,7 +9,7 @@
 
 namespace calyx
 {
-    class WeightedBranch: ProductionBranch
+    class WeightedBranch: public ProductionBranch
     {
         /**
          * @brief A type that represents a production with some weight,

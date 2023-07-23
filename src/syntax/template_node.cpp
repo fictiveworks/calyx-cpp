@@ -1,11 +1,29 @@
 #include "template_node.hpp"
 
 #include <regex>
+#include <vector>
+#include <sstream>
+#include <string>
+
+#include "atom_node.hpp"
 
 using namespace calyx;
 
 #define START_TOKEN '{'
 #define END_TOKEN '}'
+#define DEREF_TOKEN '.'
+
+
+std::vector<std::string>
+split(const std::string& s, const char delim) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delim)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
 
 std::vector<std::string>
 TemplateNode::fragmentString(const std::string& raw)
@@ -54,28 +72,43 @@ TemplateNode::TemplateNode(std::vector<std::shared_ptr<Production>> concatNodes)
 
 TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
 {
-    static const std::string startToken = "{";
-    static const std::string endToken = "}";
-
     const Options& ops = registry.getOptions();
     std::string rawString = ops._converter.toString(raw);
     std::vector<std::string> fragments = fragmentString(rawString);
 
     std::vector<std::shared_ptr<Production>> concatNodes;
 
-    for (const auto& atom : fragments)
+    for (auto atom : fragments)
     {
         if (atom.size() == 0)
         {
             continue;
         }
 
-        if (atom.starts_with(startToken) && atom.ends_with(endToken))
+        if (atom.starts_with(START_TOKEN) && atom.ends_with(END_TOKEN))
         {
+            // remove the braces
             std::string expression = atom.substr(1, atom.size() - 1);
 
+            std::vector<std::string> components = split(expression, DEREF_TOKEN);
 
+            if (components.size() > 1)
+            {
+
+            }
+            else 
+            {
+
+            }
         }
+        else 
+        {
+            String_t convertedAtom = ops._converter.fromString(atom);
+            std::shared_ptr<AtomNode> prod = std::make_shared<AtomNode>(convertedAtom);
+            concatNodes.push_back(prod);
+        }
+
+        return TemplateNode(concatNodes);
     }
 
 }
