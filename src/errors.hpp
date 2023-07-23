@@ -30,7 +30,7 @@ namespace calyx
  */
 #define IGNORE_ERRORS(EXPRESSION, ...)                     \
     ErrorHolder LINE_UNIQUE_NAME(ignored) = ErrorHolder(); \
-    EXPRESSION(##__VA_ARGS__, LINE_UNIQUE_NAME(ignored));
+    EXPRESSION(__VA_ARGS__, LINE_UNIQUE_NAME(ignored));
 
     /**
      * @brief Stores commonly used error message factories. Note that these are not proper error holders!
