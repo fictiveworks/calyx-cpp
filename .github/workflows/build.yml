@@ -9,6 +9,9 @@ jobs:
         steps:
             -   name: checkout repo
                 uses: actions/checkout@v2
+            
+            -   name: install xmake
+                run: curl -fsSL https://xmake.io/shget.text | bash
 
             -   name: build and run
                 run: xmake
