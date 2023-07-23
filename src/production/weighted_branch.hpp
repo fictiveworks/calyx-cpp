@@ -28,9 +28,9 @@ namespace calyx
 
         ~WeightedBranch() = default;
 
-        Expansion evaluate(Options& options) const override;
+        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
 
-        Expansion evaluateAt(int index, Options& options) const override;
+        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const override;
 
         size_t length() const override;
 

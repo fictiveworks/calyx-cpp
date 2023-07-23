@@ -30,23 +30,29 @@ Rule::empty(String_t term)
     return Rule(term, std::make_unique<EmptyBranch>());
 }
 
-Rule 
-Rule::build(String_t term, std::vector<String_t> productions, const Registry& registry)
+std::optional<Rule> 
+Rule::build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors)
 {
-    UniformBranch branch = UniformBranch::parse(productions, registry);
-    return Rule(term, std::make_unique<UniformBranch>(branch));
+    std::optional<UniformBranch> branch = UniformBranch::parse(productions, registry, errors);
+
+    if (!branch)
+    {
+        return {};
+    }
+
+    return Rule(term, std::make_unique<UniformBranch>(*branch));
 }
 
-Expansion
-Rule::evaluate(Options& options) const
+std::optional<Expansion>
+Rule::evaluate(Options& options, ErrorHolder& errors) const
 {
-    return _production->evaluate(options);
+    return _production->evaluate(options, errors);
 }
 
-Expansion
-Rule::evaluateAt(int index, Options& options) const
+std::optional<Expansion>
+Rule::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
-    return _production->evaluateAt(index, options);
+    return _production->evaluateAt(index, options, errors);
 }
 
 size_t

@@ -40,7 +40,7 @@ TemplateNode::fragmentString(const std::string& raw)
         {
             break; // no closing bracket found, stop parsing
         }
-        
+
         if (expressionPos > lastExpressionPos)
         {
             // add any atoms before the expression to the fragments
@@ -71,7 +71,8 @@ TemplateNode::TemplateNode(std::vector<std::shared_ptr<Production>> concatNodes)
 
 }
 
-TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
+std::optional<TemplateNode>
+TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& errors)
 {
     const Options& ops = registry.getOptions();
     std::string rawString = ops._converter.toString(raw);
@@ -98,13 +99,19 @@ TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
             {
                 // TODO: expr chains
             }
-            else 
+            else
             {
-                std::shared_ptr<ExpressionNode> prod = ExpressionNode::parse(convertedAtom, registry);
-                concatNodes.push_back(prod);
+                auto prod = ExpressionNode::parse(convertedAtom, registry, errors);
+
+                if (!prod) 
+                {
+                    return {};
+                }
+
+                concatNodes.push_back(*prod);
             }
         }
-        else 
+        else
         {
             std::shared_ptr<AtomNode> prod = std::make_shared<AtomNode>(convertedAtom);
             concatNodes.push_back(prod);
@@ -116,13 +123,21 @@ TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
 }
 
 
-Expansion TemplateNode::evaluate(Options& options) const
+std::optional<Expansion>
+TemplateNode::evaluate(Options& options, ErrorHolder& errors) const
 {
     std::vector<std::unique_ptr<Expansion>> evaluatedResults;
 
     for (const auto& node : _concatNodes)
     {
-        evaluatedResults.push_back(std::make_unique<Expansion>(node->evaluate(options)));
+        std::optional<Expansion> exp = node->evaluate(options, errors);
+
+        if (!exp)
+        {
+            return {};
+        }
+
+        evaluatedResults.push_back(std::make_unique<Expansion>(*exp));
     }
 
     Expansion exp = Expansion(

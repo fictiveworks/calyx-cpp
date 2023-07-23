@@ -20,11 +20,11 @@ namespace calyx
 
         ~UniformBranch() = default;
 
-        static UniformBranch parse(std::vector<String_t> raw, const Registry& registry);
+        static std::optional<UniformBranch> parse(std::vector<String_t> raw, const Registry& registry, ErrorHolder& errors);
         
-        Expansion evaluate(Options& options) const override;
+        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
 
-        Expansion evaluateAt(int index, Options& options) const override;
+        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const override;
 
         size_t length() const override;
 

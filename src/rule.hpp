@@ -35,11 +35,11 @@ namespace calyx
 
         static Rule empty(String_t term);
 
-        static Rule build(String_t term, std::vector<String_t> productions, const Registry& registry);
+        static std::optional<Rule> build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors);
 
-        Expansion evaluate(Options& options) const;
+        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const;
 
-        Expansion evaluateAt(int index, Options& options) const;
+        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const;
 
         size_t length() const;
 

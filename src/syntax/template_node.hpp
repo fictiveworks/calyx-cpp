@@ -16,9 +16,9 @@ namespace calyx
 
         ~TemplateNode() = default;
 
-        virtual Expansion evaluate(Options& options) const override;
+        virtual std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
 
-        static TemplateNode parse(const String_t& raw, const Registry& registry);
+        static std::optional<TemplateNode> parse(const String_t& raw, const Registry& registry, ErrorHolder& errors);
 
         /**
          * @brief Fragments a std string into a vector of strings tokens. For example, the string {@code "{prod} words words {prod}"}

@@ -2,14 +2,20 @@
 
 #include <include/calyx.h>
 #include <syntax/atom_node.hpp>
+#include <errors.hpp>
+
+using namespace calyx;
 
 TEST_CASE("Atom tests") 
 {
-    calyx::Options ops = calyx::Options();
+    Options ops = Options();
+    ErrorHolder errors;
 
-    calyx::AtomNode atom = calyx::AtomNode("T E R M");
-    calyx::Expansion exp = atom.evaluate(ops);
+    AtomNode atom = AtomNode("T E R M");
+    std::optional<Expansion> exp = atom.evaluate(ops, errors);
 
-    REQUIRE(calyx::Exp::ATOM == exp.getSymbol());
-    REQUIRE("T E R M" == exp.getTerm());
+    REQUIRE(exp.has_value());
+    REQUIRE_FALSE(errors.hasError());
+    REQUIRE(Exp::ATOM == exp->getSymbol());
+    REQUIRE("T E R M" == exp->getTerm());
 }

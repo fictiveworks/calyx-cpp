@@ -11,22 +11,31 @@ ExpressionNode::ExpressionNode(const String_t reference, const Registry& registr
 
 }
 
-std::shared_ptr<ExpressionNode>
-ExpressionNode::parse(const String_t raw, const Registry& registry)
+std::optional<std::shared_ptr<ExpressionNode>>
+ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder& errors)
 {
     return std::make_shared<ExpressionNode>(raw, registry);
 }
 
-Expansion
-ExpressionNode::evaluate(Options& options) const
+std::optional<Expansion>
+ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
 {
     ErrorHolder errs;
     std::optional<Rule> rule = _registry.expand(_reference, errs);
 
-    // FIXME: error handling for evaluation
-    Expansion eval = rule->evaluate(options);
+    if (!rule)
+    {
+        return {};
+    }
 
-    return Expansion(EXPRESSION, std::make_unique<Expansion>(eval));
+    std::optional<Expansion> eval = rule->evaluate(options, errors);
+
+    if (!eval)
+    {
+        return {};
+    }
+
+    return Expansion(EXPRESSION, std::make_unique<Expansion>(*eval));
 }
 
 Production*

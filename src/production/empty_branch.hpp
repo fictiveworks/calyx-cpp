@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include "../production.hpp"
 
 namespace calyx
@@ -14,9 +15,9 @@ namespace calyx
 
         ~EmptyBranch() = default;
 
-        Expansion evaluate(Options& options) const override;
+        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
 
-        Expansion evaluateAt(int index, Options& options) const override;
+        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const override;
 
         size_t length() const override;
 

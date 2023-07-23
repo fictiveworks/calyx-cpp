@@ -8,8 +8,8 @@ AtomNode::AtomNode(String_t atom)
 
 }
 
-Expansion
-AtomNode::evaluate(Options& options) const
+std::optional<Expansion>
+AtomNode::evaluate(Options& options, ErrorHolder& errors) const
 {
     return Expansion(ATOM, _atom);
 }

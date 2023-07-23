@@ -27,7 +27,7 @@ namespace calyx
 
         Options& getOptions() const; 
 
-        void defineRule(String_t term, std::vector<String_t> production);
+        void defineRule(String_t term, std::vector<String_t> production, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
 

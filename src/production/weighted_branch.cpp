@@ -22,12 +22,18 @@ WeightedBranch::WeightedBranch(const WeightedBranch& old)
 {
 }
 
-Expansion
-WeightedBranch::evaluate(Options& options) const
+std::optional<Expansion>
+WeightedBranch::evaluate(Options& options, ErrorHolder& errors) const
 {
     const WeightedProduction& prod = this->getRandomProduction(options);
 
-    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(prod.production->evaluate(options)));
+    std::optional<Expansion> choice = prod.production->evaluate(options, errors);
+
+    if (!choice) {
+        return {};
+    }
+
+    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(*choice));
 }
 
 const WeightedBranch::WeightedProduction&
@@ -44,16 +50,21 @@ WeightedBranch::getRandomProduction(Options& options) const
     }
 
     // this should never happen, as the total weight should be greater than 0
-    static const WeightedProduction default_result {0.0, nullptr};
+    static const WeightedProduction default_result{ 0.0, nullptr };
     return default_result;
 }
 
-Expansion
-WeightedBranch::evaluateAt(int index, Options& options) const
+std::optional<Expansion>
+WeightedBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
-    Expansion tail = _productions[index].production->evaluate(options);
+    std::optional<Expansion> tail = _productions[index].production->evaluate(options, errors);
 
-    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(tail));
+    if (!tail)
+    {
+        return {};
+    }
+
+    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(*tail));
 }
 
 size_t

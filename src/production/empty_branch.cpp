@@ -6,14 +6,14 @@ EmptyBranch::EmptyBranch(const EmptyBranch& old)
 {
 }
 
-Expansion
-EmptyBranch::evaluate(Options& options) const
+std::optional<Expansion>
+EmptyBranch::evaluate(Options& options, ErrorHolder& errors) const
 {
-    return evaluateAt(0, options);
+    return evaluateAt(0, options, errors);
 }
 
-Expansion
-EmptyBranch::evaluateAt(int index, Options& options) const
+std::optional<Expansion>
+EmptyBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
     std::unique_ptr<Expansion> tail = std::make_unique<Expansion>(ATOM, options._converter.fromString(""));
 

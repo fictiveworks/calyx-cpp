@@ -15,31 +15,46 @@ UniformBranch::UniformBranch(const UniformBranch& old)
 
 }
 
-UniformBranch
-UniformBranch::parse(std::vector<String_t> raw, const Registry& registry)
+std::optional<UniformBranch>
+UniformBranch::parse(std::vector<String_t> raw, const Registry& registry, ErrorHolder& errors)
 {
     std::vector<std::shared_ptr<Production>> choices;
 
     for (const auto& term : raw)
     {
-        choices.push_back(std::make_shared<TemplateNode>(TemplateNode::parse(term, registry)));
+        std::optional<TemplateNode> templateNode = TemplateNode::parse(term, registry, errors);
+
+        if (!templateNode)
+        {
+            return {};
+        }
+
+        choices.push_back(std::make_shared<TemplateNode>(*templateNode));
     }
 
     return UniformBranch(choices);
 }
 
 
-Expansion UniformBranch::evaluate(Options& options) const
+std::optional<Expansion> 
+UniformBranch::evaluate(Options& options, ErrorHolder& errors) const
 {
     int index = options.randInt(_choices.size());
-    return evaluateAt(index, options);
+    return evaluateAt(index, options, errors);
 }
 
-Expansion UniformBranch::evaluateAt(int index, Options& options) const
+std::optional<Expansion> 
+UniformBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
     std::shared_ptr<Production> choice = _choices.at(index);
-    Expansion tail = choice->evaluate(options);
-    return Expansion(UNIFORM_BRANCH, std::make_unique<Expansion>(tail));
+    std::optional<Expansion> tail = choice->evaluate(options, errors);
+
+    if (!tail)
+    {
+        return {};
+    }
+
+    return Expansion(UNIFORM_BRANCH, std::make_unique<Expansion>(*tail));
 }
 
 size_t UniformBranch::length() const

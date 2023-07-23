@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 
 #include "expansion.hpp"
 #include "options.hpp"
@@ -11,7 +12,7 @@ namespace calyx
     class Production
     {
     public:
-        virtual Expansion evaluate(Options& options) const = 0;
+        virtual std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const = 0;
 
         std::unique_ptr<Production> clone() const
         {
@@ -27,7 +28,7 @@ namespace calyx
     class ProductionBranch: public Production
     {
     public:
-        virtual Expansion evaluateAt(int index, Options& options) const = 0;
+        virtual std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const = 0;
 
         virtual size_t length() const = 0;
 
