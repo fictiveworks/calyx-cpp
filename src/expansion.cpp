@@ -8,7 +8,8 @@ using namespace calyx;
 Expansion::Expansion(const Expansion& old)
     : _symbol(old._symbol),
     _term(old._term)
-{
+{    
+    _tail.reserve(old._tail.size());
     for (const auto& ptr : old._tail) {
         _tail.push_back(std::make_unique<Expansion>(*ptr));
     }

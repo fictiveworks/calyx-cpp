@@ -26,7 +26,7 @@ ExpressionNode::evaluate(Options& options) const
     // FIXME: error handling for evaluation
     Expansion eval = rule->evaluate(options);
 
-    return Expansion(EXPRESSION, std::move(eval.getTail()));
+    return Expansion(EXPRESSION, std::make_unique<Expansion>(eval));
 }
 
 Production*
