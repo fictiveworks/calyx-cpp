@@ -35,6 +35,8 @@ namespace calyx
 
         static Rule empty(String_t term);
 
+        static Rule build(String_t term, std::vector<String_t> productions, const Registry& registry);
+
         Expansion evaluate(Options& options) const;
 
         Expansion evaluateAt(int index, Options& options) const;

@@ -14,11 +14,13 @@ namespace calyx
     {
     public:
 
-        UniformBranch(std::vector<std::shared_ptr<Production>> choices, Registry& registry);
+        UniformBranch(std::vector<std::shared_ptr<Production>> choices);
 
         UniformBranch(const UniformBranch& old);
 
         ~UniformBranch() = default;
+
+        static UniformBranch parse(std::vector<String_t> raw, const Registry& registry);
         
         Expansion evaluate(Options& options) const override;
 
@@ -31,6 +33,5 @@ namespace calyx
 
     private:
         std::vector<std::shared_ptr<Production>> _choices;
-        Registry& _registry;
     };
 }

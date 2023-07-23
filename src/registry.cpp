@@ -2,7 +2,7 @@
 
 using namespace calyx;
 
-Registry::Registry() : Registry(std::make_shared<Options>(Options()))
+Registry::Registry(): Registry(std::make_shared<Options>(Options()))
 {
 }
 
@@ -25,6 +25,15 @@ Registry::operator=(const Registry& other)
     _options = other._options;
 
     return *this;
+}
+
+
+void
+Registry::defineRule(String_t term, std::vector<String_t> production)
+{
+    Rule rule = Rule::build(term, production, *this);
+
+    _rules[term] = rule;
 }
 
 std::optional<Expansion>
@@ -108,7 +117,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
         return {};
     }
 
-    
+
     return rule->evaluateAt(_cycles[symbol]->poll(), *_options);
 }
 

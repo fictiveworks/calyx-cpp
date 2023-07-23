@@ -24,10 +24,17 @@ Rule::Rule(const Rule& other)
 {
 }
 
-Rule 
+Rule
 Rule::empty(String_t term)
 {
     return Rule(term, std::make_unique<EmptyBranch>());
+}
+
+Rule 
+Rule::build(String_t term, std::vector<String_t> productions, const Registry& registry)
+{
+    UniformBranch branch = UniformBranch::parse(productions, registry);
+    return Rule(term, std::make_unique<UniformBranch>(branch));
 }
 
 Expansion
