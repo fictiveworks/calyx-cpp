@@ -5,9 +5,8 @@
 using namespace calyx;
 
 
-WeightedBranch::WeightedBranch(std::vector<WeightedProduction> productions, Registry& registry)
-    : _productions(productions),
-    _registry(registry)
+WeightedBranch::WeightedBranch(std::vector<WeightedProduction> productions)
+    : _productions(productions)
 {
 
     _sumOfWeights = std::accumulate(
@@ -19,7 +18,6 @@ WeightedBranch::WeightedBranch(std::vector<WeightedProduction> productions, Regi
 
 WeightedBranch::WeightedBranch(const WeightedBranch& old)
     : _productions(old._productions),
-    _registry(old._registry),
     _sumOfWeights(old._sumOfWeights)
 {
 }

@@ -41,10 +41,9 @@ namespace calyx
     private:
 
         std::vector<WeightedProduction> _productions;
-        Registry& _registry;
         double _sumOfWeights;
 
-        WeightedBranch(std::vector<WeightedProduction> productions, Registry& registry);
+        WeightedBranch(std::vector<WeightedProduction> productions);
 
         const WeightedProduction& getRandomProduction(Options& options) const;
     };

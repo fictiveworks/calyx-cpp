@@ -137,5 +137,5 @@ Expansion TemplateNode::evaluate(Options& options) const
 
 Production* TemplateNode::deepcopy() const
 {
-    return nullptr;
+    return new TemplateNode(_concatNodes);
 }
