@@ -6,6 +6,7 @@
 #include <string>
 
 #include "atom_node.hpp"
+#include "expression_node.hpp"
 
 using namespace calyx;
 
@@ -84,6 +85,7 @@ TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
         {
             continue;
         }
+        String_t convertedAtom = ops._converter.fromString(atom);
 
         if (atom.starts_with(START_TOKEN) && atom.ends_with(END_TOKEN))
         {
@@ -94,16 +96,16 @@ TemplateNode TemplateNode::parse(const String_t& raw, const Registry& registry)
 
             if (components.size() > 1)
             {
-
+                // TODO: expr chains
             }
             else 
             {
-
+                std::shared_ptr<ExpressionNode> prod = ExpressionNode::parse(convertedAtom, registry);
+                concatNodes.push_back(prod);
             }
         }
         else 
         {
-            String_t convertedAtom = ops._converter.fromString(atom);
             std::shared_ptr<AtomNode> prod = std::make_shared<AtomNode>(convertedAtom);
             concatNodes.push_back(prod);
         }

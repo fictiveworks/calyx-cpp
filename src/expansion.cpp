@@ -90,3 +90,9 @@ Expansion::getSymbol() const
 {
     return _symbol;
 }
+
+const std::vector<std::unique_ptr<Expansion>>& 
+Expansion::getTail() const
+{
+    return _tail;
+}

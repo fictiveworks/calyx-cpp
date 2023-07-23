@@ -46,6 +46,8 @@ namespace calyx
 
         const Exp& getSymbol() const;
 
+        const std::vector<std::unique_ptr<Expansion>>& getTail() const;
+
     private:
         std::vector<std::unique_ptr<Expansion>> _tail;
         String_t _term;
