@@ -7,14 +7,14 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            -   name: checkout repo
+            -   name: Checkout repo
                 uses: actions/checkout@v2
             
-            -   name: install xmake
+            -   name: Install xmake
                 run: curl -fsSL https://xmake.io/shget.text | bash
 
-            -   name: build and run
-                run: xmake
+            -   name: Build
+                run: xmake -y
 
             -   name: Run tests
                 run: xmake run test
