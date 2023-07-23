@@ -108,7 +108,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
                     return {};
                 }
 
-                concatNodes.push_back(*prod);
+                concatNodes.push_back(std::make_shared<ExpressionNode>(*prod));
             }
         }
         else

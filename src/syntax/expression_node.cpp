@@ -11,10 +11,10 @@ ExpressionNode::ExpressionNode(const String_t reference, const Registry& registr
 
 }
 
-std::optional<std::shared_ptr<ExpressionNode>>
+std::optional<ExpressionNode>
 ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder& errors)
 {
-    return std::make_shared<ExpressionNode>(raw, registry);
+    return ExpressionNode(raw, registry);
 }
 
 std::optional<Expansion>
