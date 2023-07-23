@@ -15,9 +15,9 @@ EmptyBranch::evaluate(Options& options, ErrorHolder& errors) const
 std::optional<Expansion>
 EmptyBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
-    std::unique_ptr<Expansion> tail = std::make_unique<Expansion>(ATOM, options._converter.fromString(""));
+    auto tail = Expansion(ATOM, options._converter.fromString(""));
 
-    return Expansion(EMPTY_BRANCH, std::move(tail));
+    return Expansion(EMPTY_BRANCH, tail);
 }
 
 size_t

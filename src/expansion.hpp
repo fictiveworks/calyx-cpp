@@ -32,9 +32,9 @@ namespace calyx
 
         Expansion(Exp symbol, String_t term);
 
-        Expansion(Exp symbol, std::unique_ptr<Expansion> tail);
+        Expansion(Exp symbol, Expansion tail);
 
-        Expansion(Exp symbol, std::vector<std::unique_ptr<Expansion>> tail);
+        Expansion(Exp symbol, std::vector<Expansion> tail);
 
         Expansion& operator=(const Expansion& other);
 
@@ -46,10 +46,10 @@ namespace calyx
 
         const Exp& getSymbol() const;
 
-        const std::vector<std::unique_ptr<Expansion>>& getTail() const;
+        const std::vector<Expansion>& getTail() const;
 
     private:
-        std::vector<std::unique_ptr<Expansion>> _tail;
+        std::vector<Expansion> _tail;
         String_t _term;
         Exp _symbol;
     };

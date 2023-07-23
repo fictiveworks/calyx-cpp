@@ -54,7 +54,7 @@ UniformBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) cons
         return {};
     }
 
-    return Expansion(UNIFORM_BRANCH, std::make_unique<Expansion>(*tail));
+    return Expansion(UNIFORM_BRANCH, *tail);
 }
 
 size_t UniformBranch::length() const

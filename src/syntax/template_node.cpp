@@ -126,7 +126,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
 std::optional<Expansion>
 TemplateNode::evaluate(Options& options, ErrorHolder& errors) const
 {
-    std::vector<std::unique_ptr<Expansion>> evaluatedResults;
+    std::vector<Expansion> evaluatedResults;
 
     for (const auto& node : _concatNodes)
     {
@@ -137,12 +137,12 @@ TemplateNode::evaluate(Options& options, ErrorHolder& errors) const
             return {};
         }
 
-        evaluatedResults.push_back(std::make_unique<Expansion>(*exp));
+        evaluatedResults.push_back(*exp);
     }
 
     Expansion exp = Expansion(
         TEMPLATE,
-        std::move(evaluatedResults)
+        evaluatedResults
     );
 
     return exp;

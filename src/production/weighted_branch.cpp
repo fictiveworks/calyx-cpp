@@ -33,7 +33,7 @@ WeightedBranch::evaluate(Options& options, ErrorHolder& errors) const
         return {};
     }
 
-    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(*choice));
+    return Expansion(WEIGHTED_BRANCH, *choice);
 }
 
 const WeightedBranch::WeightedProduction&
@@ -64,7 +64,7 @@ WeightedBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) con
         return {};
     }
 
-    return Expansion(WEIGHTED_BRANCH, std::make_unique<Expansion>(*tail));
+    return Expansion(WEIGHTED_BRANCH, *tail);
 }
 
 size_t

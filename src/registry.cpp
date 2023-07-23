@@ -60,7 +60,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return {};
     }
 
-    Expansion root = Expansion(RESULT, std::make_unique<Expansion>(*tail));
+    Expansion root = Expansion(RESULT, *tail);
 
     return root;
 }
@@ -91,8 +91,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
         return {};
     }
 
-    std::unique_ptr<Expansion> resultTail = std::make_unique<Expansion>(*tail);
-    return Expansion(RESULT, std::move(resultTail));
+    return Expansion(RESULT, *tail);
 }
 
 std::optional<std::shared_ptr<Expansion>>

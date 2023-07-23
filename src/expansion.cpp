@@ -7,12 +7,10 @@ using namespace calyx;
 
 Expansion::Expansion(const Expansion& old)
     : _symbol(old._symbol),
-    _term(old._term)
+    _term(old._term),
+    _tail(old._tail)
 {    
-    _tail.reserve(old._tail.size());
-    for (const auto& ptr : old._tail) {
-        _tail.push_back(std::make_unique<Expansion>(*ptr));
-    }
+
 }
 
 Expansion::Expansion(Exp symbol, String_t term)
@@ -22,17 +20,17 @@ Expansion::Expansion(Exp symbol, String_t term)
 {
 }
 
-Expansion::Expansion(Exp symbol, std::unique_ptr<Expansion> tail)
+Expansion::Expansion(Exp symbol, Expansion tail)
     : _symbol(symbol),
     _term()
 {
-    _tail.push_back(std::move(tail));
+    _tail.push_back(tail);
 }
 
-Expansion::Expansion(Exp symbol, std::vector<std::unique_ptr<Expansion>> tail)
+Expansion::Expansion(Exp symbol, std::vector<Expansion> tail)
     : _symbol(symbol),
     _term(),
-    _tail(std::move(tail))
+    _tail(tail)
 {
 
 }
@@ -50,8 +48,8 @@ Expansion::operator=(const Expansion& other)
         _tail.clear();
 
         // Copy the elements of other._tail into _tail
-        for (const auto& ptr : other._tail) {
-            _tail.push_back(std::make_unique<Expansion>(*ptr));
+        for (const Expansion ptr : other._tail) {
+            _tail.push_back(ptr);
         }
     }
 
@@ -72,10 +70,8 @@ void Expansion::collectAtoms(String_t& concat) const
         concat += _term;
     }
     else {
-        for (const auto& expansions : _tail) {
-            if (expansions != nullptr) {
-                expansions->collectAtoms(concat);
-            }
+        for (const Expansion& expansions : _tail) {
+            expansions.collectAtoms(concat);
         }
     }
 }
@@ -92,7 +88,7 @@ Expansion::getSymbol() const
     return _symbol;
 }
 
-const std::vector<std::unique_ptr<Expansion>>& 
+const std::vector<Expansion>& 
 Expansion::getTail() const
 {
     return _tail;

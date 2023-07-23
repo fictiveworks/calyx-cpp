@@ -35,7 +35,7 @@ ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
         return {};
     }
 
-    return Expansion(EXPRESSION, std::make_unique<Expansion>(*eval));
+    return Expansion(EXPRESSION, *eval);
 }
 
 Production*
