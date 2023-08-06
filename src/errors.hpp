@@ -1,6 +1,7 @@
 #pragma once
 
 #include "string_converter.hpp"
+#include "options.hpp"
 
 namespace calyx
 {
@@ -9,28 +10,7 @@ namespace calyx
 #define CONCAT_INNER(a, b) a##b
 #define LINE_UNIQUE_NAME(base) CONCAT(base, __LINE__)
 
-/**
- * @brief Macro used as a shorthand for explicitly ignoring errors. Creates an error holder that is passed as the last argument
- * into the expression. The "Expression" should be any normal C++ expression that ends with a function/method call, except instead
- * of putting the arguments in brackets, they are added onto the end of the macro.
- *
- * Example, generating random numbers:
- *
- * @code {.cpp}
- * IGNORE_ERRORS(int choice = options.randInt, min, max);
- * @endcode
- *
- * Will expand to...
- *
- * @code {.cpp}
- * ErrorHolder ignoredX = ErrorHolder();
- * int choice = options.randInt(min, max, ignoredX);
- * @endcode
- *
- */
-#define IGNORE_ERRORS(EXPRESSION, ...)                     \
-    ErrorHolder LINE_UNIQUE_NAME(ignored) = ErrorHolder(); \
-    EXPRESSION(__VA_ARGS__, LINE_UNIQUE_NAME(ignored));
+    class Options;
 
     /**
      * @brief Stores commonly used error message factories. Note that these are not proper error holders!
@@ -38,11 +18,11 @@ namespace calyx
      */
     struct Errors
     {
-        static String_t undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t undefinedRule(const String_t& symbol, const Options& options);
 
-        static String_t undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t undefinedFilter(const String_t& symbol, const Options& options);
 
-        static String_t incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter = StringConverters::DEFAULT_STRING_CONVERTER);
+        static String_t incorrectFilterSignature(const String_t& symbol, const Options& options);
     };
 
     /**
@@ -60,7 +40,7 @@ namespace calyx
          * @brief Construct a new Error object with no errors
          *
          */
-        ErrorHolder();
+        ErrorHolder(const Options& options);
 
         ~ErrorHolder() = default;
 

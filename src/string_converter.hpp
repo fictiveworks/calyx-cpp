@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <functional>
 
 namespace calyx
 {
@@ -24,6 +25,15 @@ namespace calyx
         StringConverter() = default;
 
         ~StringConverter() = default;
+
+        /**
+         * @brief A reference to a string converter for `String_t`s. If the String_t type is redefined
+         * (e.g. to UE's FString), then the object this is referencing will also need to be changed.
+         *
+         * This is the default string converter passed as an argument to any methods of Calyx that require
+         * reading/modifying strings. It should do this in the `Options` argument for API methods.
+         */
+        static const std::unique_ptr<StringConverter<String_t>> createDefaultConverter();
 
         /**
          * @brief Converts an instance of the string-like type S into a std::string.
@@ -66,23 +76,5 @@ namespace calyx
          * @return const std::string Returns the stdString input as it is already a string-like std::string
          */
         virtual const std::string fromString(const std::string& stdString) const override;
-    };
-
-    struct StringConverters
-    {
-        /**
-         * @brief The converter for standard strings.
-         *
-         */
-        static const StdStringConverter STD_STRING_CONVERTER;
-
-        /**
-         * @brief A reference to a string converter for `String_t`s. If the String_t type is redefined
-         * (e.g. to UE's FString), then the object this is referencing will also need to be changed.
-         *
-         * This is the default string converter passed as an argument to any methods of Calyx that require
-         * reading/modifying strings. It should do this in the `Options` argument for API methods.
-         */
-        static const StringConverter<String_t>& DEFAULT_STRING_CONVERTER;
     };
 }

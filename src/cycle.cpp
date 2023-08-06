@@ -31,7 +31,7 @@ Cycle::create(std::shared_ptr<Options> options, size_t count, ErrorHolder& error
 {
     if (count < 1)
     {
-        errors.setError(options->_converter.fromString("'count' must be greater than zero!"));
+        errors.setError(options->fromString("'count' must be greater than zero!"));
         return {};
     }
 

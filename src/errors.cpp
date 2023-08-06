@@ -4,34 +4,34 @@
 
 using namespace calyx;
 
-ErrorHolder::ErrorHolder()
-    : _message(StringConverters::DEFAULT_STRING_CONVERTER.fromString("")),
+ErrorHolder::ErrorHolder(const Options& options)
+    : _message(options.fromString("")),
     _hasError(false)
 {
 }
 
 String_t
-Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
+Errors::undefinedRule(const String_t& symbol, const Options& options)
 {
     std::ostringstream stream;
-    stream << "Undefined rule: '" << converter.toString(symbol) << "'";
-    return converter.fromString(stream.str());
+    stream << "Undefined rule: '" << options.toString(symbol) << "'";
+    return options.fromString(stream.str());
 }
 
 String_t
-Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter)
+Errors::undefinedFilter(const String_t& symbol, const Options& options)
 {
     std::ostringstream stream;
-    stream << "Undefined filter: '" << converter.toString(symbol) << "'";
-    return converter.fromString(stream.str());
+    stream << "Undefined filter: '" << options.toString(symbol) << "'";
+    return options.fromString(stream.str());
 }
 
 String_t
-Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter)
+Errors::incorrectFilterSignature(const String_t& symbol, const Options& options)
 {
     std::ostringstream stream;
-    stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";
-    return converter.fromString(stream.str());
+    stream << "Incorrect method signature for filter: '" << options.toString(symbol) << "'";
+    return options.fromString(stream.str());
 }
 
 bool

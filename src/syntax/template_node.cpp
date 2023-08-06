@@ -75,7 +75,7 @@ std::optional<TemplateNode>
 TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& errors)
 {
     const Options& ops = registry.getOptions();
-    std::string rawString = ops._converter.toString(raw);
+    std::string rawString = ops.toString(raw);
     std::vector<std::string> fragments = fragmentString(rawString);
 
     std::vector<std::shared_ptr<Production>> concatNodes;
@@ -86,7 +86,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
         {
             continue;
         }
-        String_t convertedAtom = ops._converter.fromString(atom);
+        String_t convertedAtom = ops.fromString(atom);
 
         if (atom.starts_with(START_TOKEN) && atom.ends_with(END_TOKEN))
         {

@@ -2,12 +2,12 @@
 
 using namespace calyx;
 
-Registry::Registry(): Registry(std::make_shared<Options>(Options()))
+Registry::Registry(): Registry(std::move(std::make_unique<Options>()))
 {
 }
 
-Registry::Registry(std::shared_ptr<Options> options)
-    : _options(options),
+Registry::Registry(std::unique_ptr<Options> options)
+    : _options(std::move(options)),
     _rules(std::map<String_t, Rule>())
 {
 }
@@ -16,15 +16,6 @@ Options&
 Registry::getOptions() const
 {
     return *_options;
-}
-
-Registry&
-Registry::operator=(const Registry& other)
-{
-    _rules = other._rules;
-    _options = other._options;
-
-    return *this;
 }
 
 
@@ -166,9 +157,9 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
     }
     else
     {
-        if (_options->_strict) {
+        if (_options->isStrict()) {
             // strict - do not allow empty rules
-            errors.setError(Errors::undefinedRule(symbol, _options->_converter));
+            errors.setError(Errors::undefinedRule(symbol, *_options));
 
             return {};
         }

@@ -15,7 +15,7 @@ EmptyBranch::evaluate(Options& options, ErrorHolder& errors) const
 std::optional<Expansion>
 EmptyBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
 {
-    auto tail = Expansion(ATOM, options._converter.fromString(""));
+    auto tail = Expansion(ATOM, options.fromString(""));
 
     return Expansion(EMPTY_BRANCH, tail);
 }

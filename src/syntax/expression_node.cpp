@@ -20,7 +20,7 @@ ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder&
 std::optional<Expansion>
 ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
 {
-    ErrorHolder errs;
+    ErrorHolder errs(options);
     std::optional<Rule> rule = _registry.expand(_reference, errs);
 
     if (!rule)

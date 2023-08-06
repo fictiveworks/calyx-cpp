@@ -19,11 +19,11 @@ namespace calyx
     public:
         Registry();
 
-        Registry(std::shared_ptr<Options> options);
+        Registry(std::unique_ptr<Options> options);
 
         ~Registry() = default;
 
-        Registry& operator=(const Registry& other);
+        Registry& operator=(const Registry& other) = delete;
 
         Options& getOptions() const; 
 
@@ -47,6 +47,6 @@ namespace calyx
         std::map<String_t, std::shared_ptr<Expansion>> _memos;
         std::map<String_t, std::unique_ptr<Cycle>> _cycles;
 
-        std::shared_ptr<Options> _options;
+        std::unique_ptr<Options> _options;
     };
 }

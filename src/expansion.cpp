@@ -35,8 +35,6 @@ Expansion::Expansion(Exp symbol, std::vector<Expansion> tail)
 
 }
 
-
-
 Expansion&
 Expansion::operator=(const Expansion& other)
 {
@@ -59,7 +57,7 @@ Expansion::operator=(const Expansion& other)
 String_t
 Expansion::flatten(Options& options) const
 {
-    String_t concat = options._converter.fromString("");
+    String_t concat = options.fromString("");
     collectAtoms(concat);
     return concat;
 }

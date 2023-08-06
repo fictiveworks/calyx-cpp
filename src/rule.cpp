@@ -5,13 +5,6 @@
 
 using namespace calyx;
 
-Rule::Rule()
-    : _production(new EmptyBranch()),
-    _term(StringConverters::DEFAULT_STRING_CONVERTER.fromString(""))
-{
-
-}
-
 Rule::Rule(String_t term, std::unique_ptr<ProductionBranch> production)
     : _production(std::move(production)),
     _term(term)
