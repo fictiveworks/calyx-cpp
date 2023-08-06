@@ -71,7 +71,6 @@ namespace calyx
          * Max must be greater than 0!
          * 
          * @param max The maximum bound of the random number (exclusive)
-         * @param errorHolder Reference to error holder 
          * @return int Returns a random int between 0 (inclusive) and max (exclusive)
          */
         int randInt(int max);
@@ -97,7 +96,6 @@ namespace calyx
          * 
          * @param min The minimum bound of the random number (inclusive)
          * @param max The maximum bound of the random number (exclusive)
-         * @param errorHolder Reference to error holder
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
         int randInt(int min, int max);
@@ -116,8 +114,24 @@ namespace calyx
 
         bool isStrict() const;
 
-        const String_t toString(const String_t& stringLike) const override;
+        /**
+         * @brief Converts a string-like object into a concrete, std::string.
+         * 
+         * Delegates this functionality to {@link #_converter}.
+         * 
+         * @param stringLike The string-like object to be converted
+         * @return const std::string The std::string equivalent of {@code stringLike} 
+         */
+        const std::string toString(const String_t& stringLike) const override;
 
+        /**
+         * @brief Converts a concrete, std::string into a string-like object.
+         * 
+         * Delegates this functionality to {@link #_converter}.
+         * 
+         * @param stdString The std::string to be converted
+         * @return const String_t The String_t equivalent of the {@code stdString} 
+         */
         const String_t fromString(const std::string& stdString) const override;
 
     private:
