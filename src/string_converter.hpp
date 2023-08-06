@@ -54,7 +54,7 @@ namespace calyx
         virtual const S fromString(const std::string& stdString) const = 0;
     };
 
-    class StdStringConverter: public StringConverter<std::string>
+    class StdStringConverter : public StringConverter<std::string>
     {
     public:
         StdStringConverter() = default;
@@ -76,5 +76,43 @@ namespace calyx
          * @return const std::string Returns the stdString input as it is already a string-like std::string
          */
         virtual const std::string fromString(const std::string& stdString) const override;
+    };
+
+    /**
+     * @brief A C-style string type (aka a char pointer)
+     */
+    typedef char* C_Str;
+
+    /**
+     * @brief A demonstration of how much I hate myself.
+     *
+     * This is only for demonstration purposes, of how one might define string converters for other string-like types.
+     * It should probably never actually be used.
+     */
+    class CStrConverter : public StringConverter<C_Str>
+    {
+    public:
+        CStrConverter() = default;
+
+        ~CStrConverter() = default;
+
+        /**
+         * @brief Converts an instance of the string-like char* into a std::string.
+         *
+         * @param stringLike The string-like char* to be converted
+         * @return const std::string Returns a std::string with the char* as its char buffer
+         */
+        virtual const std::string toString(const C_Str& stringLike) const override;
+
+        /**
+         * @brief Converts a std::string into an instance of a char*.
+         *
+         * Note that the returned pointer will be allocated on the heap, and the caller is responsible for deleting the pointer.
+         *
+         * @param stdString The std::string to be converted
+         * @return const std::string Returns a copy of the string buffer as a char*
+         */
+        virtual const C_Str fromString(const std::string& stdString) const override;
+
     };
 }
