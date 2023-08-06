@@ -40,7 +40,7 @@ namespace calyx
          * @brief Construct a new Error object with no errors
          *
          */
-        ErrorHolder(const Options& options);
+        ErrorHolder();
 
         ~ErrorHolder() = default;
 

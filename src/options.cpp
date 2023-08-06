@@ -83,7 +83,7 @@ Options::randInt(int min, int max, ErrorHolder& errorHolder)
 int
 Options::randInt(int max)
 {
-    ErrorHolder errs(*this);
+    ErrorHolder errs;
 
     return randInt(max, errs);
 }
@@ -91,7 +91,7 @@ Options::randInt(int max)
 int
 Options::randInt(int min, int max)
 {
-    ErrorHolder errs(*this);
+    ErrorHolder errs;
 
     return randInt(min, max, errs);
 }

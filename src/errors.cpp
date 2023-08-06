@@ -4,8 +4,8 @@
 
 using namespace calyx;
 
-ErrorHolder::ErrorHolder(const Options& options)
-    : _message(options.fromString("")),
+ErrorHolder::ErrorHolder()
+    : _message(DEFAULT_STRING_CONVERTER().fromString("")),
     _hasError(false)
 {
 }

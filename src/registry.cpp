@@ -1,13 +1,15 @@
 #include "registry.hpp"
 
+#include "string_converter.hpp"
+
 using namespace calyx;
 
-Registry::Registry(): Registry(std::move(std::make_unique<Options>()))
+Registry::Registry(): Registry(std::shared_ptr<Options>(new Options()))
 {
 }
 
-Registry::Registry(std::unique_ptr<Options> options)
-    : _options(std::move(options)),
+Registry::Registry(std::shared_ptr<Options> options)
+    : _options(options),
     _rules(std::map<String_t, Rule>())
 {
 }
@@ -16,6 +18,15 @@ Options&
 Registry::getOptions() const
 {
     return *_options;
+}
+
+Registry&
+Registry::operator=(const Registry& other)
+{
+    _rules = other._rules;
+    _options = other._options;
+
+    return *this;
 }
 
 
@@ -29,7 +40,7 @@ Registry::defineRule(String_t term, std::vector<String_t> production, ErrorHolde
         return;
     }
 
-    _rules[term] = *rule;
+    _rules.emplace(term, *rule);
 }
 
 std::optional<Expansion>
@@ -117,7 +128,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     {
         std::optional<Rule> prod = this->expand(symbol, errors);
 
-        if (!prod || errors.hasError()) 
+        if (!prod || errors.hasError())
         {
             return {};
         }
@@ -126,7 +137,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
 
         std::optional<Cycle> cycle = Cycle::create(_options, cycleLength, errors);
 
-        if (!cycle || errors.hasError()) 
+        if (!cycle || errors.hasError())
         {
             return {};
         }

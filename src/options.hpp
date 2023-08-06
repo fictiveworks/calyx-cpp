@@ -25,7 +25,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = createDefaultConverter());
+        Options(bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         /**
          * @brief Construct a new Options object with a specified random seed
@@ -34,7 +34,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(unsigned int seed, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = createDefaultConverter());
+        Options(unsigned int seed, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         /**
          * @brief Construct a new Options object with a specific random number generator
@@ -43,7 +43,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = createDefaultConverter());
+        Options(std::function<int()> rng, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         Options(const Options& old) = delete;
 
@@ -124,6 +124,5 @@ namespace calyx
         const bool _strict;
         const std::function<int()> _rng;
         const std::unique_ptr<StringConverter<String_t>> _converter;
-
     };
 }
