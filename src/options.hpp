@@ -111,7 +111,13 @@ namespace calyx
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
         int randInt(int min, int max, ErrorHolder& errorHolder);
-
+        
+        /**
+         * @brief Check whether to use strict-rule checking for expansion of unknown rules
+         * 
+         * @return true 
+         * @return false 
+         */
         bool isStrict() const;
 
         /**
