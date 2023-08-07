@@ -96,7 +96,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     return Expansion(RESULT, *tail);
 }
 
-std::optional<std::shared_ptr<Expansion>>
+std::shared_ptr<Expansion>
 Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     if (!_memos.contains(symbol))
@@ -104,14 +104,14 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
         auto rule = this->expand(symbol, errors);
         if (!rule || errors.hasError())
         {
-            return {};
+            return nullptr;
         }
 
         std::optional<Expansion> exp = rule->evaluate(*_options, errors);
 
         if (!exp || errors.hasError())
         {
-            return {};
+            return nullptr;
         }
 
         _memos[symbol] = std::make_shared<Expansion>(*exp);
