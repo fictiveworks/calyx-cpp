@@ -33,7 +33,7 @@ namespace calyx
 
         std::optional<Expansion> evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
 
-        std::optional<std::shared_ptr<Expansion>> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
+        std::shared_ptr<Expansion> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
 
         std::optional<Expansion> uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
 

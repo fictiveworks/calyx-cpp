@@ -1,3 +1,6 @@
+
+#include <cstring>
+
 #include "string_converter.hpp"
 
 using namespace calyx;
