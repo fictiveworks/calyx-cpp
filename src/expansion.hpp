@@ -38,7 +38,7 @@ namespace calyx
 
         Expansion& operator=(const Expansion& other);
 
-        String_t flatten(Options& options) const;
+        String_t flatten(const Options& options) const;
 
         void collectAtoms(String_t& concat) const;
 

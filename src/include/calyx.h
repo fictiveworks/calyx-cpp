@@ -22,16 +22,23 @@ namespace calyx
     class Result
     {
     public:
-        Result(String_t txt);
+        Result(Expansion tree);
 
         /**
-         * [toString description]
-         * @return [description]
+         * @brief Get the expansion tree of the result
+         * 
+         * @return Returns a reference to the expansion tree of this result  
          */
-        String_t text();
+        const Expansion& getTree();
+
+        /**
+         * @brief Flattens the text into a new string, and returns it 
+         * @return Returns a new string_t
+         */
+        String_t text(const Options& options);
 
     private:
-        String_t _text;
+        Expansion _tree;
     };
 
     class Grammar

@@ -41,21 +41,14 @@ Expansion::operator=(const Expansion& other)
     if (this != &other) {
         _symbol = other._symbol;
         _term = other._term;
-
-        // Clear the existing _tail vector
-        _tail.clear();
-
-        // Copy the elements of other._tail into _tail
-        for (const Expansion ptr : other._tail) {
-            _tail.push_back(ptr);
-        }
+        _tail = other._tail;
     }
 
     return *this;
 }
 
 String_t
-Expansion::flatten(Options& options) const
+Expansion::flatten(const Options& options) const
 {
     String_t concat = options.fromString("");
     collectAtoms(concat);

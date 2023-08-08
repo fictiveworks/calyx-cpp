@@ -5,11 +5,6 @@
 
 namespace calyx
 {
-    // Macros from https://stackoverflow.com/questions/1082192/how-to-generate-random-variable-names-in-c-using-macros
-#define CONCAT(a, b) CONCAT_INNER(a, b)
-#define CONCAT_INNER(a, b) a##b
-#define LINE_UNIQUE_NAME(base) CONCAT(base, __LINE__)
-
     class Options;
 
     /**

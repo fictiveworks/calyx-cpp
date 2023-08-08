@@ -23,14 +23,14 @@ ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
     ErrorHolder errs;
     std::optional<Rule> rule = _registry.expand(_reference, errs);
 
-    if (!rule)
+    if (!rule || errs.hasError())
     {
         return {};
     }
 
     std::optional<Expansion> eval = rule->evaluate(options, errors);
 
-    if (!eval)
+    if (!eval || errs.hasError())
     {
         return {};
     }
