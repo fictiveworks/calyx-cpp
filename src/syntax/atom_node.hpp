@@ -22,10 +22,6 @@ namespace calyx
             ErrorHolder& errors
         ) const override;
 
-    protected:
-
-        Production* deepcopy() const override;
-
     private:
 
         const String_t _atom;

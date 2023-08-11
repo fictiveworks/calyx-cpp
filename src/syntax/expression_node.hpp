@@ -25,10 +25,6 @@ namespace calyx
             ErrorHolder& errors
         ) const override;
 
-    protected:
-
-        virtual Production* deepcopy() const;
-
     private:
         const String_t _reference;
 

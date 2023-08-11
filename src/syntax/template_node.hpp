@@ -35,10 +35,6 @@ namespace calyx
          */
         static std::vector<std::string> fragmentString(const std::string& raw);
 
-    protected:
-        
-        virtual Production* deepcopy() const override;
-
     private:
         std::vector<std::shared_ptr<Production>> _concatNodes;
     };

@@ -151,10 +151,3 @@ TemplateNode::evaluate(
 
     return exp;
 }
-
-
-
-Production* TemplateNode::deepcopy() const
-{
-    return new TemplateNode(_concatNodes);
-}

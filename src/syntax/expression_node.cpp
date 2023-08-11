@@ -41,9 +41,3 @@ ExpressionNode::evaluate(
 
     return Expansion(EXPRESSION, *eval);
 }
-
-Production*
-ExpressionNode::deepcopy() const
-{
-    return new ExpressionNode(_reference);
-}

@@ -34,9 +34,3 @@ EmptyBranch::length() const
 {
     return 1;
 }
-
-ProductionBranch*
-EmptyBranch::deepcopyBranch() const
-{
-    return new EmptyBranch(*this);
-}

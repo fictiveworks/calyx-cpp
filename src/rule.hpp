@@ -24,7 +24,7 @@ namespace calyx
          * @param term 
          * @param production 
          */
-        Rule(String_t term, std::unique_ptr<ProductionBranch> production);
+        Rule(String_t term, std::shared_ptr<ProductionBranch> production);
 
         Rule(const Rule& other);
 
@@ -57,6 +57,6 @@ namespace calyx
 
     private:
         String_t _term;
-        std::unique_ptr<ProductionBranch> _production;
+        std::shared_ptr<ProductionBranch> _production;
     };
 }

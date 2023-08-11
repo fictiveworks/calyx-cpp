@@ -6,14 +6,14 @@
 
 using namespace calyx;
 
-Rule::Rule(String_t term, std::unique_ptr<ProductionBranch> production)
-    : _production(std::move(production)),
+Rule::Rule(String_t term, std::shared_ptr<ProductionBranch> production)
+    : _production(production),
     _term(term)
 {
 }
 
 Rule::Rule(const Rule& other)
-    : _production(other._production->cloneBranch()),
+    : _production(other._production),
     _term(other._term)
 {
 }
@@ -68,7 +68,7 @@ Rule&
 Rule::operator=(const Rule& other)
 {
     _term = other._term;
-    _production = other._production->cloneBranch();
+    _production = other._production;
 
     return *this;
 }

@@ -20,15 +20,6 @@ namespace calyx
             ErrorHolder& errors
         ) const = 0;
 
-        std::unique_ptr<Production> clone() const
-        {
-            return std::unique_ptr<Production>(deepcopy());
-        }
-
-    protected:
-
-        virtual Production* deepcopy() const = 0;
-
     };
 
     class ProductionBranch: public Production
@@ -42,20 +33,7 @@ namespace calyx
         ) const = 0;
 
         virtual size_t length() const = 0;
-
-        std::unique_ptr<ProductionBranch> cloneBranch() const
-        {
-            return std::unique_ptr<ProductionBranch>(deepcopyBranch());
-        }
-
-    protected:
-
-        virtual ProductionBranch* deepcopyBranch() const = 0;
-
-        Production* deepcopy() const override
-        {
-            return deepcopyBranch();
-        }
+        
     };
 
 }

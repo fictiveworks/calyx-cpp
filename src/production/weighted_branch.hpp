@@ -9,7 +9,7 @@
 
 namespace calyx
 {
-    class WeightedBranch: public ProductionBranch
+    class WeightedBranch : public ProductionBranch
     {
         /**
          * @brief A type that represents a production with some weight,
@@ -42,10 +42,6 @@ namespace calyx
         ) const override;
 
         size_t length() const override;
-
-    protected:
-
-        ProductionBranch* deepcopyBranch() const override;
 
     private:
 

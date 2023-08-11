@@ -10,7 +10,7 @@
 
 namespace calyx
 {
-    class UniformBranch: public ProductionBranch
+    class UniformBranch : public ProductionBranch
     {
     public:
 
@@ -21,7 +21,7 @@ namespace calyx
         ~UniformBranch() = default;
 
         static std::optional<UniformBranch> parse(std::vector<String_t> raw, const Registry& registry, ErrorHolder& errors);
-        
+
         std::optional<Expansion> evaluate(
             Registry& registry,
             Options& options,
@@ -36,9 +36,6 @@ namespace calyx
         ) const override;
 
         size_t length() const override;
-
-    protected:
-        ProductionBranch* deepcopyBranch() const override;
 
     private:
         std::vector<std::shared_ptr<Production>> _choices;

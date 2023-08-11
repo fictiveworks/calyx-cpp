@@ -30,7 +30,5 @@ namespace calyx
 
         size_t length() const override;
 
-    protected:
-        ProductionBranch* deepcopyBranch() const override;
     };
 }

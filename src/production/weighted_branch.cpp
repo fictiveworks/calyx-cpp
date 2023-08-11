@@ -82,8 +82,3 @@ WeightedBranch::length() const
     return _productions.size();
 }
 
-ProductionBranch*
-WeightedBranch::deepcopyBranch() const
-{
-    return new WeightedBranch(*this);
-}
