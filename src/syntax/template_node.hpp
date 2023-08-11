@@ -16,7 +16,11 @@ namespace calyx
 
         ~TemplateNode() = default;
 
-        virtual std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
+        virtual std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const override;
 
         static std::optional<TemplateNode> parse(const String_t& raw, const Registry& registry, ErrorHolder& errors);
 

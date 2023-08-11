@@ -1,4 +1,5 @@
 #include "rule.hpp"
+
 #include "production/empty_branch.hpp"
 #include "production/uniform_branch.hpp"
 #include "production/weighted_branch.hpp"
@@ -23,7 +24,7 @@ Rule::empty(String_t term)
     return Rule(term, std::make_unique<EmptyBranch>());
 }
 
-std::optional<Rule> 
+std::optional<Rule>
 Rule::build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors)
 {
     std::optional<UniformBranch> branch = UniformBranch::parse(productions, registry, errors);
@@ -37,15 +38,24 @@ Rule::build(String_t term, std::vector<String_t> productions, const Registry& re
 }
 
 std::optional<Expansion>
-Rule::evaluate(Options& options, ErrorHolder& errors) const
+Rule::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
-    return _production->evaluate(options, errors);
+    return _production->evaluate(registry, options, errors);
 }
 
 std::optional<Expansion>
-Rule::evaluateAt(int index, Options& options, ErrorHolder& errors) const
+Rule::evaluateAt(
+    int index,
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
-    return _production->evaluateAt(index, options, errors);
+    return _production->evaluateAt(index, registry, options, errors);
 }
 
 size_t

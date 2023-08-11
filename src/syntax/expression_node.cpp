@@ -5,8 +5,8 @@ using namespace calyx;
 #define MEMO_SIGIL '@'
 #define UNIQUE_SIGIL '$'
 
-ExpressionNode::ExpressionNode(const String_t reference, const Registry& registry)
-    : _reference(reference), _registry(registry)
+ExpressionNode::ExpressionNode(const String_t reference)
+    : _reference(reference)
 {
 
 }
@@ -14,21 +14,25 @@ ExpressionNode::ExpressionNode(const String_t reference, const Registry& registr
 std::optional<ExpressionNode>
 ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder& errors)
 {
-    return ExpressionNode(raw, registry);
+    return ExpressionNode(raw);
 }
 
 std::optional<Expansion>
-ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
+ExpressionNode::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     ErrorHolder errs;
-    std::optional<Rule> rule = _registry.expand(_reference, errs);
+    std::optional<Rule> rule = registry.expand(_reference, errs);
 
     if (!rule || errs.hasError())
     {
         return {};
     }
 
-    std::optional<Expansion> eval = rule->evaluate(options, errors);
+    std::optional<Expansion> eval = rule->evaluate(registry, options, errors);
 
     if (!eval || errs.hasError())
     {
@@ -41,5 +45,5 @@ ExpressionNode::evaluate(Options& options, ErrorHolder& errors) const
 Production*
 ExpressionNode::deepcopy() const
 {
-    return new ExpressionNode(_reference, _registry);
+    return new ExpressionNode(_reference);
 }

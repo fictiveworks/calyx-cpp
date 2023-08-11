@@ -9,10 +9,16 @@
 namespace calyx
 {
 
+    class Registry;
+
     class Production
     {
     public:
-        virtual std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const = 0;
+        virtual std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const = 0;
 
         std::unique_ptr<Production> clone() const
         {
@@ -28,7 +34,12 @@ namespace calyx
     class ProductionBranch: public Production
     {
     public:
-        virtual std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const = 0;
+        virtual std::optional<Expansion> evaluateAt(
+            int index,
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const = 0;
 
         virtual size_t length() const = 0;
 

@@ -23,11 +23,15 @@ WeightedBranch::WeightedBranch(const WeightedBranch& old)
 }
 
 std::optional<Expansion>
-WeightedBranch::evaluate(Options& options, ErrorHolder& errors) const
+WeightedBranch::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     const WeightedProduction& prod = this->getRandomProduction(options);
 
-    std::optional<Expansion> choice = prod.production->evaluate(options, errors);
+    std::optional<Expansion> choice = prod.production->evaluate(registry, options, errors);
 
     if (!choice) {
         return {};
@@ -55,9 +59,14 @@ WeightedBranch::getRandomProduction(Options& options) const
 }
 
 std::optional<Expansion>
-WeightedBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
+WeightedBranch::evaluateAt(
+    int index,
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
-    std::optional<Expansion> tail = _productions[index].production->evaluate(options, errors);
+    std::optional<Expansion> tail = _productions[index].production->evaluate(registry, options, errors);
 
     if (!tail)
     {

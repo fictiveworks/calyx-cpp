@@ -17,9 +17,9 @@ TEST_CASE("Expression test")
 
     REQUIRE_FALSE(errors.hasError());
 
-    auto expression = ExpressionNode("term", registry);
+    auto expression = ExpressionNode("term");
 
-    auto exp = expression.evaluate(ops, errors);
+    auto exp = expression.evaluate(registry, ops, errors);
 
     REQUIRE(exp.has_value());
     REQUIRE_FALSE(errors.hasError());

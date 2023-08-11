@@ -22,9 +22,18 @@ namespace calyx
 
         static std::optional<UniformBranch> parse(std::vector<String_t> raw, const Registry& registry, ErrorHolder& errors);
         
-        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
+        std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const override;
 
-        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const override;
+        std::optional<Expansion> evaluateAt(
+            int index,
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const override;
 
         size_t length() const override;
 

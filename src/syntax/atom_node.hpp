@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include "../registry.hpp"
 #include "../production.hpp"
 #include "../expansion.hpp"
 #include "../string_converter.hpp"
@@ -15,7 +16,11 @@ namespace calyx
 
         AtomNode(String_t atom);
 
-        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
+        std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const override;
 
     protected:
 

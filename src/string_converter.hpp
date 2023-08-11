@@ -8,7 +8,7 @@ namespace calyx
     /**
      * The string type used by this version of Calyx. This should be preferred whenever interacting with strings in the Calyx API.
      *
-     * If a std::string is ever needed in implementation, CalyStrings should first be converted to a std::string using the relevant
+     * If a std::string is ever needed in implementation, a String_t should first be converted to a std::string using the relevant
      * string converter, and then converted back to String_t when done with the std::string using the same.
      */
     typedef std::string String_t;

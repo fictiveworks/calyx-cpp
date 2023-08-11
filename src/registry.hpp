@@ -7,13 +7,13 @@
 #include <optional>
 
 #include "options.hpp"
-#include "production.hpp"
 #include "rule.hpp"
 #include "expansion.hpp"
 #include "cycle.hpp"
 
 namespace calyx
 {
+    
     class Registry
     {
     public:

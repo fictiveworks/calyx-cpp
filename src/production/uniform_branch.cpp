@@ -36,18 +36,27 @@ UniformBranch::parse(std::vector<String_t> raw, const Registry& registry, ErrorH
 }
 
 
-std::optional<Expansion> 
-UniformBranch::evaluate(Options& options, ErrorHolder& errors) const
+std::optional<Expansion>
+UniformBranch::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     int index = options.randInt(_choices.size());
-    return evaluateAt(index, options, errors);
+    return evaluateAt(index, registry, options, errors);
 }
 
-std::optional<Expansion> 
-UniformBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
+std::optional<Expansion>
+UniformBranch::evaluateAt(
+    int index,
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     std::shared_ptr<Production> choice = _choices.at(index);
-    std::optional<Expansion> tail = choice->evaluate(options, errors);
+    std::optional<Expansion> tail = choice->evaluate(registry, options, errors);
 
     if (!tail)
     {

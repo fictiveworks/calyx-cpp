@@ -9,12 +9,16 @@ AtomNode::AtomNode(String_t atom)
 }
 
 std::optional<Expansion>
-AtomNode::evaluate(Options& options, ErrorHolder& errors) const
+AtomNode::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     return Expansion(ATOM, _atom);
 }
 
-Production* 
+Production*
 AtomNode::deepcopy() const
 {
     return new AtomNode(_atom);

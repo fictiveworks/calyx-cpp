@@ -7,13 +7,22 @@ EmptyBranch::EmptyBranch(const EmptyBranch& old)
 }
 
 std::optional<Expansion>
-EmptyBranch::evaluate(Options& options, ErrorHolder& errors) const
+EmptyBranch::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
-    return evaluateAt(0, options, errors);
+    return evaluateAt(0, registry, options, errors);
 }
 
 std::optional<Expansion>
-EmptyBranch::evaluateAt(int index, Options& options, ErrorHolder& errors) const
+EmptyBranch::evaluateAt(
+    int index,
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     auto tail = Expansion(ATOM, options.fromString(""));
 

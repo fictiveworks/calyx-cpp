@@ -13,13 +13,17 @@ namespace calyx
     class ExpressionNode : public Production
     {
     public:
-        ExpressionNode(const String_t reference, const Registry& registry);
+        ExpressionNode(const String_t reference);
 
         ~ExpressionNode() = default;
 
         static std::optional<ExpressionNode> parse(const String_t raw, const Registry& registry, ErrorHolder& errors);
 
-        virtual std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const override;
+        virtual std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const override;
 
     protected:
 
@@ -27,9 +31,6 @@ namespace calyx
 
     private:
         const String_t _reference;
-
-        // TODO: figure out safer way to reference registries than this 
-        const Registry& _registry;
 
     };
 }

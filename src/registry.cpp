@@ -55,7 +55,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return {};
     }
 
-    std::optional<Expansion> tail = rule->evaluate(getOptions(), errors);
+    std::optional<Expansion> tail = rule->evaluate(*this, getOptions(), errors);
 
     if (!tail)
     {
@@ -86,7 +86,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
         return {};
     }
 
-    std::optional<Expansion> tail = rule->evaluate(getOptions(), errors);
+    std::optional<Expansion> tail = rule->evaluate(*this, getOptions(), errors);
 
     if (!tail)
     {
@@ -107,7 +107,7 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
             return nullptr;
         }
 
-        std::optional<Expansion> exp = rule->evaluate(*_options, errors);
+        std::optional<Expansion> exp = rule->evaluate(*this, *_options, errors);
 
         if (!exp || errors.hasError())
         {
@@ -152,7 +152,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     }
 
 
-    return rule->evaluateAt(_cycles[symbol]->poll(), *_options, errors);
+    return rule->evaluateAt(_cycles[symbol]->poll(), *this, *_options, errors);
 }
 
 std::optional<Rule>

@@ -103,7 +103,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
             {
                 auto prod = ExpressionNode::parse(convertedAtom, registry, errors);
 
-                if (!prod) 
+                if (!prod)
                 {
                     return {};
                 }
@@ -124,13 +124,17 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
 
 
 std::optional<Expansion>
-TemplateNode::evaluate(Options& options, ErrorHolder& errors) const
+TemplateNode::evaluate(
+    Registry& registry,
+    Options& options,
+    ErrorHolder& errors
+) const
 {
     std::vector<Expansion> evaluatedResults;
 
     for (const auto& node : _concatNodes)
     {
-        std::optional<Expansion> exp = node->evaluate(options, errors);
+        std::optional<Expansion> exp = node->evaluate(registry, options, errors);
 
         if (!exp)
         {

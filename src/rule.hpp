@@ -3,15 +3,14 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <optional>
 
 #include "expansion.hpp"
-#include "production.hpp"
 #include "string_converter.hpp"
+#include "production.hpp"
 
 namespace calyx
 {
-
-    class Registry;
 
     class Rule
     {
@@ -37,9 +36,18 @@ namespace calyx
 
         static std::optional<Rule> build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors);
 
-        std::optional<Expansion> evaluate(Options& options, ErrorHolder& errors) const;
+        std::optional<Expansion> evaluate(
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const;
 
-        std::optional<Expansion> evaluateAt(int index, Options& options, ErrorHolder& errors) const;
+        std::optional<Expansion> evaluateAt(
+            int index,
+            Registry& registry,
+            Options& options,
+            ErrorHolder& errors
+        ) const;
 
         size_t length() const;
 
