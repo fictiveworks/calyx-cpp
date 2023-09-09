@@ -1,7 +1,5 @@
 #include "registry.hpp"
 
-#include "string_converter.hpp"
-
 using namespace calyx;
 
 Registry::Registry(): Registry(std::shared_ptr<Options>(new Options()))

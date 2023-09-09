@@ -6,7 +6,7 @@
 #include <optional>
 
 #include "expansion.hpp"
-#include "string_converter.hpp"
+#include "include/string_converter.hpp"
 #include "production.hpp"
 
 namespace calyx

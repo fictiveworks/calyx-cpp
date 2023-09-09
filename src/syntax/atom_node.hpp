@@ -4,7 +4,7 @@
 #include "../registry.hpp"
 #include "../production.hpp"
 #include "../expansion.hpp"
-#include "../string_converter.hpp"
+#include "../include/string_converter.hpp"
 #include "../options.hpp"
 
 namespace calyx

@@ -10,6 +10,7 @@
 #include "rule.hpp"
 #include "expansion.hpp"
 #include "cycle.hpp"
+#include "include/string_converter.hpp"
 
 namespace calyx
 {

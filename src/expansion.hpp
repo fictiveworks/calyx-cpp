@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-#include "string_converter.hpp"
+#include "include/string_converter.hpp"
 #include "options.hpp"
 
 namespace calyx
