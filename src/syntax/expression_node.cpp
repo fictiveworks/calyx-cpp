@@ -25,7 +25,7 @@ ExpressionNode::evaluate(
 ) const
 {
     ErrorHolder errs;
-    std::optional<Rule> rule = registry.expand(_reference, errs);
+    std::shared_ptr<Rule> rule = registry.expand(_reference, errs);
 
     if (!rule || errs.hasError())
     {

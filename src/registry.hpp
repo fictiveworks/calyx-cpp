@@ -37,13 +37,13 @@ namespace calyx
 
         std::optional<Expansion> uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
 
-        std::optional<Rule> expand(const String_t& symbol, ErrorHolder& errors) const;
+        std::shared_ptr<Rule> expand(const String_t& symbol, ErrorHolder& errors) const;
 
         void resetEvaluationContext();
 
     private:
-        std::map<String_t, Rule> _rules;
-        std::map<String_t, Rule> _context;
+        std::map<String_t, std::shared_ptr<Rule>> _rules;
+        std::map<String_t, std::shared_ptr<Rule>> _context;
         std::map<String_t, std::shared_ptr<Expansion>> _memos;
         std::map<String_t, std::unique_ptr<Cycle>> _cycles;
 

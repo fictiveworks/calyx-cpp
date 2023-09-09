@@ -10,7 +10,7 @@ Registry::Registry(): Registry(std::shared_ptr<Options>(new Options()))
 
 Registry::Registry(std::shared_ptr<Options> options)
     : _options(options),
-    _rules(std::map<String_t, Rule>())
+    _rules(std::map<String_t, std::shared_ptr<Rule>>())
 {
 }
 
@@ -35,12 +35,12 @@ Registry::defineRule(String_t term, std::vector<String_t> production, ErrorHolde
 {
     std::optional<Rule> rule = Rule::build(term, production, *this, errors);
 
-    if (!rule)
+    if (!rule || errors.hasError())
     {
         return;
     }
 
-    _rules.emplace(term, *rule);
+    _rules.emplace(term, std::make_shared<Rule>(*rule));
 }
 
 std::optional<Expansion>
@@ -79,7 +79,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     //     _context[rule.first] = Rule::build(rule.first, rule.second, *this);
     // }
 
-    std::optional<Rule> rule = this->expand(startSymbol, errors);
+    std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
 
     if (!rule)
     {
@@ -126,7 +126,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     //
     if (!_cycles.contains(symbol))
     {
-        std::optional<Rule> prod = this->expand(symbol, errors);
+        std::shared_ptr<Rule> prod = this->expand(symbol, errors);
 
         if (!prod || errors.hasError())
         {
@@ -155,7 +155,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     return rule->evaluateAt(_cycles[symbol]->poll(), *this, *_options, errors);
 }
 
-std::optional<Rule>
+std::shared_ptr<Rule>
 Registry::expand(const String_t& symbol, ErrorHolder& errors) const
 {
     if (_rules.contains(symbol))
@@ -172,11 +172,11 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
             // strict - do not allow empty rules
             errors.setError(Errors::undefinedRule(symbol, *_options));
 
-            return {};
+            return nullptr;
         }
 
         // create empty rule
-        return Rule::empty(symbol);
+        return std::make_shared<Rule>(Rule::empty(symbol));
     }
 }
 
