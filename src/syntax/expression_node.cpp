@@ -39,5 +39,5 @@ ExpressionNode::evaluate(
         return {};
     }
 
-    return Expansion(EXPRESSION, *eval);
+    return Expansion(Exp::EXPRESSION, *eval);
 }

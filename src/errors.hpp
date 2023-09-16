@@ -35,7 +35,7 @@ namespace calyx
          * @brief Construct a new Error object with no errors
          *
          */
-        ErrorHolder();
+        ErrorHolder() = default;
 
         ~ErrorHolder() = default;
 
@@ -77,7 +77,7 @@ namespace calyx
         void setError(String_t message);
 
     private:
-        String_t _message;
-        bool _hasError;
+        String_t _message = DEFAULT_STRING_CONVERTER().fromString("");
+        bool _hasError = false;
     };
 }

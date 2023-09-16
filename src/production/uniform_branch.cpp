@@ -63,7 +63,7 @@ UniformBranch::evaluateAt(
         return {};
     }
 
-    return Expansion(UNIFORM_BRANCH, *tail);
+    return Expansion(Exp::UNIFORM_BRANCH, *tail);
 }
 
 size_t UniformBranch::length() const

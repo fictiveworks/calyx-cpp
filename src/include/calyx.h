@@ -90,6 +90,6 @@ namespace calyx
         Result generate();
 
     private:
-        Registry& _registry;
+        Registry _registry;
     };
 }

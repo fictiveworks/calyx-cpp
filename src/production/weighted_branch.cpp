@@ -37,7 +37,7 @@ WeightedBranch::evaluate(
         return {};
     }
 
-    return Expansion(WEIGHTED_BRANCH, *choice);
+    return Expansion(Exp::WEIGHTED_BRANCH, *choice);
 }
 
 const WeightedBranch::WeightedProduction&
@@ -73,7 +73,7 @@ WeightedBranch::evaluateAt(
         return {};
     }
 
-    return Expansion(WEIGHTED_BRANCH, *tail);
+    return Expansion(Exp::WEIGHTED_BRANCH, *tail);
 }
 
 size_t

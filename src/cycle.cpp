@@ -6,9 +6,9 @@ using namespace calyx;
 
 Cycle::Cycle(std::shared_ptr<Options> options, size_t count)
     : _options(options),
-    _count(count) // assume count greater than 1
+    _count(count), // assume count greater than 1
+    _sequence(new int[count])
 {
-    _sequence = new int[count];
     _index = _count - 1;  // defer shuffling until the first poll()
 }
 

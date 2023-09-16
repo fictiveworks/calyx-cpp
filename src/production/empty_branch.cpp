@@ -2,10 +2,6 @@
 
 using namespace calyx;
 
-EmptyBranch::EmptyBranch(const EmptyBranch& old)
-{
-}
-
 std::optional<Expansion>
 EmptyBranch::evaluate(
     Registry& registry,
@@ -24,9 +20,9 @@ EmptyBranch::evaluateAt(
     ErrorHolder& errors
 ) const
 {
-    auto tail = Expansion(ATOM, options.fromString(""));
+    auto tail = Expansion(Exp::ATOM, options.fromString(""));
 
-    return Expansion(EMPTY_BRANCH, tail);
+    return Expansion(Exp::EMPTY_BRANCH, tail);
 }
 
 size_t

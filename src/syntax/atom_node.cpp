@@ -15,5 +15,5 @@ AtomNode::evaluate(
     ErrorHolder& errors
 ) const
 {
-    return Expansion(ATOM, _atom);
+    return Expansion(Exp::ATOM, _atom);
 }

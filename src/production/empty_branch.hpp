@@ -11,7 +11,7 @@ namespace calyx
 
         EmptyBranch() = default;
 
-        EmptyBranch(const EmptyBranch& old);
+        EmptyBranch(const EmptyBranch& old) = default;
 
         ~EmptyBranch() = default;
 

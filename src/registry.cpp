@@ -60,7 +60,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return {};
     }
 
-    Expansion root = Expansion(RESULT, *tail);
+    Expansion root = Expansion(Exp::RESULT, *tail);
 
     return root;
 }
@@ -91,7 +91,7 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
         return {};
     }
 
-    return Expansion(RESULT, *tail);
+    return Expansion(Exp::RESULT, *tail);
 }
 
 std::shared_ptr<Expansion>

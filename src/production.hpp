@@ -20,6 +20,8 @@ namespace calyx
             ErrorHolder& errors
         ) const = 0;
 
+        virtual ~Production() = default;
+
     };
 
     class ProductionBranch: public Production

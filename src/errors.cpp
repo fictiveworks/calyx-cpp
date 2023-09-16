@@ -4,12 +4,6 @@
 
 using namespace calyx;
 
-ErrorHolder::ErrorHolder()
-    : _message(DEFAULT_STRING_CONVERTER().fromString("")),
-    _hasError(false)
-{
-}
-
 String_t
 Errors::undefinedRule(const String_t& symbol, const Options& options)
 {

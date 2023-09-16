@@ -128,7 +128,7 @@ namespace calyx
          * @param stringLike The string-like object to be converted
          * @return const std::string The std::string equivalent of {@code stringLike} 
          */
-        const std::string toString(const String_t& stringLike) const override;
+        std::string toString(const String_t& stringLike) const override;
 
         /**
          * @brief Converts a concrete, std::string into a string-like object.
@@ -138,7 +138,7 @@ namespace calyx
          * @param stdString The std::string to be converted
          * @return const String_t The String_t equivalent of the {@code stdString} 
          */
-        const String_t fromString(const std::string& stdString) const override;
+        String_t fromString(const std::string& stdString) const override;
 
     private:
         const bool _strict;

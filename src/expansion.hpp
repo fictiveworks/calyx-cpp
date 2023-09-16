@@ -11,7 +11,7 @@
 
 namespace calyx
 {
-    enum Exp
+    enum class Exp
     {
         RESULT,
         UNIFORM_BRANCH,

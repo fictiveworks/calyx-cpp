@@ -145,7 +145,7 @@ TemplateNode::evaluate(
     }
 
     Expansion exp = Expansion(
-        TEMPLATE,
+        Exp::TEMPLATE,
         evaluatedResults
     );
 

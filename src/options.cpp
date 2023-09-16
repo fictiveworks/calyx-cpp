@@ -102,13 +102,13 @@ Options::isStrict() const
     return _strict;
 }
 
-const std::string 
+std::string 
 Options::toString(const String_t& stringLike) const
 {
     return _converter->toString(stringLike);
 }
 
-const String_t 
+String_t 
 Options::fromString(const std::string& stdString) const
 {
     return _converter->fromString(stdString);
