@@ -8,46 +8,46 @@ const bool Options::DEFAULT_STRICT = false;
 
 Options::Options(bool strict, std::unique_ptr<StringConverter<String_t>> converter)
     : _strict(strict),
-    _converter(std::move(converter)),
-    _rng(std::rand) // TODO: Find actual implementation for rng
+    _converter(std::move(converter))
 {
 }
 
 Options::Options(unsigned int seed, bool strict, std::unique_ptr<StringConverter<String_t>> converter)
     : _strict(strict),
-    _converter(std::move(converter)),
-    _rng(std::rand) // TODO: Find actual implementation for rng
+    _rng(seed),
+    _converter(std::move(converter))
 {
-    std::srand(seed); // TODO: Find actual implementation for seeded rng
+
 }
 
-Options::Options(std::function<int()> rng, bool strict, std::unique_ptr<StringConverter<String_t>> converter)
+Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter<String_t>> converter)
     : _strict(strict),
-    _converter(std::move(converter)),
-    _rng(rng)
+    _rng(rng),
+    _converter(std::move(converter))
 {
 }
 
-Options::~Options()
+int
+Options::randInt() const
 {
-}
+    auto distribution = std::uniform_int_distribution(
+        std::numeric_limits<int>::min(), 
+        std::numeric_limits<int>::max()
+    );
 
-int 
-Options::randInt()
-{
-    return _rng();
+    return distribution(_rng);
 }
 
 double
-Options::randDouble()
+Options::randDouble() const
 {
-    int randint = randInt(1000);
+    std::uniform_real_distribution<double> distribution(0, 1);
 
-    return randint / 1000.0;
+    return distribution(_rng);
 }
 
-int 
-Options::randInt(int max, ErrorHolder& errorHolder)
+int
+Options::randInt(int max, ErrorHolder& errorHolder) const
 {
     if (max <= 0)
     {
@@ -56,12 +56,12 @@ Options::randInt(int max, ErrorHolder& errorHolder)
         return 0;
     }
 
-    int random = randInt();
-    return ((random % max) + max) % max; // TODO: modulo isnt the best way to bound random numbers
+    auto distribution = std::uniform_int_distribution(0, max);
+    return distribution(_rng);
 }
 
-int 
-Options::randInt(int min, int max, ErrorHolder& errorHolder)
+int
+Options::randInt(int min, int max, ErrorHolder& errorHolder) const
 {
     if (max <= 0)
     {
@@ -76,12 +76,13 @@ Options::randInt(int min, int max, ErrorHolder& errorHolder)
         errorHolder.setError(msg);
         return 0;
     }
-
-    return randInt(max - min, errorHolder) + min;
+    
+    auto distribution = std::uniform_int_distribution(min, max);
+    return distribution(_rng);
 }
 
 int
-Options::randInt(int max)
+Options::randInt(int max) const
 {
     ErrorHolder errs;
 
@@ -89,26 +90,26 @@ Options::randInt(int max)
 }
 
 int
-Options::randInt(int min, int max)
+Options::randInt(int min, int max) const
 {
     ErrorHolder errs;
 
     return randInt(min, max, errs);
 }
 
-bool 
+bool
 Options::isStrict() const
 {
     return _strict;
 }
 
-std::string 
+std::string
 Options::toString(const String_t& stringLike) const
 {
     return _converter->toString(stringLike);
 }
 
-String_t 
+String_t
 Options::fromString(const std::string& stdString) const
 {
     return _converter->fromString(stdString);
