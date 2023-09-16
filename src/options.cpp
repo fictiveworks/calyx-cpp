@@ -28,7 +28,7 @@ Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter<
 }
 
 int
-Options::randInt() const
+Options::randInt()
 {
     auto distribution = std::uniform_int_distribution(
         std::numeric_limits<int>::min(), 
@@ -39,7 +39,7 @@ Options::randInt() const
 }
 
 double
-Options::randDouble() const
+Options::randDouble()
 {
     std::uniform_real_distribution<double> distribution(0, 1);
 
@@ -47,7 +47,7 @@ Options::randDouble() const
 }
 
 int
-Options::randInt(int max, ErrorHolder& errorHolder) const
+Options::randInt(int max, ErrorHolder& errorHolder)
 {
     if (max <= 0)
     {
@@ -61,7 +61,7 @@ Options::randInt(int max, ErrorHolder& errorHolder) const
 }
 
 int
-Options::randInt(int min, int max, ErrorHolder& errorHolder) const
+Options::randInt(int min, int max, ErrorHolder& errorHolder)
 {
     if (max <= 0)
     {
@@ -76,13 +76,12 @@ Options::randInt(int min, int max, ErrorHolder& errorHolder) const
         errorHolder.setError(msg);
         return 0;
     }
-    
     auto distribution = std::uniform_int_distribution(min, max);
     return distribution(_rng);
 }
 
 int
-Options::randInt(int max) const
+Options::randInt(int max)
 {
     ErrorHolder errs;
 
@@ -90,7 +89,7 @@ Options::randInt(int max) const
 }
 
 int
-Options::randInt(int min, int max) const
+Options::randInt(int min, int max)
 {
     ErrorHolder errs;
 

@@ -25,7 +25,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::make_unique<StringConverter<String_t>>(DEFAULT_STRING_CONVERTER()));
+        Options(bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         /**
          * @brief Construct a new Options object with a specified random seed
@@ -34,7 +34,7 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(unsigned int seed, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::make_unique<StringConverter<String_t>>(DEFAULT_STRING_CONVERTER()));
+        Options(unsigned int seed, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         /**
          * @brief Construct a new Options object with a specific random number generator
@@ -43,25 +43,25 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(std::mt19937 rng, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::make_unique<StringConverter<String_t>>(DEFAULT_STRING_CONVERTER()));
+        Options(std::mt19937 rng, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
 
         Options(const Options& old) = delete;
 
-        ~Options() = default;
+        ~Options() override = default;
 
         /**
          * @brief Generates a random number
          *
          * @return int Returns a random int
          */
-        int randInt() const;
+        int randInt();
 
         /**
          * @brief Generates a random double between 0 and 1
          *
          * @return double Returns a random double between 0 and 1
          */
-        double randDouble() const;
+        double randDouble();
 
         /**
          * @brief Generated a random number with a maximum bound and ignores errors.
@@ -73,7 +73,7 @@ namespace calyx
          * @param max The maximum bound of the random number (exclusive)
          * @return int Returns a random int between 0 (inclusive) and max (exclusive)
          */
-        int randInt(int max) const;
+        int randInt(int max);
 
         /**
          * @brief Generated a random number with a maximum bound
@@ -84,7 +84,7 @@ namespace calyx
          * @param errorHolder Reference to error holder
          * @return int Returns a random int between 0 (inclusive) and max (exclusive)
          */
-        int randInt(int max, ErrorHolder& errorHolder) const;
+        int randInt(int max, ErrorHolder& errorHolder);
 
 
         /**
@@ -98,7 +98,7 @@ namespace calyx
          * @param max The maximum bound of the random number (exclusive)
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
-        int randInt(int min, int max) const;
+        int randInt(int min, int max);
 
         /**
          * @brief Generated a random number with minimum and maximum bounds
@@ -110,7 +110,7 @@ namespace calyx
          * @param errorHolder Reference to error holder
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
-        int randInt(int min, int max, ErrorHolder& errorHolder) const;
+        int randInt(int min, int max, ErrorHolder& errorHolder);
 
         /**
          * @brief Check whether to use strict-rule checking for expansion of unknown rules
@@ -142,7 +142,7 @@ namespace calyx
 
     private:
         const bool _strict;
-        const std::mt19937 _rng;
+        std::mt19937 _rng;
         const std::unique_ptr<StringConverter<String_t>> _converter;
     };
 }
