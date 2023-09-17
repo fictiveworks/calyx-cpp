@@ -6,6 +6,8 @@ add_rules("mode.debug", "mode.release")
 
 add_requires("catch2")
 
+add_rules("plugin.vsxmake.autoupdate")
+
 target("calyx")
     set_kind("static")
     add_files("src/*.cpp", "src/**/*.cpp")

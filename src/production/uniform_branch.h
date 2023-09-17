@@ -3,10 +3,10 @@
 #include <vector>
 #include <memory>
 
-#include "../production.hpp"
-#include "../registry.hpp"
-#include "../expansion.hpp"
-#include "../include/string_converter.hpp"
+#include "../production.h"
+#include "../registry.h"
+#include "../expansion.h"
+#include "../include/string_converter.h"
 
 namespace calyx
 {

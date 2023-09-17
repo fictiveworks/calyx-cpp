@@ -1,6 +1,6 @@
 #include <numeric>
 
-#include "weighted_branch.hpp"
+#include "weighted_branch.h"
 
 using namespace calyx;
 

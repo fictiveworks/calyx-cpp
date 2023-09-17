@@ -1,10 +1,10 @@
 #include <catch2/catch_all.hpp>
 
 #include <include/calyx.h>
-#include <expansion.hpp>
+#include <expansion.h>
 #include <vector>
 #include <memory>
-#include <options.hpp>
+#include <options.h>
 
 using namespace calyx;
 

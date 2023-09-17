@@ -5,9 +5,9 @@
 #include <memory>
 #include <optional>
 
-#include "expansion.hpp"
-#include "include/string_converter.hpp"
-#include "production.hpp"
+#include "expansion.h"
+#include "include/string_converter.h"
+#include "production.h"
 
 namespace calyx
 {

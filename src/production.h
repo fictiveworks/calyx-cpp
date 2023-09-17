@@ -3,8 +3,8 @@
 #include <memory>
 #include <optional>
 
-#include "expansion.hpp"
-#include "options.hpp"
+#include "expansion.h"
+#include "options.h"
 
 namespace calyx
 {

@@ -1,8 +1,8 @@
-#include "rule.hpp"
+#include "rule.h"
 
-#include "production/empty_branch.hpp"
-#include "production/uniform_branch.hpp"
-#include "production/weighted_branch.hpp"
+#include "production/empty_branch.h"
+#include "production/uniform_branch.h"
+#include "production/weighted_branch.h"
 
 using namespace calyx;
 

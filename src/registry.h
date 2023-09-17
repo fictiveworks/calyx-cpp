@@ -6,11 +6,11 @@
 #include <memory>
 #include <optional>
 
-#include "options.hpp"
-#include "rule.hpp"
-#include "expansion.hpp"
-#include "cycle.hpp"
-#include "include/string_converter.hpp"
+#include "options.h"
+#include "rule.h"
+#include "expansion.h"
+#include "cycle.h"
+#include "include/string_converter.h"
 
 namespace calyx
 {

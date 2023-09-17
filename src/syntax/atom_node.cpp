@@ -1,4 +1,4 @@
-#include "atom_node.hpp"
+#include "atom_node.h"
 
 using namespace calyx;
 

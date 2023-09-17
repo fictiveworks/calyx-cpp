@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <include/calyx.h>
-#include <cycle.hpp>
+#include <cycle.h>
 
 TEST_CASE("Cycle length 1 always returns 0th index") 
 {

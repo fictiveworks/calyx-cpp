@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "../production.hpp"
+#include "../production.h"
 
 namespace calyx
 {

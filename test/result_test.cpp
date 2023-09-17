@@ -1,7 +1,7 @@
 #include <catch2/catch_all.hpp>
 
 #include <include/calyx.h>
-#include <expansion.hpp>
+#include <expansion.h>
 #include <vector>
 
 using namespace calyx;

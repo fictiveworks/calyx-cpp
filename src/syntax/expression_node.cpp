@@ -1,4 +1,4 @@
-#include "expression_node.hpp"
+#include "expression_node.h"
 
 using namespace calyx;
 

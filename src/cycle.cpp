@@ -1,4 +1,4 @@
-#include "cycle.hpp"
+#include "cycle.h"
 
 #include <algorithm>
 

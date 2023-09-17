@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <include/calyx.h>
-#include <syntax/expression_node.hpp>
+#include <syntax/expression_node.h>
 
 using namespace calyx;
 

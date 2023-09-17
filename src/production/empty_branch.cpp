@@ -1,4 +1,4 @@
-#include "empty_branch.hpp"
+#include "empty_branch.h"
 
 using namespace calyx;
 

@@ -10,11 +10,11 @@
 
 #include <string>
 
-#include "../registry.hpp"
-#include "../options.hpp"
-#include "string_converter.hpp"
-#include "../errors.hpp"
-#include "../expansion.hpp"
+#include "../registry.h"
+#include "../options.h"
+#include "string_converter.h"
+#include "../errors.h"
+#include "../expansion.h"
 
 namespace calyx
 {

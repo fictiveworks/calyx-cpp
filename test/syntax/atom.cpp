@@ -2,8 +2,8 @@
 #include <memory>
 
 #include <include/calyx.h>
-#include <syntax/atom_node.hpp>
-#include <errors.hpp>
+#include <syntax/atom_node.h>
+#include <errors.h>
 
 using namespace calyx;
 

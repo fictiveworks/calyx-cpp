@@ -1,11 +1,11 @@
 #pragma once
 
 #include <optional>
-#include "../registry.hpp"
-#include "../production.hpp"
-#include "../expansion.hpp"
-#include "../include/string_converter.hpp"
-#include "../options.hpp"
+#include "../registry.h"
+#include "../production.h"
+#include "../expansion.h"
+#include "../include/string_converter.h"
+#include "../options.h"
 
 namespace calyx
 {

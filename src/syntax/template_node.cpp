@@ -1,12 +1,12 @@
-#include "template_node.hpp"
+#include "template_node.h"
 
 #include <regex>
 #include <vector>
 #include <sstream>
 #include <string>
 
-#include "atom_node.hpp"
-#include "expression_node.hpp"
+#include "atom_node.h"
+#include "expression_node.h"
 
 using namespace calyx;
 

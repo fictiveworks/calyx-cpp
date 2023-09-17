@@ -3,7 +3,7 @@
 #include <memory>
 #include <optional>
 
-#include "options.hpp"
+#include "options.h"
 
 namespace calyx
 {

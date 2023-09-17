@@ -1,4 +1,4 @@
-#include "registry.hpp"
+#include "registry.h"
 
 using namespace calyx;
 

@@ -1,7 +1,7 @@
 
 #include <cstring>
 
-#include "string_converter.hpp"
+#include "string_converter.h"
 
 using namespace calyx;
 

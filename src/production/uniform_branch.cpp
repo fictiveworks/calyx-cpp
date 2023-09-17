@@ -1,5 +1,5 @@
-#include "uniform_branch.hpp"
-#include "../syntax/template_node.hpp"
+#include "uniform_branch.h"
+#include "../syntax/template_node.h"
 
 using namespace calyx;
 

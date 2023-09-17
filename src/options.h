@@ -3,8 +3,8 @@
 #include <functional>
 #include <random>
 #include <memory>
-#include "include/string_converter.hpp"
-#include "errors.hpp"
+#include "include/string_converter.h"
+#include "errors.h"
 
 
 namespace calyx
