@@ -10,6 +10,7 @@ add_rules("plugin.vsxmake.autoupdate")
 
 target("calyx")
     set_kind("static")
+    add_headerfiles("src/*.h", "src/**/*.h")
     add_files("src/*.cpp", "src/**/*.cpp")
 
 target("test")

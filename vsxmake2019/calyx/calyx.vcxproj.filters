@@ -44,6 +44,51 @@ xmake version 2.7.8+master.d6ee79eed
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(XmakeProjectDir)\src\cycle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\errors.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\expansion.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\include\calyx.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\include\string_converter.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\options.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\production.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\production\empty_branch.h">
+      <Filter>src\production</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\production\uniform_branch.h">
+      <Filter>src\production</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\production\weighted_branch.h">
+      <Filter>src\production</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\registry.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\rule.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\syntax\atom_node.h">
+      <Filter>src\syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\syntax\expression_node.h">
+      <Filter>src\syntax</Filter>
+    </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\syntax\template_node.h">
+      <Filter>src\syntax</Filter>
+    </ClInclude>
 
 
   </ItemGroup>
