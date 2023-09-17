@@ -16,7 +16,7 @@ namespace calyx
     {
     public:
 
-        Rule();
+        Rule() = default;
 
         /**
          * @brief Construct a new Rule object with a term and production.

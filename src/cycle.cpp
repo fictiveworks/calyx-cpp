@@ -41,6 +41,11 @@ Cycle::create(std::shared_ptr<Options> options, size_t count, ErrorHolder& error
 Cycle&
 Cycle::operator=(const Cycle& other)
 {
+    if (this == &other)
+    {
+        return *this;
+    }
+    
     delete[] _sequence;
 
     _options = other._options;

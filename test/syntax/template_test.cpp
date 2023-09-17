@@ -14,7 +14,7 @@ using namespace calyx;
  * @param raw The raw input to fragmentize
  * @param expected The expected fragmentation output
  */
-void testFragmentation(const std::string&& raw, const std::vector<std::string> expected)
+void testFragmentation(const std::string& raw, const std::vector<std::string> expected)
 {
     std::vector<std::string> fragments = TemplateNode::fragmentString(raw);
     REQUIRE(expected == fragments);

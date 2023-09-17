@@ -30,7 +30,7 @@ Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter<
 int
 Options::randInt()
 {
-    auto distribution = std::uniform_int_distribution(
+    const std::uniform_int_distribution distribution(
         std::numeric_limits<int>::min(), 
         std::numeric_limits<int>::max()
     );
@@ -41,7 +41,7 @@ Options::randInt()
 double
 Options::randDouble()
 {
-    std::uniform_real_distribution<double> distribution(0, 1);
+    const std::uniform_real_distribution distribution(0.0, 1.0);
 
     return distribution(_rng);
 }
@@ -51,12 +51,12 @@ Options::randInt(int max, ErrorHolder& errorHolder)
 {
     if (max <= 0)
     {
-        String_t msg = _converter->fromString("Max bound must be positive");
+        const String_t msg = _converter->fromString("Max bound must be positive");
         errorHolder.setError(msg);
         return 0;
     }
 
-    auto distribution = std::uniform_int_distribution(0, max);
+    const std::uniform_int_distribution distribution(0, max);
     return distribution(_rng);
 }
 
@@ -76,7 +76,7 @@ Options::randInt(int min, int max, ErrorHolder& errorHolder)
         errorHolder.setError(msg);
         return 0;
     }
-    auto distribution = std::uniform_int_distribution(min, max);
+    const std::uniform_int_distribution distribution(min, max);
     return distribution(_rng);
 }
 

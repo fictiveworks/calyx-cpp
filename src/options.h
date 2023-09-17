@@ -141,8 +141,8 @@ namespace calyx
         String_t fromString(const std::string& stdString) const override;
 
     private:
-        const bool _strict;
+        bool _strict;
         std::mt19937 _rng;
-        const std::unique_ptr<StringConverter<String_t>> _converter;
+        std::unique_ptr<StringConverter<String_t>> _converter;
     };
 }

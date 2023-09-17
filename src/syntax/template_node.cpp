@@ -116,10 +116,9 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
             std::shared_ptr<AtomNode> prod = std::make_shared<AtomNode>(convertedAtom);
             concatNodes.push_back(prod);
         }
-
-        return TemplateNode(concatNodes);
     }
 
+    return TemplateNode(concatNodes);
 }
 
 

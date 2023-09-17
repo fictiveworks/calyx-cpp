@@ -21,7 +21,7 @@ StdStringConverter::fromString(const std::string& stdString) const
 std::string 
 CStrConverter::toString(const C_Str& stringLike) const
 {
-    return std::string(stringLike);
+    return {stringLike};
 }
 
 
