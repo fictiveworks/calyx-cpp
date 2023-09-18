@@ -1,11 +1,12 @@
 #include "expression_node.h"
 
+
 using namespace calyx;
 
 #define MEMO_SIGIL '@'
 #define UNIQUE_SIGIL '$'
 
-ExpressionNode::ExpressionNode(const String_t reference)
+ExpressionNode::ExpressionNode(String_t reference)
     : _reference(reference)
 {
 

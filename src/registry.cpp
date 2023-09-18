@@ -38,7 +38,7 @@ Registry::defineRule(String_t term, std::vector<String_t> production, ErrorHolde
         return;
     }
 
-    _rules.emplace(term, std::make_shared<Rule>(*rule));
+    _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
 }
 
 std::optional<Expansion>

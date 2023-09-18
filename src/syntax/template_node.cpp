@@ -16,11 +16,13 @@ using namespace calyx;
 
 
 std::vector<std::string>
-split(const std::string& s, const char delim) {
+split(const std::string& s, const char delim)
+{
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(s);
-    while (std::getline(tokenStream, token, delim)) {
+    while (std::getline(tokenStream, token, delim))
+    {
         tokens.push_back(token);
     }
     return tokens;
@@ -68,7 +70,6 @@ TemplateNode::fragmentString(const std::string& raw)
 TemplateNode::TemplateNode(std::vector<std::shared_ptr<Production>> concatNodes)
     : _concatNodes(concatNodes)
 {
-
 }
 
 std::optional<TemplateNode>
@@ -91,7 +92,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
         if (atom.starts_with(START_TOKEN) && atom.ends_with(END_TOKEN))
         {
             // remove the braces
-            std::string expression = atom.substr(1, atom.size() - 1);
+            std::string expression = atom.substr(1, atom.size() - 2);
 
             std::vector<std::string> components = split(expression, DEREF_TOKEN);
 
@@ -101,7 +102,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
             }
             else
             {
-                auto prod = ExpressionNode::parse(convertedAtom, registry, errors);
+                auto prod = ExpressionNode::parse(ops.fromString(expression), registry, errors);
 
                 if (!prod)
                 {

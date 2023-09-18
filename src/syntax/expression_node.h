@@ -13,7 +13,7 @@ namespace calyx
     class ExpressionNode : public Production
     {
     public:
-        ExpressionNode(const String_t reference);
+        ExpressionNode(String_t reference);
 
         ~ExpressionNode() = default;
 

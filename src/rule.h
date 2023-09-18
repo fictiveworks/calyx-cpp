@@ -26,7 +26,7 @@ namespace calyx
          */
         Rule(String_t term, std::shared_ptr<ProductionBranch> production);
 
-        Rule(const Rule& other);
+        Rule(const Rule& other) = default;
 
         Rule(Rule&& other) = default;
 
@@ -34,7 +34,7 @@ namespace calyx
 
         static Rule empty(String_t term);
 
-        static std::optional<Rule> build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors);
+        static std::optional<Rule> build(String_t term, const std::vector<String_t>& productions, const Registry& registry, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(
             Registry& registry,

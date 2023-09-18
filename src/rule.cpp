@@ -6,15 +6,9 @@
 
 using namespace calyx;
 
-Rule::Rule(String_t term, std::shared_ptr<ProductionBranch> production)
-    : _production(production),
-    _term(term)
-{
-}
-
-Rule::Rule(const Rule& other)
-    : _production(other._production),
-    _term(other._term)
+Rule::Rule(String_t term, std::shared_ptr<ProductionBranch> production):
+    _term(std::move(term)),
+    _production(production)
 {
 }
 
@@ -25,7 +19,7 @@ Rule::empty(String_t term)
 }
 
 std::optional<Rule>
-Rule::build(String_t term, std::vector<String_t> productions, const Registry& registry, ErrorHolder& errors)
+Rule::build(String_t term, const std::vector<String_t>& productions, const Registry& registry, ErrorHolder& errors)
 {
     std::optional<UniformBranch> branch = UniformBranch::parse(productions, registry, errors);
 
@@ -34,7 +28,7 @@ Rule::build(String_t term, std::vector<String_t> productions, const Registry& re
         return {};
     }
 
-    return Rule(term, std::make_unique<UniformBranch>(*branch));
+    return Rule(std::move(term), std::make_unique<UniformBranch>(*branch));
 }
 
 std::optional<Expansion>

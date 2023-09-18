@@ -16,7 +16,7 @@ UniformBranch::UniformBranch(const UniformBranch& old)
 }
 
 std::optional<UniformBranch>
-UniformBranch::parse(std::vector<String_t> raw, const Registry& registry, ErrorHolder& errors)
+UniformBranch::parse(const std::vector<String_t>& raw, const Registry& registry, ErrorHolder& errors)
 {
     std::vector<std::shared_ptr<Production>> choices;
 
