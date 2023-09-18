@@ -83,7 +83,7 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
 
     for (auto atom : fragments)
     {
-        if (atom.size() == 0)
+        if (atom.empty())
         {
             continue;
         }
