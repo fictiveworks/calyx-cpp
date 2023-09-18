@@ -24,7 +24,7 @@ namespace calyx
 
     private:
 
-        const String_t _atom;
+        String_t _atom;
 
     };
 }

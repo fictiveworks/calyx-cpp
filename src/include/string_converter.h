@@ -14,13 +14,13 @@ namespace calyx
     using String_t = std::string;
 
     /**
-     * @brief The constructor for the default string converter for `String_t`s to be used by Calyx. If the String_t type is redefined
+     * @brief The type macro for the default string converter for `String_t`s to be used by Calyx. If the String_t type is redefined
      * (e.g. to UE's FString), then the constructor this is referencing will also need to be changed.
      *
-     * This is the constructor for the default string converter passed as an argument to any methods of Calyx that require
+     * This is the type for the default string converter passed as an argument to any methods of Calyx that require
      * reading/modifying strings.
      */
-    #define DEFAULT_STRING_CONVERTER() StdStringConverter()
+    #define DEFAULT_STRING_CONVERTER StdStringConverter
 
     /**
      * @brief Converts a string-like type S into a std::string

@@ -6,32 +6,40 @@ using namespace calyx;
 
 const bool Options::DEFAULT_STRICT = false;
 
-Options::Options(bool strict, std::unique_ptr<StringConverter<String_t>> converter)
-    : _strict(strict),
+Options::Options(bool strict, std::unique_ptr<StringConverter> converter):
+    _strict(strict),
+    _rng(),
     _converter(std::move(converter))
 {
 }
 
-Options::Options(unsigned int seed, bool strict, std::unique_ptr<StringConverter<String_t>> converter)
-    : _strict(strict),
+Options::Options(int seed, bool strict, std::unique_ptr<StringConverter> converter):
+    _strict(strict),
     _rng(seed),
     _converter(std::move(converter))
 {
-
 }
 
-Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter<String_t>> converter)
-    : _strict(strict),
+Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter> converter):
+    _strict(strict),
     _rng(rng),
     _converter(std::move(converter))
 {
 }
 
+Options::Options(Options&& other) noexcept:
+    _strict(other._strict),
+    _rng(other._rng),
+    _converter(std::move(other._converter))
+{
+}
+
+
 int
 Options::randInt()
 {
     const std::uniform_int_distribution distribution(
-        std::numeric_limits<int>::min(), 
+        std::numeric_limits<int>::min(),
         std::numeric_limits<int>::max()
     );
 

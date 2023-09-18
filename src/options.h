@@ -9,12 +9,10 @@
 
 namespace calyx
 {
-
     class ErrorHolder;
 
     class Options : public StringConverter<String_t>
     {
-
     public:
         static const bool DEFAULT_STRICT;
 
@@ -25,7 +23,10 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
+        Options(
+            bool strict = DEFAULT_STRICT,
+            std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
+        );
 
         /**
          * @brief Construct a new Options object with a specified random seed
@@ -34,7 +35,11 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(unsigned int seed, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
+        Options(
+            int seed,
+            bool strict = DEFAULT_STRICT,
+            std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
+        );
 
         /**
          * @brief Construct a new Options object with a specific random number generator
@@ -43,11 +48,19 @@ namespace calyx
          * @param strict Determines if the parser should throw an error when encountering an undefined key
          * @param converter The string converter to use
          */
-        Options(std::mt19937 rng, bool strict = DEFAULT_STRICT, std::unique_ptr<StringConverter<String_t>> converter = std::unique_ptr<StringConverter<String_t>>(new DEFAULT_STRING_CONVERTER()));
+        Options(
+            std::mt19937 rng,
+            bool strict = DEFAULT_STRICT,
+            std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
+        );
 
-        Options(const Options& old) = delete;
+        Options(Options&& other) noexcept;
 
         ~Options() override = default;
+
+        Options(const Options& old) = delete;
+     
+        Options operator=(const Options& other) = delete;
 
         /**
          * @brief Generates a random number
@@ -143,6 +156,6 @@ namespace calyx
     private:
         bool _strict;
         std::mt19937 _rng;
-        std::unique_ptr<StringConverter<String_t>> _converter;
+        std::unique_ptr<StringConverter> _converter;
     };
 }

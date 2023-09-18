@@ -3,7 +3,7 @@
 using namespace calyx;
 
 AtomNode::AtomNode(String_t atom)
-    : _atom(atom)
+    : _atom(std::move(atom))
 {
 
 }

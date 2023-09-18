@@ -20,7 +20,7 @@ TEST_CASE("Flattens expression tree to string")
 {
     Expansion tripleAtomTree = Expansion(
         Exp::TEMPLATE,
-        std::vector<Expansion> {
+        std::vector {
                 Expansion(Exp::ATOM, "O N E"),
                 Expansion(Exp::ATOM, " | "),
                 Expansion(Exp::ATOM, "T W O")

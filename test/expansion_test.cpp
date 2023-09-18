@@ -3,10 +3,36 @@
 #include <include/calyx.h>
 #include <expansion.h>
 #include <vector>
-#include <memory>
 #include <options.h>
 
 using namespace calyx;
+
+TEST_CASE("Construct expansion terminal test")
+{
+    const Options ops;
+    const String_t term = ops.fromString("T E R M");
+    const auto exp = Expansion(Exp::ATOM, term);
+    
+    REQUIRE(exp.getTerm() == term);
+}
+
+TEST_CASE("Construct nested expansion test")
+{
+    const std::vector tail {
+        Expansion(Exp::ATOM, "-TAHI-"),
+        Expansion(Exp::ATOM, "-RUA-"),
+        Expansion(Exp::ATOM, "-TORU-"),
+    };
+    const Expansion exp(Exp::TEMPLATE, tail);
+
+    REQUIRE(exp.getSymbol() == Exp::TEMPLATE);
+    REQUIRE(exp.getTail()[0].getSymbol() == Exp::ATOM);
+    REQUIRE(exp.getTail()[0].getTerm() == "-TAHI-");
+    REQUIRE(exp.getTail()[1].getSymbol() == Exp::ATOM);
+    REQUIRE(exp.getTail()[1].getTerm() == "-RUA-");
+    REQUIRE(exp.getTail()[2].getSymbol() == Exp::ATOM);
+    REQUIRE(exp.getTail()[2].getTerm() == "-TORU-");
+}
 
 TEST_CASE("Flatten expansion to atoms")
 {

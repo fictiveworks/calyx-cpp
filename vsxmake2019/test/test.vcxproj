@@ -127,6 +127,7 @@ xmake version 2.7.8+master.d6ee79eed
     <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_test.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="..\..\test\options_test.cpp" />
 
 
 
