@@ -60,7 +60,7 @@ WeightedBranch::getRandomProduction(Options& options) const
 
 std::optional<Expansion>
 WeightedBranch::evaluateAt(
-    int index,
+    std::size_t index,
     Registry& registry,
     Options& options,
     ErrorHolder& errors

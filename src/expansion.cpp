@@ -5,40 +5,29 @@
 
 using namespace calyx;
 
-Expansion::Expansion(const Expansion& old)
-    : _symbol(old._symbol),
-    _term(old._term),
-    _tail(old._tail)
-{    
-
-}
-
-Expansion::Expansion(Exp symbol, String_t term)
-    : _symbol(symbol),
-    _term(term),
-    _tail()
+Expansion::Expansion(Exp symbol, String_t term):
+    _term(std::move(term)),
+    _symbol(symbol)
 {
 }
 
-Expansion::Expansion(Exp symbol, Expansion tail)
-    : _symbol(symbol),
-    _term()
+Expansion::Expansion(Exp symbol, Expansion tail):
+    _symbol(symbol)
 {
-    _tail.push_back(tail);
+    _tail.push_back(std::move(tail));
 }
 
-Expansion::Expansion(Exp symbol, std::vector<Expansion> tail)
-    : _symbol(symbol),
-    _term(),
-    _tail(tail)
+Expansion::Expansion(Exp symbol, std::vector<Expansion> tail):
+    _tail(std::move(tail)),
+    _symbol(symbol)
 {
-
 }
 
 Expansion&
 Expansion::operator=(const Expansion& other)
 {
-    if (this != &other) {
+    if (this != &other)
+    {
         _symbol = other._symbol;
         _term = other._term;
         _tail = other._tail;
@@ -57,12 +46,15 @@ Expansion::flatten(const Options& options) const
 
 void Expansion::collectAtoms(String_t& concat) const
 {
-    if (_symbol == Exp::ATOM) {
+    if (_symbol == Exp::ATOM)
+    {
         concat += _term;
     }
-    else {
-        for (const Expansion& expansions : _tail) {
-            expansions.collectAtoms(concat);
+    else
+    {
+        for (const Expansion& child : _tail)
+        {
+            child.collectAtoms(concat);
         }
     }
 }
@@ -73,13 +65,13 @@ Expansion::getTerm() const
     return _term;
 }
 
-const Exp& 
+const Exp&
 Expansion::getSymbol() const
 {
     return _symbol;
 }
 
-const std::vector<Expansion>& 
+const std::vector<Expansion>&
 Expansion::getTail() const
 {
     return _tail;

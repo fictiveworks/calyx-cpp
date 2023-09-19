@@ -26,7 +26,7 @@ namespace calyx
 
         WeightedBranch(const WeightedBranch& old);
 
-        ~WeightedBranch() = default;
+        ~WeightedBranch() override = default;
 
         std::optional<Expansion> evaluate(
             Registry& registry,
@@ -35,7 +35,7 @@ namespace calyx
         ) const override;
 
         std::optional<Expansion> evaluateAt(
-            int index,
+            std::size_t index,
             Registry& registry,
             Options& options,
             ErrorHolder& errors

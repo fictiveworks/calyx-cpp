@@ -18,7 +18,7 @@ namespace calyx
 
         UniformBranch(const UniformBranch& old);
 
-        ~UniformBranch() = default;
+        ~UniformBranch() override = default;
 
         static std::optional<UniformBranch> parse(const std::vector<String_t>& raw, const Registry& registry, ErrorHolder& errors);
 
@@ -29,7 +29,7 @@ namespace calyx
         ) const override;
 
         std::optional<Expansion> evaluateAt(
-            int index,
+            std::size_t index,
             Registry& registry,
             Options& options,
             ErrorHolder& errors

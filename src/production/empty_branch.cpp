@@ -14,7 +14,7 @@ EmptyBranch::evaluate(
 
 std::optional<Expansion>
 EmptyBranch::evaluateAt(
-    int index,
+    std::size_t index,
     Registry& registry,
     Options& options,
     ErrorHolder& errors

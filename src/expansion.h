@@ -28,7 +28,7 @@ namespace calyx
     class Expansion
     {
     public:
-        Expansion(const Expansion& old);
+        Expansion(const Expansion& old) = default;
 
         Expansion(Exp symbol, String_t term);
 
@@ -37,16 +37,16 @@ namespace calyx
         Expansion(Exp symbol, std::vector<Expansion> tail);
 
         Expansion& operator=(const Expansion& other);
-
-        String_t flatten(const Options& options) const;
-
+        
         void collectAtoms(String_t& concat) const;
+        
+        _NODISCARD String_t flatten(const Options& options) const;
 
-        const String_t& getTerm() const;
+        _NODISCARD const String_t& getTerm() const;
 
-        const Exp& getSymbol() const;
+        _NODISCARD const Exp& getSymbol() const;
 
-        const std::vector<Expansion>& getTail() const;
+        _NODISCARD const std::vector<Expansion>& getTail() const;
 
     private:
         std::vector<Expansion> _tail;

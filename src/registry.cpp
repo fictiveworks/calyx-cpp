@@ -29,7 +29,7 @@ Registry::operator=(const Registry& other)
 
 
 void
-Registry::defineRule(String_t term, std::vector<String_t> production, ErrorHolder& errors)
+Registry::defineRule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors)
 {
     std::optional<Rule> rule = Rule::build(term, production, *this, errors);
 
@@ -48,7 +48,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 
     auto rule = this->expand(startSymbol, errors);
 
-    if (!rule)
+    if (!rule || errors.hasError())
     {
         return {};
     }
@@ -60,7 +60,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
         return {};
     }
 
-    Expansion root = Expansion(Exp::RESULT, *tail);
+    Expansion root(Exp::RESULT, *tail);
 
     return root;
 }

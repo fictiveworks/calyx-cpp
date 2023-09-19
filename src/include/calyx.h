@@ -18,10 +18,17 @@
 
 namespace calyx
 {
-
+    /**
+     * \brief Class representing the result of an evaluation. Allows for access to the underlying expansion tree,
+     * as well as the ability to flatten the tree into a string.
+     */
     class Result
     {
     public:
+        /**
+         * @brief Constructs the Result out of an expansion tree.
+         * @param tree The expansion tree of the result.
+         */
         Result(Expansion tree);
 
         /**
@@ -32,7 +39,9 @@ namespace calyx
         const Expansion& getTree();
 
         /**
-         * @brief Flattens the text into a new string, and returns it 
+         * @brief Flattens the text into a new string, and returns it
+         *
+         * @param options Options for evaluating the text.
          * @return Returns a new string_t
          */
         String_t text(const Options& options);

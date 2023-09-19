@@ -1,5 +1,6 @@
 #include "uniform_branch.h"
 #include "../syntax/template_node.h"
+#include <sstream>
 
 using namespace calyx;
 
@@ -49,12 +50,22 @@ UniformBranch::evaluate(
 
 std::optional<Expansion>
 UniformBranch::evaluateAt(
-    int index,
+    std::size_t index,
     Registry& registry,
     Options& options,
     ErrorHolder& errors
 ) const
 {
+
+    if (index < 0 || index >= _choices.size())
+    {
+        std::ostringstream oss;
+        oss << "Attempting to choose invalid expansion at index " << index;
+
+        errors.setError(oss.str());
+        return {};
+    }
+    
     std::shared_ptr<Production> choice = _choices.at(index);
     std::optional<Expansion> tail = choice->evaluate(registry, options, errors);
 
