@@ -59,7 +59,7 @@ namespace calyx
         ~Options() override = default;
 
         Options(const Options& old) = delete;
-     
+        
         Options operator=(const Options& other) = delete;
 
         /**

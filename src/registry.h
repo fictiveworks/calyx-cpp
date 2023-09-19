@@ -20,11 +20,17 @@ namespace calyx
     public:
         Registry();
 
+        Registry(Options options);
+
         Registry(std::shared_ptr<Options> options);
 
         ~Registry() = default;
 
-        Registry& operator=(const Registry& other);
+        Registry(Registry&& old) noexcept;
+
+        Registry(const Registry& other) = delete;
+        
+        Registry& operator=(const Registry& other) = delete;
 
         Options& getOptions() const; 
 

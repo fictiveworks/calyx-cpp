@@ -4,13 +4,27 @@
 
 using namespace calyx;
 
-Registry::Registry(): Registry(std::shared_ptr<Options>(new Options()))
+
+Registry::Registry(): Registry(std::make_shared<Options>())
 {
 }
 
-Registry::Registry(std::shared_ptr<Options> options)
-    : _options(options),
-    _rules(std::map<String_t, std::shared_ptr<Rule>>())
+Registry::Registry(Options options): Registry(std::make_shared<Options>(std::move(options)))
+{
+}
+
+Registry::Registry(std::shared_ptr<Options> options):
+    _rules(std::map<String_t, std::shared_ptr<Rule>>()),
+    _options(std::move(options))
+{
+}
+
+Registry::Registry(Registry&& old) noexcept:
+    _rules(std::move(old._rules)),
+    _context(std::move(old._context)),
+    _memos(std::move(old._memos)),
+    _cycles(std::move(old._cycles)),
+    _options(std::move(old._options))
 {
 }
 
@@ -19,16 +33,6 @@ Registry::getOptions() const
 {
     return *_options;
 }
-
-Registry&
-Registry::operator=(const Registry& other)
-{
-    _rules = other._rules;
-    _options = other._options;
-
-    return *this;
-}
-
 
 void
 Registry::defineRule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors)
@@ -47,7 +51,7 @@ std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
-    
+
     const std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
 
     if (rule == nullptr || errors.hasError())
@@ -80,8 +84,8 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
         {
             return {};
         }
-        
-        contextBuilder[rule.first] = std::make_shared<Rule>(*contextRule); 
+
+        contextBuilder[rule.first] = std::make_shared<Rule>(*contextRule);
     }
     // we can move since the class member has been reset and is thus empty right now
     _context = std::move(contextBuilder);
@@ -174,8 +178,9 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
     {
         return _context.at(symbol);
     }
-    
-    if (_options->isStrict()) {
+
+    if (_options->isStrict())
+    {
         // strict - do not allow empty rules
         errors.setError(Errors::undefinedRule(symbol, *_options));
         return nullptr;

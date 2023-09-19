@@ -6,6 +6,12 @@
 
 using namespace calyx;
 
+TEST_CASE("Strict options returned error with unknown rule")
+{
+    Options ops(12);
+    Registry registry(std::move(ops));
+}
+
 TEST_CASE("Evaluate start rule")
 {
     Registry registry;
