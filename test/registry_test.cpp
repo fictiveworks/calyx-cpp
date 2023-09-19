@@ -108,7 +108,7 @@ TEST_CASE("Evaluate only initialized context")
 
 TEST_CASE("Memoized rules return identical expression")
 {
-    Registry registry(std::make_shared<Options>(123, true));
+    Registry registry(std::make_shared<Options>(556677, true));
     const Options& ops = registry.getOptions();
 
     String_t start = ops.fromString("start");
