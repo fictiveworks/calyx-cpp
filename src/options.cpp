@@ -1,6 +1,4 @@
 #include "options.h"
-#include <stdlib.h>
-#include <exception>
 
 using namespace calyx;
 
@@ -38,7 +36,7 @@ Options::Options(Options&& other) noexcept:
 int
 Options::randInt()
 {
-    const std::uniform_int_distribution distribution(
+    std::uniform_int_distribution distribution(
         std::numeric_limits<int>::min(),
         std::numeric_limits<int>::max()
     );
@@ -49,7 +47,7 @@ Options::randInt()
 double
 Options::randDouble()
 {
-    const std::uniform_real_distribution distribution(0.0, 1.0);
+    std::uniform_real_distribution distribution(0.0, 1.0);
 
     return distribution(_rng);
 }
@@ -64,7 +62,7 @@ Options::randInt(int max, ErrorHolder& errorHolder)
         return 0;
     }
 
-    const std::uniform_int_distribution distribution(0, max);
+    std::uniform_int_distribution distribution(0, max);
     return distribution(_rng);
 }
 
@@ -84,7 +82,7 @@ Options::randInt(int min, int max, ErrorHolder& errorHolder)
         errorHolder.setError(msg);
         return 0;
     }
-    const std::uniform_int_distribution distribution(min, max);
+    std::uniform_int_distribution distribution(min, max);
     return distribution(_rng);
 }
 
