@@ -62,7 +62,7 @@ Options::randInt(int max, ErrorHolder& errorHolder)
         return 0;
     }
 
-    std::uniform_int_distribution distribution(0, max);
+    std::uniform_int_distribution distribution(0, max - 1);
     return distribution(_rng);
 }
 
