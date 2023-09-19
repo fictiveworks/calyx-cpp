@@ -70,12 +70,20 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
 {
     this->resetEvaluationContext();
 
-    // TODO: build context from rules
-    // for (const auto& rule : context)
-    // {
-    //     // C# version has a commented-out exception for duplicate rules here, idk
-    //     _context[rule.first] = Rule::build(rule.first, rule.second, *this);
-    // }
+    // use a temp builder since we dont want to affect class context if an error occurs
+    std::map<String_t, std::shared_ptr<Rule>> contextBuilder;
+    for (const auto& rule : context)
+    {
+        std::optional<Rule> contextRule = Rule::build(rule.first, rule.second, *this, errors);
+        if (!contextRule || errors.hasError())
+        {
+            return {};
+        }
+        
+        contextBuilder[rule.first] = std::make_shared<Rule>(*contextRule); 
+    }
+    // we can move since the class member has been reset and is thus empty right now
+    _context = std::move(contextBuilder);
 
     std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
 

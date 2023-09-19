@@ -23,8 +23,7 @@ TEST_CASE("Evaluate start rule")
     REQUIRE_FALSE(errs.hasError());
 
     std::optional<Expansion> exp = registry.evaluate(start, errs);
-
-    CAPTURE(errs.getMessage());
+    
     REQUIRE_FALSE(errs.hasError());
     REQUIRE(exp.has_value());
     REQUIRE(exp->getSymbol() == Exp::RESULT);
@@ -47,6 +46,31 @@ TEST_CASE("Evaluate recursive rules")
 
     std::optional<Expansion> exp = registry.evaluate(start, errs);
 
+    REQUIRE_FALSE(errs.hasError());
+    REQUIRE(exp.has_value());
+    REQUIRE(exp->getSymbol() == Exp::RESULT);
+    REQUIRE(exp->flatten(ops) == atom);
+}
+
+TEST_CASE("Evaluate rules with initialized context")
+{
+    Registry registry(std::make_shared<Options>(true));
+    const Options& ops = registry.getOptions();
+
+
+    String_t start = ops.fromString("start");
+    String_t prod = ops.fromString("{atom}");
+    String_t atom = ops.fromString("atom");
+    ErrorHolder errs;
+    
+    registry.defineRule(start, std::vector { prod }, errs);
+    REQUIRE_FALSE(errs.hasError());
+
+    std::map<String_t, std::vector<String_t>> context = {
+        { atom, std::vector { atom } }
+    };
+    std::optional<Expansion> exp = registry.evaluate(start, context, errs);
+    
     REQUIRE_FALSE(errs.hasError());
     REQUIRE(exp.has_value());
     REQUIRE(exp->getSymbol() == Exp::RESULT);
