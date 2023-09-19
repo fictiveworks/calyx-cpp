@@ -40,13 +40,13 @@ namespace calyx
         
         void collectAtoms(String_t& concat) const;
         
-        _NODISCARD String_t flatten(const Options& options) const;
+        [[nodiscard]] String_t flatten(const Options& options) const;
 
-        _NODISCARD const String_t& getTerm() const;
+        [[nodiscard]] const String_t& getTerm() const;
 
-        _NODISCARD const Exp& getSymbol() const;
+        [[nodiscard]] const Exp& getSymbol() const;
 
-        _NODISCARD const std::vector<Expansion>& getTail() const;
+        [[nodiscard]] const std::vector<Expansion>& getTail() const;
 
     private:
         std::vector<Expansion> _tail;
