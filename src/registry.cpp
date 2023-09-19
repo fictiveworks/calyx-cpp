@@ -1,7 +1,5 @@
 #include "registry.h"
 
-#include <iostream>
-
 using namespace calyx;
 
 

@@ -1,5 +1,4 @@
-﻿#include <iostream>
-#include <catch2/catch_all.hpp>
+﻿#include <catch2/catch_all.hpp>
 
 #include <include/calyx.h>
 #include <registry.h>
@@ -8,8 +7,16 @@ using namespace calyx;
 
 TEST_CASE("Strict options returned error with unknown rule")
 {
-    Options ops(12);
-    Registry registry(std::move(ops));
+    Registry registry(Options(true));
+    Options& ops = registry.getOptions();
+    String_t start = ops.fromString("start");
+    
+    ErrorHolder errs;
+    std::optional<Expansion> exp = registry.evaluate(start, errs);
+
+    REQUIRE(errs.hasError());
+    REQUIRE_FALSE(exp.has_value());
+    REQUIRE(errs.getMessage() == Errors::undefinedRule(start, ops));
 }
 
 TEST_CASE("Evaluate start rule")
