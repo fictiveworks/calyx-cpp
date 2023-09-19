@@ -1,5 +1,7 @@
 #include "registry.h"
 
+#include <iostream>
+
 using namespace calyx;
 
 Registry::Registry(): Registry(std::shared_ptr<Options>(new Options()))
@@ -45,17 +47,16 @@ std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
+    
+    const std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
 
-    auto rule = this->expand(startSymbol, errors);
-
-    if (!rule || errors.hasError())
+    if (rule == nullptr || errors.hasError())
     {
         return {};
     }
 
     std::optional<Expansion> tail = rule->evaluate(*this, getOptions(), errors);
-
-    if (!tail)
+    if (!tail || errors.hasError())
     {
         return {};
     }
@@ -85,9 +86,9 @@ Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<S
     // we can move since the class member has been reset and is thus empty right now
     _context = std::move(contextBuilder);
 
-    std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
+    const std::shared_ptr<Rule> rule = this->expand(startSymbol, errors);
 
-    if (!rule)
+    if (rule == nullptr || errors.hasError())
     {
         return {};
     }
@@ -168,22 +169,20 @@ Registry::expand(const String_t& symbol, ErrorHolder& errors) const
     {
         return _rules.at(symbol);
     }
-    else if (_context.contains(symbol))
+
+    if (_context.contains(symbol))
     {
         return _context.at(symbol);
     }
-    else
-    {
-        if (_options->isStrict()) {
-            // strict - do not allow empty rules
-            errors.setError(Errors::undefinedRule(symbol, *_options));
-
-            return nullptr;
-        }
-
-        // create empty rule
-        return std::make_shared<Rule>(Rule::empty(symbol));
+    
+    if (_options->isStrict()) {
+        // strict - do not allow empty rules
+        errors.setError(Errors::undefinedRule(symbol, *_options));
+        return nullptr;
     }
+
+    // create empty rule
+    return std::make_shared<Rule>(Rule::empty(symbol));
 }
 
 void

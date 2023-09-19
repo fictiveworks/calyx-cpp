@@ -1,5 +1,7 @@
 #include "expression_node.h"
 
+#include "memo_node.h"
+
 
 using namespace calyx;
 
@@ -12,10 +14,18 @@ ExpressionNode::ExpressionNode(String_t reference)
 
 }
 
-std::optional<ExpressionNode>
+std::shared_ptr<Production>
 ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder& errors)
 {
-    return ExpressionNode(raw);
+    if (raw[0] == MEMO_SIGIL)
+    {
+        Options& ops = registry.getOptions();
+        std::string rawString = ops.toString(raw).substr(1);
+        return std::make_shared<MemoNode>(MemoNode(ops.fromString(rawString)));
+    }
+    
+    
+    return std::make_shared<ExpressionNode>(ExpressionNode(raw));
 }
 
 std::optional<Expansion>

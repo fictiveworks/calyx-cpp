@@ -1,4 +1,6 @@
 #include "errors.h"
+
+#include <iostream>
 #include <string>
 #include <sstream>
 
@@ -43,6 +45,7 @@ ErrorHolder::getMessage() const
 void
 ErrorHolder::setError(String_t message)
 {
-    _message = message;
+    std::cout << "setting error " << message << std::endl;
+    _message = std::move(message);
     _hasError = true;
 }

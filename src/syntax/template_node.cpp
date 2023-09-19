@@ -102,14 +102,14 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
             }
             else
             {
-                auto prod = ExpressionNode::parse(ops.fromString(expression), registry, errors);
+                std::shared_ptr<Production> prod = ExpressionNode::parse(ops.fromString(expression), registry, errors);
 
-                if (!prod)
+                if (prod == nullptr || errors.hasError())
                 {
                     return {};
                 }
 
-                concatNodes.push_back(std::make_shared<ExpressionNode>(*prod));
+                concatNodes.push_back(prod);
             }
         }
         else

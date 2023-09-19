@@ -17,9 +17,9 @@ namespace calyx
 
         ~ExpressionNode() = default;
 
-        static std::optional<ExpressionNode> parse(const String_t raw, const Registry& registry, ErrorHolder& errors);
+        static std::shared_ptr<Production> parse(const String_t raw, const Registry& registry, ErrorHolder& errors);
 
-        virtual std::optional<Expansion> evaluate(
+        std::optional<Expansion> evaluate(
             Registry& registry,
             Options& options,
             ErrorHolder& errors
