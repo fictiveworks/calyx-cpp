@@ -44,7 +44,13 @@ UniformBranch::evaluate(
     ErrorHolder& errors
 ) const
 {
-    int index = options.randInt(_choices.size());
+    int index = options.randInt(_choices.size(), errors);
+
+    if (errors.hasError())
+    {
+        return {};
+    }
+    
     return evaluateAt(index, registry, options, errors);
 }
 

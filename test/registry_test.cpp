@@ -24,6 +24,7 @@ TEST_CASE("Evaluate start rule")
 
     std::optional<Expansion> exp = registry.evaluate(start, errs);
 
+    CAPTURE(errs.getMessage());
     REQUIRE_FALSE(errs.hasError());
     REQUIRE(exp.has_value());
     REQUIRE(exp->getSymbol() == Exp::RESULT);
