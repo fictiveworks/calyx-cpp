@@ -112,8 +112,8 @@ xmake version 2.7.8+master.d6ee79eed
     <ClInclude Include="$(XmakeProjectDir)\src\rule.h" />
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\atom_node.h" />
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\expression_node.h" />
+    <ClInclude Include="$(XmakeProjectDir)\src\syntax\memo_node.h" />
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\template_node.h" />
-    <ClInclude Include="..\..\src\syntax\memo_node.h" />
 
 
   </ItemGroup>
@@ -158,10 +158,12 @@ xmake version 2.7.8+master.d6ee79eed
     <ClCompile Include="$(XmakeProjectDir)\src\syntax\expression_node.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\src\syntax\memo_node.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\src\syntax\template_node.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="..\..\src\syntax\memo_node.cpp" />
 
 
 

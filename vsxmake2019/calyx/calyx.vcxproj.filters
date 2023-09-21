@@ -86,6 +86,9 @@ xmake version 2.7.8+master.d6ee79eed
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\expression_node.h">
       <Filter>src\syntax</Filter>
     </ClInclude>
+    <ClInclude Include="$(XmakeProjectDir)\src\syntax\memo_node.h">
+      <Filter>src\syntax</Filter>
+    </ClInclude>
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\template_node.h">
       <Filter>src\syntax</Filter>
     </ClInclude>
@@ -131,6 +134,9 @@ xmake version 2.7.8+master.d6ee79eed
       <Filter>src\syntax</Filter>
     </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\src\syntax\expression_node.cpp">
+      <Filter>src\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\src\syntax\memo_node.cpp">
       <Filter>src\syntax</Filter>
     </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\src\syntax\template_node.cpp">

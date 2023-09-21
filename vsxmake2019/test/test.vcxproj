@@ -115,21 +115,27 @@ xmake version 2.7.8+master.d6ee79eed
     <ClCompile Include="$(XmakeProjectDir)\test\main.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\test\options_test.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\test\registry_test.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\test\result_test.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="$(XmakeProjectDir)\test\syntax\atom.cpp">
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\atom_node_test.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\test\syntax\expression_node_test.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_test.cpp">
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_fragment_test.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
-    <ClCompile Include="..\..\test\options_test.cpp" />
-    <ClCompile Include="..\..\test\registry_test.cpp" />
-    <ClCompile Include="..\..\test\syntax\template_node_test.cpp" />
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_node_test.cpp">
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
 
 
 

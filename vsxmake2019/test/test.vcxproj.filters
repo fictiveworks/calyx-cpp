@@ -55,16 +55,25 @@ xmake version 2.7.8+master.d6ee79eed
     <ClCompile Include="$(XmakeProjectDir)\test\main.cpp">
       <Filter>test</Filter>
     </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\test\options_test.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\test\registry_test.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\test\result_test.cpp">
       <Filter>test</Filter>
     </ClCompile>
-    <ClCompile Include="$(XmakeProjectDir)\test\syntax\atom.cpp">
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\atom_node_test.cpp">
       <Filter>test\syntax</Filter>
     </ClCompile>
     <ClCompile Include="$(XmakeProjectDir)\test\syntax\expression_node_test.cpp">
       <Filter>test\syntax</Filter>
     </ClCompile>
-    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_test.cpp">
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_fragment_test.cpp">
+      <Filter>test\syntax</Filter>
+    </ClCompile>
+    <ClCompile Include="$(XmakeProjectDir)\test\syntax\template_node_test.cpp">
       <Filter>test\syntax</Filter>
     </ClCompile>
 
