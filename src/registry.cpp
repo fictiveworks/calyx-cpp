@@ -15,6 +15,7 @@ Registry::Registry(std::shared_ptr<Options> options):
     _rules(std::map<String_t, std::shared_ptr<Rule>>()),
     _options(std::move(options))
 {
+    addFilter(_options->fromString("uppercase"), filters::uppercase);
 }
 
 Registry::Registry(Registry&& old) noexcept:
@@ -22,6 +23,7 @@ Registry::Registry(Registry&& old) noexcept:
     _context(std::move(old._context)),
     _memos(std::move(old._memos)),
     _cycles(std::move(old._cycles)),
+    _filters(std::move(old._filters)),
     _options(std::move(old._options))
 {
 }
@@ -43,6 +45,11 @@ Registry::defineRule(String_t term, const std::vector<String_t>& production, Err
     }
 
     _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
+}
+
+void Registry::addFilter(String_t name, Filter_t filter)
+{
+    _filters.emplace(std::move(name), filter);
 }
 
 std::optional<Expansion>
