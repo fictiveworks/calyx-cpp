@@ -5,7 +5,7 @@ using namespace calyx;
 
 
 String_t
-filters::uppercase(String_t input, const Options& ops)
+filters::uppercase(const String_t& input, const Options& ops)
 {
     std::string raw = ops.toString(input);
 

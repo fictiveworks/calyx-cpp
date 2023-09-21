@@ -137,6 +137,7 @@ xmake version 2.7.8+master.d6ee79eed
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <ClCompile Include="..\..\test\filter_test.cpp" />
+    <ClCompile Include="..\..\test\syntax\expression_chain_test.cpp" />
 
 
 

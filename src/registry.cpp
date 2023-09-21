@@ -52,6 +52,16 @@ void Registry::addFilter(String_t name, Filter_t filter)
     _filters.emplace(std::move(name), filter);
 }
 
+std::optional<const Filter_t>
+Registry::getFilter(const String_t& name) const
+{
+    if (_filters.contains(name))
+    {
+        return _filters.at(name);
+    }
+    return {};
+}
+
 std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {

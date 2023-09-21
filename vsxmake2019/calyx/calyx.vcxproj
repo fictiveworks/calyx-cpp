@@ -115,6 +115,7 @@ xmake version 2.7.8+master.d6ee79eed
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\memo_node.h" />
     <ClInclude Include="$(XmakeProjectDir)\src\syntax\template_node.h" />
     <ClInclude Include="..\..\src\filters.h" />
+    <ClInclude Include="..\..\src\syntax\expression_chain.h" />
 
 
   </ItemGroup>
@@ -236,6 +237,7 @@ xmake version 2.7.8+master.d6ee79eed
       <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
       <LibCompiled>true</LibCompiled>
     </ClCompile>
+    <ClCompile Include="..\..\src\syntax\expression_chain.cpp" />
 
 
 
