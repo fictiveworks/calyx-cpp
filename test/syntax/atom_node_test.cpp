@@ -9,12 +9,12 @@ using namespace calyx;
 
 TEST_CASE("Atom tests") 
 {
-    std::shared_ptr<Options> ops = std::make_shared<Options>();
-    Registry registry = Registry(ops);
+    Registry registry = Registry(Options());
+    Options& ops = registry.getOptions();
     ErrorHolder errors;
 
     AtomNode atom = AtomNode("T E R M");
-    std::optional<Expansion> exp = atom.evaluate(registry, *ops, errors);
+    std::optional<Expansion> exp = atom.evaluate(registry, ops, errors);
 
     REQUIRE(exp.has_value());
     REQUIRE_FALSE(errors.hasError());
