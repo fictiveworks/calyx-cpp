@@ -41,22 +41,40 @@ Grammar& Grammar::operator=(Grammar&& old) noexcept
     return *this;
 }
 
-void Grammar::start(String_t production) noexcept
+void
+Grammar::start(String_t production, ErrorHolder& errors) noexcept
 {
+    const Options& ops = _registry.getOptions();
+    _registry.defineRule(ops.fromString("start"), { std::move(production) }, errors);
 }
 
-void Grammar::start(std::vector<String_t> production) noexcept
+void
+Grammar::start(const std::vector<String_t>& production, ErrorHolder& errors) noexcept
 {
+    const Options& ops = _registry.getOptions();
+    _registry.defineRule(ops.fromString("start"), production, errors);
 }
 
-void Grammar::rule(String_t term, String_t production) noexcept
+void
+Grammar::rule(String_t term, String_t production, ErrorHolder& errors) noexcept
 {
+    _registry.defineRule(std::move(term), { std::move(production) }, errors);
 }
 
-void Grammar::rule(std::vector<String_t> term, std::vector<String_t> production) noexcept
+void
+Grammar::rule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors) noexcept
 {
+    _registry.defineRule(std::move(term), production, errors);
 }
 
-Result Grammar::generate() const noexcept
+std::optional<Result>
+Grammar::generate(ErrorHolder& errors) noexcept
 {
+    const Options& ops = _registry.getOptions();
+    std::optional<Expansion> exp = _registry.evaluate(ops.fromString("start"), errors);
+    if (!exp || errors.hasError())
+    {
+        return {};
+    }
+    return Result(*exp);
 }

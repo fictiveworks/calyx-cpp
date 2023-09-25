@@ -27,15 +27,15 @@ namespace calyx
         
         Grammar& operator=(const Grammar& old) = delete;
 
-        void start(String_t production) noexcept;
+        void start(String_t production, ErrorHolder& errors) noexcept;
 
-        void start(std::vector<String_t> production) noexcept;
+        void start(const std::vector<String_t>& production, ErrorHolder& errors) noexcept;
 
-        void rule(String_t term, String_t production) noexcept;
+        void rule(String_t term, String_t production, ErrorHolder& errors) noexcept;
 
-        void rule(std::vector<String_t> term, std::vector<String_t> production) noexcept;
+        void rule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors) noexcept;
 
-        Result generate() const noexcept;
+        [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
 
     private:
         Registry _registry;
