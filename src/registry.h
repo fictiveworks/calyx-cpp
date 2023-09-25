@@ -33,6 +33,8 @@ namespace calyx
         
         Registry& operator=(const Registry& other) = delete;
 
+        Registry& operator=(Registry&& other) noexcept;
+
         Options& getOptions() const; 
 
         void defineRule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors);

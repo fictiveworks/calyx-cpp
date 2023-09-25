@@ -28,6 +28,19 @@ Registry::Registry(Registry&& old) noexcept:
 {
 }
 
+Registry& Registry::operator=(Registry&& other) noexcept
+{
+    if (this != &other)
+    {
+        _rules = std::move(other._rules);
+        _context = std::move(other._context);
+        _memos = std::move(other._memos);
+        _cycles = std::move(other._cycles);
+        _options = std::move(other._options);
+    }
+    return *this;
+}
+
 Options&
 Registry::getOptions() const
 {
