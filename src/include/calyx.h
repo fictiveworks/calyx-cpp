@@ -15,6 +15,7 @@
 #include "string_converter.h"
 #include "../errors.h"
 #include "../expansion.h"
+#include "grammar.h"
 
 namespace calyx
 {

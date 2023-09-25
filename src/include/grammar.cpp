@@ -2,7 +2,8 @@
 
 using namespace calyx;
 
-Grammar::Grammar() noexcept : Grammar(Options())
+Grammar::Grammar() noexcept :
+    Grammar(Options())
 {
 }
 
@@ -24,6 +25,18 @@ Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
 Grammar::Grammar(int seed, bool strict) noexcept :
     _registry(Options(seed, strict))
 {
+}
+
+Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept :
+    Grammar(strict)
+{
+    initializeCallback(*this);
+}
+
+Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict) noexcept :
+    Grammar(rng, strict)
+{
+    initializeCallback(*this);
 }
 
 Grammar::Grammar(Grammar&& old) noexcept :

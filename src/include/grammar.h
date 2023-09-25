@@ -16,15 +16,19 @@ namespace calyx
         explicit Grammar(std::mt19937 rng, bool strict = Options::DEFAULT_STRICT) noexcept;
 
         explicit Grammar(int seed, bool strict = Options::DEFAULT_STRICT) noexcept;
-        
+
+        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict = Options::DEFAULT_STRICT) noexcept;
+
+        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict = Options::DEFAULT_STRICT) noexcept;
+
         Grammar(Grammar&& old) noexcept;
-        
+
         Grammar(const Grammar& other) = delete;
 
         ~Grammar() = default;
 
         Grammar& operator=(Grammar&& old) noexcept;
-        
+
         Grammar& operator=(const Grammar& old) = delete;
 
         void start(String_t production, ErrorHolder& errors) noexcept;
