@@ -1,4 +1,4 @@
-﻿#include "grammar.h"
+﻿#include "calyx.h"
 
 using namespace calyx;
 
@@ -22,7 +22,7 @@ Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
 {
 }
 
-Grammar::Grammar(int seed, bool strict) noexcept :
+Grammar::Grammar(unsigned long seed, bool strict) noexcept :
     _registry(Options(seed, strict))
 {
 }
@@ -35,6 +35,12 @@ Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool s
 
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict) noexcept :
     Grammar(rng, strict)
+{
+    initializeCallback(*this);
+}
+
+Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, unsigned long seed, bool strict) noexcept :
+    Grammar(seed, strict)
 {
     initializeCallback(*this);
 }
