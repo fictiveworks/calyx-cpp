@@ -10,7 +10,7 @@ See the [Xmake installation guide](https://xmake.io/#/guide/installation).
 
 ### Compile and link
 
-```
+```bash
 xmake build -y
 ```
 
@@ -20,13 +20,19 @@ xmake build -y
 
 Calyx C++ is tested using Catch2. 
 
-```
+```bash
 xmake run test
 ```
 
 ### Build for release
 
 TBD
+
+### Generate Visual Studio IDE files
+
+```bash
+xmake project -k vs2017 -m "debug,release"
+```
 
 ## License
 
