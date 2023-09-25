@@ -19,7 +19,7 @@ TEST_CASE("Strict on with flag set")
 
 TEST_CASE("Seeded rng is deterministic")
 {
-    int seed = 123;
+    constexpr unsigned long seed = 123;
     Options ops(seed);
     Options other(seed);
 
