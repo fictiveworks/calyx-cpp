@@ -50,55 +50,5 @@ namespace calyx
         Expansion _tree;
     };
 
-    class Grammar
-    {
-    public:
 
-        Grammar();
-
-        Grammar(Options opts);
-
-        Grammar(bool strict = Options::DEFAULT_STRICT);
-
-        Grammar(std::function<int()> rng, bool strict = Options::DEFAULT_STRICT);
-
-        Grammar(unsigned int seed, bool strict = Options::DEFAULT_STRICT);
-
-        ~Grammar();
-
-        /**
-         * [start description]
-         * @param production  [description]
-         */
-        void start(String_t production);
-
-        /**
-         * [start description]
-         * @param production  [description]
-         */
-        void start(std::vector<String_t> production);
-
-        /**
-         * [rule description]
-         * @param term        [description]
-         * @param production  [description]
-         */
-        void rule(String_t term, String_t production);
-
-        /**
-         * [start description]
-         * @param term        [description]
-         * @param production  [description]
-         */
-        void rule(std::vector<String_t> term, std::vector<String_t> production);
-
-        /**
-         * [generate description]
-         * @return [description]
-         */
-        Result generate();
-
-    private:
-        Registry _registry;
-    };
 }
