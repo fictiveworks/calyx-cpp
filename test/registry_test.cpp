@@ -93,7 +93,7 @@ TEST_CASE("Evaluate rules with initialized context")
 TEST_CASE("Evaluate only initialized context")
 {
     Registry registry(std::make_shared<Options>(true));
-    const Options& ops = registry.getOptions();
+    Options& ops = registry.getOptions();
 
 
     String_t start = ops.fromString("start");
@@ -124,7 +124,7 @@ TEST_CASE("Memoized rules return identical expression")
     ErrorHolder errs;
 
     registry.defineRule(start, std::vector { prod }, errs);
-    REQUIRE_FALSE(errs.hasError());
+    REQUIRE_FALSE(errs.hasError()); 
     registry.defineRule(atom, std::vector { ops.fromString("~"), ops.fromString(":"), ops.fromString("%") }, errs);
     REQUIRE_FALSE(errs.hasError());
     

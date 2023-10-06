@@ -67,7 +67,7 @@ Cycle::shuffle()
 
     while (current > 1)
     {
-        size_t target = _options->randInt(current);
+        std::size_t target = _options->randomInteger(current);
         current--;
         std::swap(_sequence[current], _sequence[target]);
     }

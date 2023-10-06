@@ -44,7 +44,7 @@ UniformBranch::evaluate(
     ErrorHolder& errors
 ) const
 {
-    int index = options.randInt(_choices.size(), errors);
+    std::size_t index = options.randomInteger(_choices.size(), errors);
 
     if (errors.hasError())
     {

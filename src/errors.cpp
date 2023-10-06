@@ -6,27 +6,27 @@
 using namespace calyx;
 
 String_t
-Errors::undefinedRule(const String_t& symbol, const Options& options)
+Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
-    stream << "Undefined rule: '" << options.toString(symbol) << "'";
-    return options.fromString(stream.str());
+    stream << "Undefined rule: '" << converter.toString(symbol) << "'";
+    return converter.fromString(stream.str());
 }
 
 String_t
-Errors::undefinedFilter(const String_t& symbol, const Options& options)
+Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
-    stream << "Undefined filter: '" << options.toString(symbol) << "'";
-    return options.fromString(stream.str());
+    stream << "Undefined filter: '" << converter.toString(symbol) << "'";
+    return converter.fromString(stream.str());
 }
 
 String_t
-Errors::incorrectFilterSignature(const String_t& symbol, const Options& options)
+Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter)
 {
     std::ostringstream stream;
-    stream << "Incorrect method signature for filter: '" << options.toString(symbol) << "'";
-    return options.fromString(stream.str());
+    stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";
+    return converter.fromString(stream.str());
 }
 
 bool

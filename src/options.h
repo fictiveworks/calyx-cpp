@@ -9,7 +9,6 @@
 
 namespace calyx
 {
-    class ErrorHolder;
 
     class Options : public StringConverter<String_t>
     {
@@ -59,46 +58,8 @@ namespace calyx
         ~Options() override = default;
 
         Options(const Options& old) = delete;
-        
+
         Options operator=(const Options& other) = delete;
-
-        /**
-         * @brief Generates a random number
-         *
-         * @return int Returns a random int
-         */
-        int randInt();
-
-        /**
-         * @brief Generates a random double between 0 and 1
-         *
-         * @return double Returns a random double between 0 and 1
-         */
-        double randDouble();
-
-        /**
-         * @brief Generated a random number with a maximum bound and ignores errors.
-         *
-         * **Only use this when confident that errors will never be generated!**
-         *
-         * Max must be greater than 0!
-         *
-         * @param max The maximum bound of the random number (exclusive)
-         * @return int Returns a random int between 0 (inclusive) and max (exclusive)
-         */
-        int randInt(int max);
-
-        /**
-         * @brief Generated a random number with a maximum bound
-         *
-         * Max must be greater than 0.
-         *
-         * @param max The maximum bound of the random number (exclusive)
-         * @param errorHolder Reference to error holder
-         * @return int Returns a random int between 0 (inclusive) and max (exclusive)
-         */
-        int randInt(int max, ErrorHolder& errorHolder);
-
 
         /**
          * @brief Generated a random number with minimum and maximum bounds, and ignores errors.
@@ -107,23 +68,129 @@ namespace calyx
          *
          * Max must be greater than 0 and min!
          *
+         * @tparam T The integer type of the number to be generated.
          * @param min The minimum bound of the random number (inclusive)
          * @param max The maximum bound of the random number (exclusive)
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
-        int randInt(int min, int max);
+        template <typename T>
+        T randomInteger(T min, T max)
+        {
+            ErrorHolder errs;
+            return randomInteger(min, max, errs);
+        }
+
+
+        /**
+         * @brief Generated a random number with a maximum bound and ignores errors.
+         *
+         * **Only use this when confident that errors will never be generated!**
+         *
+         * Max must be greater than 0!
+         *
+         * @tparam T The integer type of the number to be generated.
+         * @param max The maximum bound of the random number (exclusive)
+         * @return int Returns a random int between 0 (inclusive) and max (exclusive)
+         */
+        template <typename T>
+        T randomInteger(T max)
+        {
+            ErrorHolder errs;
+            return randomInteger(max, errs);
+        }
 
         /**
          * @brief Generated a random number with minimum and maximum bounds
          *
          * Max must be greater than 0 and min.
          *
+         * @tparam T The integer type of the number to be generated.
          * @param min The minimum bound of the random number (inclusive)
          * @param max The maximum bound of the random number (exclusive)
          * @param errorHolder Reference to error holder
          * @return int Returns a random int between min (inclusive) and max (exclusive)
          */
-        int randInt(int min, int max, ErrorHolder& errorHolder);
+        template <typename T>
+        T randomInteger(T min, T max, ErrorHolder& errorHolder)
+        {
+            static_assert(std::is_integral_v<T>, "T must be an integral (integer) type");
+            if (max <= 0)
+            {
+                String_t msg = _converter->fromString("Max bound must be positive");
+                errorHolder.setError(msg);
+                return 0;
+            }
+
+            if (max <= min)
+            {
+                String_t msg = _converter->fromString("Max bound must be greater than min!");
+                errorHolder.setError(msg);
+                return 0;
+            }
+
+            std::uniform_int_distribution distribution(min, max - 1);
+
+            return distribution(_rng);
+        }
+
+        /**
+         * @brief Generated a random number with a maximum bound
+         *
+         * Max must be greater than 0.
+         *
+         * @tparam T The integer type of the number to be generated.
+         * @param max The maximum bound of the random number (exclusive)
+         * @param errorHolder Reference to error holder
+         * @return int Returns a random int between 0 (inclusive) and max (exclusive)
+         */
+        template <typename T>
+        T randomInteger(T max, ErrorHolder& errorHolder)
+        {
+            static_assert(std::is_integral_v<T>, "T must be an integral (integer) type");
+            if (max <= 0)
+            {
+                const String_t msg = _converter->fromString("Max bound must be positive");
+                errorHolder.setError(msg);
+                return 0;
+            }
+
+            std::uniform_int_distribution<T> distribution(0, max - 1);
+
+            return distribution(_rng);
+        }
+
+        /**
+         * @brief Generates a random number
+         *
+         * @tparam T The integer type of the number to be generated.
+         * @return int Returns a random int
+         */
+        template <typename T>
+        T randomInteger()
+        {
+            static_assert(std::is_integral_v<T>, "T must be an integral (integer) type");
+            std::uniform_int_distribution distribution(
+                std::numeric_limits<T>::min(),
+                std::numeric_limits<T>::max()
+            );
+
+            return distribution(_rng);
+        }
+
+        /**
+         * @brief Generates a random real number between 0 and 1.
+         *
+         * @tparam T The real type of the number to be generated. Must be float or double.
+         * @return double Returns a random real number between 0 and 1
+         */
+        template <typename T>
+        T randomReal()
+        {
+            static_assert(std::is_floating_point_v<T>, "T must be a real number type (eg double or float)");
+            const std::uniform_real_distribution distribution(0.0, 1.0);
+
+            return distribution(_rng);
+        }
 
         /**
          * @brief Check whether to use strict-rule checking for expansion of unknown rules

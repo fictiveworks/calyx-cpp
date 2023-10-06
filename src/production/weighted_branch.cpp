@@ -44,7 +44,7 @@ const WeightedBranch::WeightedProduction&
 WeightedBranch::getRandomProduction(Options& options) const
 {
     double max = _sumOfWeights;
-    double waterMark = options.randDouble() * _sumOfWeights;
+    double waterMark = options.randomReal<double>() * _sumOfWeights;
 
     for (const auto& wp : _productions) {
         max -= wp.weight;

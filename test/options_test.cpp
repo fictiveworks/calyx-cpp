@@ -23,6 +23,6 @@ TEST_CASE("Seeded rng is deterministic")
     Options ops(seed);
     Options other(seed);
 
-    REQUIRE(ops.randInt() == other.randInt());
+    REQUIRE(ops.randomInteger<int>() == other.randomInteger<int>());
 }
 
