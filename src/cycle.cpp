@@ -10,7 +10,7 @@ Cycle::Cycle() noexcept:
 {
 }
 
-std::optional<Cycle> Cycle::create(size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept
+std::optional<Cycle> Cycle::create(std::size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept
 {
     if (count < 1)
     {
@@ -21,7 +21,7 @@ std::optional<Cycle> Cycle::create(size_t count, StringConverter<String_t>& conv
     return Cycle(count);
 }
 
-Cycle::Cycle(size_t count) noexcept: 
+Cycle::Cycle(std::size_t count) noexcept: 
     _count(count)
 {
     _index = _count - 1;
@@ -65,17 +65,17 @@ void
 Cycle::shuffle(Options& options) noexcept
 {
     this->populateSequence();
-    size_t current = _count;
+    std::size_t current = _count;
 
     while (current > 1)
     {
-        std::size_t target = options.randomInteger(current);
+        const std::size_t target = options.randomInteger(current);
         current--;
         std::swap(_sequence[current], _sequence[target]);
     }
 }
 
-int
+std::size_t
 Cycle::poll(Options& options) noexcept
 {
     _index++;

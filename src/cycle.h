@@ -12,11 +12,11 @@ namespace calyx
 
         Cycle() noexcept;
         
-        static std::optional<Cycle> create(size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept;
+        static std::optional<Cycle> create(std::size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept;
 
         void shuffle(Options& options) noexcept;
 
-        int poll(Options& options) noexcept;
+        std::size_t poll(Options& options) noexcept;
 
         // rule of 5 stuff :D 
         
@@ -31,9 +31,9 @@ namespace calyx
         ~Cycle() = default;
 
     private:
-        size_t _count;
-        size_t _index;
-        std::vector<int> _sequence;
+        std::size_t _count;
+        std::size_t _index;
+        std::vector<std::size_t> _sequence;
 
         Cycle(size_t count) noexcept;
         void populateSequence() noexcept;

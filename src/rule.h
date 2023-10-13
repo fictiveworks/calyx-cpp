@@ -43,7 +43,7 @@ namespace calyx
         ) const;
 
         std::optional<Expansion> evaluateAt(
-            int index,
+            std::size_t index,
             Registry& registry,
             Options& options,
             ErrorHolder& errors

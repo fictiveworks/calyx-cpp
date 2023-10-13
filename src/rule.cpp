@@ -43,7 +43,7 @@ Rule::evaluate(
 
 std::optional<Expansion>
 Rule::evaluateAt(
-    int index,
+    std::size_t index,
     Registry& registry,
     Options& options,
     ErrorHolder& errors
