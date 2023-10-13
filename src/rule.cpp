@@ -19,7 +19,12 @@ Rule::empty(String_t term)
 }
 
 std::optional<Rule>
-Rule::build(String_t term, const std::vector<String_t>& productions, const Registry& registry, ErrorHolder& errors)
+Rule::build(
+    String_t term,
+    const std::vector<String_t>& productions,
+    const Registry& registry,
+    ErrorHolder& errors
+)
 {
     std::optional<UniformBranch> branch = UniformBranch::parse(productions, registry, errors);
 
@@ -29,6 +34,24 @@ Rule::build(String_t term, const std::vector<String_t>& productions, const Regis
     }
 
     return Rule(std::move(term), std::make_unique<UniformBranch>(*branch));
+}
+
+std::optional<Rule>
+Rule::build(
+    String_t term,
+    const std::map<String_t, double>& productions,
+    const Registry& registry,
+    ErrorHolder& errors
+)
+{
+    std::optional<WeightedBranch> branch = WeightedBranch::parse(productions, registry, errors);
+
+    if (!branch)
+    {
+        return {};
+    }
+
+    return Rule(std::move(term), std::make_unique<WeightedBranch>(*branch));
 }
 
 std::optional<Expansion>

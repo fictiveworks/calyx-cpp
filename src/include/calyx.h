@@ -25,7 +25,6 @@ namespace calyx
     class Result
     {
     public:
-        
         /**
          * @brief Constructs the Result out of an expansion tree.
          * @param tree The expansion tree of the result.
@@ -156,38 +155,47 @@ namespace calyx
         Grammar& operator=(const Grammar& old) = delete;
 
         /**
-         * @brief Defines the start rule for the grammar. In this case, there is only one possible choice for the result when
-         * the start rule is evaluated.
+         * @brief Defines a new single-value start rule for the grammar.
          *
          * If an error occurs while parsing this production, then the rule will NOT be added to
          * the grammar.
          * 
-         * @param production The resulting production of the start rule. Parsed as a template production.
+         * @param production The resulting production of the start rule.
          * @param errors Error handler containing errors messages that may arise when parsing this rule. 
          */
         void start(String_t production, ErrorHolder& errors) noexcept;
 
         /**
-         * @brief Defines the start rule for the grammar. In this case, there are several possible choices for the result.
-         * When start is evaluated, one of these productions is chosen at random with a uniform distribution.
+         * @brief Defines a uniform probability distribution for the start rule of the grammar.
          *
          * If an error occurs while parsing this production, then the rule will NOT be added to
          * the grammar.
          * 
-         * @param production The resulting productions of the start rule. Parsed as template productions.
+         * @param production A uniform branch of productions for this rule.
          * @param errors Error handler containing errors messages that may arise when parsing this rule. 
          */
         void start(const std::vector<String_t>& production, ErrorHolder& errors) noexcept;
 
         /**
-         * @brief Defines a new rule for the grammar. In this case, there is only one possible choice for the result when
+         * @brief Defines a weighted probability distribution for the start rule for the grammar.
+         *
+         * If an error occurs while parsing this production, then the rule will NOT be added to
+         * the grammar.
+         * 
+         * @param productions A custom weighted branch of productions for this rule.
+         * @param errors Error handler containing errors messages that may arise when parsing this rule. 
+         */
+        void start(const std::map<String_t, double>& productions, ErrorHolder& errors) noexcept;
+
+        /**
+         * @brief Defines a new single-value rule for the grammar. In this case, there is only one possible choice for the result when
          * the term is evaluated.
          *
          * If an error occurs while parsing this rule, then the rule will NOT be added to
          * the grammar.
          *
          * @param term The name of the new rule
-         * @param production The resulting productions of the start rule. Parsed as a template production.
+         * @param production The resulting production of this rule.
          * @param errors Error handler containing errors messages that may arise when parsing this rule. 
          */
         void rule(String_t term, String_t production, ErrorHolder& errors) noexcept;
@@ -200,10 +208,22 @@ namespace calyx
          * the grammar.
          *
          * @param term The name of the new rule
-         * @param production The resulting productions of the start rule. Parsed as template productions.
+         * @param production A uniform branch of productions for this rule.
          * @param errors Error handler containing errors messages that may arise when parsing this rule. 
          */
         void rule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors) noexcept;
+
+        /**
+         * @brief Defines a weighted probability distribution rule for the grammar.
+         *
+         * If an error occurs while parsing this production, then the rule will NOT be added to
+         * the grammar.
+         * 
+         * @param term The name of the new rule
+         * @param productions A custom weighted branch of productions for this rule.
+         * @param errors Error handler containing errors messages that may arise when parsing this rule. 
+         */
+        void rule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors) noexcept;
 
         /**
          * @brief Randomly generates some text using this Grammar's rules, starting from the "start" rule.
@@ -217,5 +237,4 @@ namespace calyx
     private:
         Registry _registry;
     };
-
 }

@@ -75,6 +75,14 @@ Grammar::start(const std::vector<String_t>& production, ErrorHolder& errors) noe
 }
 
 void
+Grammar::start(const std::map<String_t, double>& productions, ErrorHolder& errors) noexcept
+{
+    const Options& ops = _registry.getOptions();
+    _registry.defineRule(ops.fromString("start"), productions, errors);
+}
+
+
+void
 Grammar::rule(String_t term, String_t production, ErrorHolder& errors) noexcept
 {
     _registry.defineRule(std::move(term), { std::move(production) }, errors);
@@ -84,6 +92,12 @@ void
 Grammar::rule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors) noexcept
 {
     _registry.defineRule(std::move(term), production, errors);
+}
+
+void
+Grammar::rule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors) noexcept
+{
+    _registry.defineRule(std::move(term), productions, errors);
 }
 
 std::optional<Result>

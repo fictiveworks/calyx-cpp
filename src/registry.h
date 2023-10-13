@@ -38,6 +38,8 @@ namespace calyx
 
         void defineRule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors);
 
+        void defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors);
+
         std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);

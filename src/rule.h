@@ -11,11 +11,9 @@
 
 namespace calyx
 {
-
     class Rule
     {
     public:
-
         Rule() = default;
 
         /**
@@ -34,7 +32,19 @@ namespace calyx
 
         static Rule empty(String_t term);
 
-        static std::optional<Rule> build(String_t term, const std::vector<String_t>& productions, const Registry& registry, ErrorHolder& errors);
+        static std::optional<Rule> build(
+            String_t term,
+            const std::vector<String_t>& productions,
+            const Registry& registry,
+            ErrorHolder& errors
+        );
+
+        static std::optional<Rule> build(
+            String_t term,
+            const std::map<String_t, double>& productions,
+            const Registry& registry,
+            ErrorHolder& errors
+        );
 
         std::optional<Expansion> evaluate(
             Registry& registry,

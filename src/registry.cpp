@@ -58,6 +58,19 @@ Registry::defineRule(String_t term, const std::vector<String_t>& production, Err
     _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
 }
 
+void
+Registry::defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors)
+{
+    std::optional<Rule> rule = Rule::build(term, productions, *this, errors);
+
+    if (!rule || errors.hasError())
+    {
+        return;
+    }
+
+    _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
+}
+
 std::optional<Expansion>
 Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 {
