@@ -4,17 +4,17 @@
 #include <include/calyx.h>
 #include <cycle.h>
 
-TEST_CASE("Cycle length 1 always returns 0th index") 
+using namespace calyx;
+
+TEST_CASE("Cycle length 1 always returns 0th index")
 {
-    auto ops = std::shared_ptr<calyx::Options>();
-    auto errs = calyx::ErrorHolder();
-    std::optional<calyx::Cycle> cycle = calyx::Cycle::create(ops, 1, errs);
-    
+    Options ops;
+    ErrorHolder errs;
+    std::optional<Cycle> cycle = Cycle::create(1, ops, errs);
+
     REQUIRE(cycle.has_value());
     REQUIRE_FALSE(errs.hasError());
-    REQUIRE(0 == cycle->poll());
-    REQUIRE(0 == cycle->poll());
-    REQUIRE(0 == cycle->poll());
+    REQUIRE(0 == cycle->poll(ops));
+    REQUIRE(0 == cycle->poll(ops));
+    REQUIRE(0 == cycle->poll(ops));
 }
-
-

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <optional>
 
 #include "options.h"
@@ -11,30 +10,32 @@ namespace calyx
     {
     public:
 
-        static std::optional<Cycle> create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors);
-
-        Cycle(const Cycle& old);
-
-        Cycle& operator=(const Cycle& other);
-
-        ~Cycle();
+        Cycle() noexcept;
         
-        void shuffle();
+        static std::optional<Cycle> create(size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept;
 
-        int poll();
+        void shuffle(Options& options) noexcept;
 
-    protected:
-        Cycle(std::shared_ptr<Options> options, size_t count);
+        int poll(Options& options) noexcept;
+
+        // rule of 5 stuff :D 
+        
+        Cycle(const Cycle& other) noexcept = default;
+
+        Cycle(Cycle&& other) noexcept;
+
+        Cycle& operator=(const Cycle& other) noexcept;
+
+        Cycle& operator=(Cycle&& other) noexcept;
+
+        ~Cycle() = default;
 
     private:
-
-        std::shared_ptr<Options> _options;
-        size_t _index;
-        
         size_t _count;
-        int* _sequence;
+        size_t _index;
+        std::vector<int> _sequence;
 
-        void populateSequence();
-
+        Cycle(size_t count) noexcept;
+        void populateSequence() noexcept;
     };
 }

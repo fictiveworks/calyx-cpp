@@ -145,7 +145,6 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 std::optional<Expansion>
 Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
 {
-    //
     if (!_cycles.contains(symbol))
     {
         std::shared_ptr<Rule> prod = this->expand(symbol, errors);
@@ -157,24 +156,25 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
 
         size_t cycleLength = prod->length();
 
-        std::optional<Cycle> cycle = Cycle::create(_options, cycleLength, errors);
+        std::optional<Cycle> cycle = Cycle::create(cycleLength, *_options, errors);
 
         if (!cycle || errors.hasError())
         {
             return {};
         }
-        _cycles.emplace(symbol, std::make_unique<Cycle>(cycle.value()));
+
+        _cycles.emplace(symbol, *cycle);
     }
 
-    auto rule = this->expand(symbol, errors);
+    const std::shared_ptr<Rule> rule = this->expand(symbol, errors);
 
     if (!rule || errors.hasError())
     {
         return {};
     }
+    Cycle& randomCycle = _cycles[symbol];
 
-
-    return rule->evaluateAt(_cycles[symbol]->poll(), *this, *_options, errors);
+    return rule->evaluateAt(randomCycle.poll(*_options), *this, *_options, errors);
 }
 
 std::shared_ptr<Rule>
