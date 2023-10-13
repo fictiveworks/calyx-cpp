@@ -189,7 +189,9 @@ namespace calyx
         T randomReal()
         {
             static_assert(std::is_floating_point_v<T>, "T must be a real number type (eg double or float)");
-            const std::uniform_real_distribution distribution(0.0, 1.0);
+            std::uniform_real_distribution distribution(
+                0.0, 1.0
+            );
 
             return distribution(_rng);
         }
