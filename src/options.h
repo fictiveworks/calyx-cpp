@@ -59,7 +59,9 @@ namespace calyx
 
         Options(const Options& old) = delete;
 
-        Options operator=(const Options& other) = delete;
+        Options& operator=(const Options& other) noexcept = delete;
+
+        Options& operator=(Options&& old) noexcept;
 
         /**
          * @brief Generated a random number with minimum and maximum bounds, and ignores errors.

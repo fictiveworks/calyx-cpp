@@ -32,6 +32,18 @@ Options::Options(Options&& other) noexcept:
 {
 }
 
+Options& Options::operator=(Options&& old) noexcept
+{
+    if (this != &old)
+    {
+        _strict = old._strict;
+        _rng = old._rng;
+        _converter = std::move(old._converter);
+    }
+
+    return *this;
+}
+
 bool
 Options::isStrict() const
 {
