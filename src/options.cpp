@@ -13,9 +13,10 @@ Options::Options(bool strict, std::unique_ptr<StringConverter> converter):
 
 Options::Options(unsigned long seed, bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
-    _rng(seed),
+    _rng(),
     _converter(std::move(converter))
 {
+    _rng.seed(seed);
 }
 
 Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter> converter):
