@@ -26,3 +26,11 @@ TEST_CASE("Seeded rng is deterministic")
     REQUIRE(ops.randomInteger<int>() == other.randomInteger<int>());
 }
 
+TEST_CASE("Seeded rng generates a particular value")
+{
+    constexpr unsigned long seed = 123;
+    Options ops(seed);
+
+    REQUIRE(ops.randomInteger<int>() == 843828734);
+}
+
