@@ -15,7 +15,7 @@ namespace calyx
     public:
         ExpressionNode(String_t reference);
 
-        ~ExpressionNode() = default;
+        ~ExpressionNode() override = default;
 
         static std::shared_ptr<Production> parse(const String_t raw, const Registry& registry, ErrorHolder& errors);
 

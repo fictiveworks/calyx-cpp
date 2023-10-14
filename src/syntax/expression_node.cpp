@@ -1,6 +1,7 @@
 #include "expression_node.h"
 
 #include "memo_node.h"
+#include "unique_node.h"
 
 
 using namespace calyx;
@@ -22,6 +23,12 @@ ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder&
         Options& ops = registry.getOptions();
         std::string rawString = ops.toString(raw).substr(1);
         return std::make_shared<MemoNode>(MemoNode(ops.fromString(rawString)));
+    }
+    else if (raw[0] == UNIQUE_SIGIL)
+    {
+        Options& ops = registry.getOptions();
+        std::string rawString = ops.toString(raw).substr(1);
+        return std::make_shared<UniqueNode>(UniqueNode(ops.fromString(rawString)));
     }
     
     

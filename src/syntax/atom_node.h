@@ -16,6 +16,8 @@ namespace calyx
 
         AtomNode(String_t atom);
 
+        ~AtomNode() override = default;
+
         std::optional<Expansion> evaluate(
             Registry& registry,
             Options& options,
