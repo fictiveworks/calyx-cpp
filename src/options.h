@@ -35,7 +35,7 @@ namespace calyx
          * @param converter The string converter to use
          */
         Options(
-            unsigned long seed,
+            unsigned int seed,
             bool strict = DEFAULT_STRICT,
             std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
         );

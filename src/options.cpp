@@ -11,7 +11,7 @@ Options::Options(bool strict, std::unique_ptr<StringConverter> converter):
 {
 }
 
-Options::Options(unsigned long seed, bool strict, std::unique_ptr<StringConverter> converter):
+Options::Options(unsigned int seed, bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
     _rng(),
     _converter(std::move(converter))

@@ -19,7 +19,7 @@ TEST_CASE("Strict on with flag set")
 
 TEST_CASE("Seeded rng is deterministic")
 {
-    constexpr unsigned long seed = 123;
+    constexpr unsigned int seed = 123;
     Options ops(seed);
     Options other(seed);
 
@@ -28,7 +28,7 @@ TEST_CASE("Seeded rng is deterministic")
 
 TEST_CASE("Seeded rng generates a particular value")
 {
-    constexpr unsigned long seed = 123;
+    constexpr unsigned int seed = 123;
     Options ops(seed);
 
     REQUIRE(ops.randomInteger<int>() == 843828734);
