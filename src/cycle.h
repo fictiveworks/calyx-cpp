@@ -18,6 +18,8 @@ namespace calyx
 
         std::size_t poll(Options& options) noexcept;
 
+        const std::vector<std::size_t>& getSequence() const noexcept;
+
         // rule of 5 stuff :D 
         
         Cycle(const Cycle& other) noexcept = default;

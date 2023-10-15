@@ -97,3 +97,9 @@ Cycle::populateSequence() noexcept
         _sequence.push_back(i);
     }
 }
+
+const std::vector<std::size_t>&
+Cycle::getSequence() const noexcept
+{
+    return _sequence;
+}
