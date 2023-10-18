@@ -2,6 +2,7 @@
 
 #include <include/calyx.h>
 #include <options.h>
+#include <stdint.h>
 
 using namespace calyx;
 
@@ -31,6 +32,9 @@ TEST_CASE("Seeded rng generates a particular value")
     constexpr unsigned int seed = 123;
     Options ops(seed);
 
-    REQUIRE(ops.randomInteger<int>() == 843828734);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 843828734);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 914636141);
+    REQUIRE(ops.randomInteger<std::int32_t>() == -918524546);
+    REQUIRE(ops.randomInteger<std::int32_t>() == -307215038);
 }
 
