@@ -47,18 +47,17 @@ TEST_CASE("Cycles are different each time")
     Options ops(3211u, false);
     ErrorHolder errs;
     const std::size_t count = 3;
-    std::cout << "initial state" << ops._rng << std::endl;
     std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
-    std::cout << "post creation state" << ops._rng << std::endl;
     REQUIRE(cycle);
     REQUIRE_FALSE(errs.hasError());
 
+    std::cout << "post creation state" << ops._rng << std::endl;
     std::vector<std::size_t> results;
     for (std::size_t i = 0; i < 2 * count; i++)
     {
         results.push_back(cycle->poll(ops));
+    std::cout << "post poll state #" << i << " " << ops._rng << std::endl;
     }
-    std::cout << "Called rng " << sizeof(unsigned int) << " times" << std::endl;
     
     REQUIRE(results == std::vector<std::size_t> { 1, 0, 2, 2, 1, 0 });
 }
