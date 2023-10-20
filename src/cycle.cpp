@@ -71,7 +71,10 @@ Cycle::shuffle(Options& options) noexcept
     {
         const std::size_t target = options.randomInteger(current);
         current--;
-        std::swap(_sequence[current], _sequence[target]);
+
+        const std::size_t old = _sequence[current];
+        _sequence[current] = _sequence[target];
+        _sequence[target] = old;
     }
 }
 

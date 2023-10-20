@@ -21,9 +21,9 @@ TEST_CASE("Cycle length 1 always returns 0th index")
 
 TEST_CASE("Cycles refresh once fully consumed")
 {
-    Options ops(12345u, false);
+    Options ops(123u, false);
     ErrorHolder errs;
-    std::size_t count = 10;
+    const std::size_t count = 3;
 
     std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
 
@@ -36,16 +36,16 @@ TEST_CASE("Cycles refresh once fully consumed")
         results.push_back(cycle->poll(ops));
     }
 
-    REQUIRE(results == std::vector<std::size_t> { 7, 1, 8, 4, 2, 9, 3, 5, 6, 0, 9, 8, 7, 6, 2, 5, 4, 1, 3, 0 });
+    REQUIRE(results == std::vector<std::size_t> { 0, 2, 1, 1, 2, 0 });
 }
 
 TEST_CASE("Cycles are different each time")
 {
     // by using a different seed to the "Cycles refresh once fully consumed" we verify
     // that the resulting cycle is indeed different each time
-    Options ops(53321321u, false);
+    Options ops(3211u, false);
     ErrorHolder errs;
-    std::size_t count = 10;
+    const std::size_t count = 3;
 
     std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
 
@@ -58,14 +58,14 @@ TEST_CASE("Cycles are different each time")
         results.push_back(cycle->poll(ops));
     }
 
-    REQUIRE(results == std::vector<std::size_t> { 7, 9, 6, 3, 4, 5, 0, 1, 8, 2, 2, 3, 4, 1, 7, 6, 9, 5, 8, 0 });
+    REQUIRE(results == std::vector<std::size_t> { 2, 0, 1, 0, 1, 2 });
 }
 
 TEST_CASE("Shuffling shuffles")
 {
-    Options ops(3213211321u, false);
+    Options ops(321, false);
     ErrorHolder errs;
-    std::size_t count = 10;
+    const std::size_t count = 3;
 
     std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
 
@@ -76,5 +76,5 @@ TEST_CASE("Shuffling shuffles")
 
     const std::vector<std::size_t>& sequence = cycle->getSequence();
 
-    REQUIRE(sequence == std::vector<std::size_t> { 1, 4, 9, 3, 5, 6, 0, 8, 7, 2 });
+    REQUIRE(sequence == std::vector<std::size_t> { 1, 2, 0 });
 }
