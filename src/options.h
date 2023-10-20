@@ -85,6 +85,7 @@ namespace calyx
         template <typename T>
         void shuffle(std::vector<T>& items)
         {
+            _rngCallCounter++;
             std::shuffle(items.begin(), items.end(), _rng);
         }
 
@@ -134,7 +135,6 @@ namespace calyx
                 errorHolder.setError(msg);
                 return 0;
             }
-            _rngCallCounter++;
             std::uniform_int_distribution distribution(min, max - 1);
 
             return distribution(_rng);
