@@ -1,6 +1,7 @@
 #include "cycle.h"
 
 #include <algorithm>
+#include <iostream>
 
 using namespace calyx;
 
@@ -64,6 +65,9 @@ Cycle& Cycle::operator=(Cycle&& other) noexcept
 void
 Cycle::shuffle(Options& options) noexcept
 {
+    std::cout << "RNG State before shuffling: " 
+          << options.randomInteger(0, 10) << ", " 
+          << options.randomInteger(0, 10) << std::endl;
     this->populateSequence();
     options.shuffle(_sequence);
 }
