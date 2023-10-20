@@ -85,7 +85,6 @@ namespace calyx
         template <typename T>
         void shuffle(std::vector<T>& items)
         {
-            _rngCallCounter++;
             std::shuffle(items.begin(), items.end(), _rng);
         }
 
@@ -229,10 +228,9 @@ namespace calyx
          */
         String_t fromString(const std::string& stdString) const override;
 
-        int _rngCallCounter = 0;
+        std::mt19937 _rng;
     private:
         bool _strict;
-        std::mt19937 _rng;
         std::unique_ptr<StringConverter> _converter;
     };
 }

@@ -58,7 +58,7 @@ TEST_CASE("Cycles are different each time")
     {
         results.push_back(cycle->poll(ops));
     }
-    std::cout << "Called rng " << ops._rngCallCounter << " times" << std::endl;
+    std::cout << "Called rng " << ops._rng << " times" << std::endl;
     
     REQUIRE(results == std::vector<std::size_t> { 1, 0, 2, 2, 1, 0 });
 }
