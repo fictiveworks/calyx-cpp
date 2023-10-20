@@ -9,7 +9,7 @@ using namespace calyx;
 
 TEST_CASE("Cycle length 1 always returns 0th index")
 {
-    Options ops;
+    Options ops(1234u, false);
     ErrorHolder errs;
     std::optional<Cycle> cycle = Cycle::create(1, ops, errs);
 

@@ -56,7 +56,7 @@ namespace calyx
         std::map<String_t, std::shared_ptr<Rule>> _rules;
         std::map<String_t, std::shared_ptr<Rule>> _context;
         std::map<String_t, std::shared_ptr<Expansion>> _memos;
-        std::map<String_t, Cycle> _cycles;
+        std::map<String_t, std::shared_ptr<Cycle>> _cycles;
 
         std::shared_ptr<Options> _options;
     };

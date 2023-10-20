@@ -167,7 +167,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
             return {};
         }
 
-        size_t cycleLength = prod->length();
+        const std::size_t cycleLength = prod->length();
 
         std::optional<Cycle> cycle = Cycle::create(cycleLength, *_options, errors);
 
@@ -176,7 +176,7 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
             return {};
         }
 
-        _cycles.emplace(symbol, *cycle);
+        _cycles.emplace(symbol, std::make_shared<Cycle>(*cycle));
     }
 
     const std::shared_ptr<Rule> rule = this->expand(symbol, errors);
@@ -185,9 +185,9 @@ Registry::uniqueExpansion(const String_t& symbol, ErrorHolder& errors)
     {
         return {};
     }
-    Cycle& randomCycle = _cycles[symbol];
+    const std::shared_ptr<Cycle> randomCycle = _cycles[symbol];
 
-    return rule->evaluateAt(randomCycle.poll(*_options), *this, *_options, errors);
+    return rule->evaluateAt(randomCycle->poll(*_options), *this, *_options, errors);
 }
 
 std::shared_ptr<Rule>
