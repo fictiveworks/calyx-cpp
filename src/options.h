@@ -82,6 +82,11 @@ namespace calyx
             return randomInteger(min, max, errs);
         }
 
+        template <typename T>
+        void shuffle(std::vector<T>& items)
+        {
+            std::shuffle(items.begin(), items.end(), _rng);
+        }
 
         /**
          * @brief Generated a random number with a maximum bound and ignores errors.

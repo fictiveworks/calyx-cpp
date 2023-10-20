@@ -36,7 +36,7 @@ TEST_CASE("Cycles refresh once fully consumed")
         results.push_back(cycle->poll(ops));
     }
 
-    REQUIRE(results == std::vector<std::size_t> { 0, 2, 1, 1, 2, 0 });
+    REQUIRE(results == std::vector<std::size_t> { 1, 2, 0, 2, 0, 1 });
 }
 
 TEST_CASE("Cycles are different each time")
@@ -58,7 +58,7 @@ TEST_CASE("Cycles are different each time")
         results.push_back(cycle->poll(ops));
     }
 
-    REQUIRE(results == std::vector<std::size_t> { 2, 0, 1, 0, 1, 2 });
+    REQUIRE(results == std::vector<std::size_t> { 1, 0, 2, 2, 1, 0 });
 }
 
 TEST_CASE("Shuffling shuffles")
@@ -76,5 +76,5 @@ TEST_CASE("Shuffling shuffles")
 
     const std::vector<std::size_t>& sequence = cycle->getSequence();
 
-    REQUIRE(sequence == std::vector<std::size_t> { 1, 2, 0 });
+    REQUIRE(sequence == std::vector<std::size_t> { 2, 0, 1 });
 }

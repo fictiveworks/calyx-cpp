@@ -65,17 +65,7 @@ void
 Cycle::shuffle(Options& options) noexcept
 {
     this->populateSequence();
-    std::size_t current = _count;
-
-    while (current > 1)
-    {
-        const std::size_t target = options.randomInteger(current);
-        current--;
-
-        const std::size_t old = _sequence[current];
-        _sequence[current] = _sequence[target];
-        _sequence[target] = old;
-    }
+    options.shuffle(_sequence);
 }
 
 std::size_t

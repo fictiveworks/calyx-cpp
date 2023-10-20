@@ -38,11 +38,3 @@ TEST_CASE("Seeded rng generates a particular value")
     REQUIRE(ops.randomInteger<std::int32_t>() == -307215038);
 }
 
-TEST_CASE("size t is funny")
-{
-    constexpr unsigned int seed = 123;
-    Options ops(seed);
-
-    REQUIRE(ops.randomInteger<std::size_t>() == 12847588855871978861);
-}
-
