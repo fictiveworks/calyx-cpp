@@ -134,7 +134,7 @@ namespace calyx
                 errorHolder.setError(msg);
                 return 0;
             }
-
+            _rngCallCounter++;
             std::uniform_int_distribution distribution(min, max - 1);
 
             return distribution(_rng);
@@ -229,6 +229,7 @@ namespace calyx
          */
         String_t fromString(const std::string& stdString) const override;
 
+        int _rngCallCounter = 0;
     private:
         bool _strict;
         std::mt19937 _rng;

@@ -49,8 +49,6 @@ TEST_CASE("Cycles are different each time")
     const std::size_t count = 3;
 
     std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
-    std::cout << "Cycle count: " << cycle->_count << std::endl;
-    std::cout << "Cycle index: " << cycle->_index << std::endl;
 
     REQUIRE(cycle);
     REQUIRE_FALSE(errs.hasError());
@@ -60,9 +58,7 @@ TEST_CASE("Cycles are different each time")
     {
         results.push_back(cycle->poll(ops));
     }
-
-    std::cout << "Cycle count 2: " << cycle->_count << std::endl;
-    std::cout << "Cycle index 2: " << cycle->_index << std::endl;
+    std::cout << "Called rng " << ops._rngCallCounter << " times" << std::endl;
     
     REQUIRE(results == std::vector<std::size_t> { 1, 0, 2, 2, 1, 0 });
 }

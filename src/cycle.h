@@ -31,11 +31,10 @@ namespace calyx
         Cycle& operator=(Cycle&& other) noexcept;
 
         ~Cycle() = default;
-        
-        std::size_t _count;
-        std::size_t _index;
 
     private:
+        std::size_t _count;
+        std::size_t _index;
         std::vector<std::size_t> _sequence;
 
         Cycle(size_t count) noexcept;
