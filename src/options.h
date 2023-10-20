@@ -3,6 +3,7 @@
 #include <functional>
 #include <random>
 #include <memory>
+#include <stdint.h>
 #include "include/string_converter.h"
 #include "errors.h"
 
@@ -35,7 +36,7 @@ namespace calyx
          * @param converter The string converter to use
          */
         Options(
-            unsigned int seed,
+            std::uint32_t seed,
             bool strict = DEFAULT_STRICT,
             std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
         );
