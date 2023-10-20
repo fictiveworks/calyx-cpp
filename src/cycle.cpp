@@ -74,7 +74,7 @@ Cycle::poll(Options& options) noexcept
     _index++;
     if (_index >= _count)
     {
-        shuffle(options);
+        this->shuffle(options);
         _index = 0;
     }
     return _sequence[_index];
