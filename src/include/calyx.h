@@ -84,17 +84,17 @@ namespace calyx
          * can be configured as you wish.
          *
          * @param rng Mersenne-twister based random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(std::mt19937 rng, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(std::mt19937 rng, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured random seed and strict mode.
          *
          * @param seed The seed for the random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(unsigned long seed, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(unsigned long seed, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured strict mode and initialization callback.
@@ -111,9 +111,9 @@ namespace calyx
          * @endcode 
          *
          * @param initializeCallback The initialization callback
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured strict mode, random number generator, and initialization callback.
@@ -122,12 +122,12 @@ namespace calyx
          * 
          * @param initializeCallback The initialization callback
          * @param rng Mersenne-twister based random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict. 
          */
         explicit Grammar(
             const std::function<void(Grammar&)>& initializeCallback,
             std::mt19937 rng,
-            bool strict = Options::DEFAULT_STRICT
+            bool strict
         ) noexcept;
 
         /**
@@ -137,12 +137,12 @@ namespace calyx
          * 
          * @param initializeCallback The initialization callback
          * @param seed The seed for the random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
         explicit Grammar(
             const std::function<void(Grammar&)>& initializeCallback,
             unsigned long seed,
-            bool strict = Options::DEFAULT_STRICT
+            bool strict
         ) noexcept;
 
         Grammar(Grammar&& old) noexcept;

@@ -15,7 +15,6 @@ Registry::Registry(std::shared_ptr<Options> options):
     _rules(std::map<String_t, std::shared_ptr<Rule>>()),
     _options(std::move(options))
 {
-    addFilter(_options->fromString("uppercase"), filters::uppercase);
 }
 
 Registry::Registry(Registry&& old) noexcept:

@@ -15,47 +15,35 @@ Grammar::Grammar(Options opts) noexcept :
 }
 
 Grammar::Grammar(bool strict) noexcept :
-    _registry(strict)
+    Grammar(Options(strict))
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
 }
 
 Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
-    _registry(Options(rng, strict))
+    Grammar(Options(rng, strict))
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
 }
 
 Grammar::Grammar(unsigned long seed, bool strict) noexcept :
-    _registry(Options(seed, strict))
+    Grammar(Options(seed, strict))
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
 }
 
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept :
     Grammar(strict)
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
     initializeCallback(*this);
 }
 
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict) noexcept :
     Grammar(rng, strict)
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
     initializeCallback(*this);
 }
 
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, unsigned long seed, bool strict) noexcept :
     Grammar(seed, strict)
 {
-    const DefaultFilters baseFilters = DefaultFilters();
-    this->filters(baseFilters);
     initializeCallback(*this);
 }
 

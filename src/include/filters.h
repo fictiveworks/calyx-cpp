@@ -1,11 +1,15 @@
 #pragma once
 #include <map>
-#include <vector>
 
-#include "../filters.h"
+#include "string_converter.h"
+
 
 namespace calyx
 {
+    class Options;
+
+    using Filter_t = String_t(*)(const String_t&, const Options&);
+    
     class FiltersProvider
     {
     public:
@@ -39,6 +43,10 @@ namespace calyx
         const std::map<String_t, Filter_t> getFilters(const Options& options) const override;
 
         static String_t uppercase(const String_t& input, const Options& options);
+        
+        static String_t lowercase(const String_t& input, const Options& options);
+        
+        static String_t length(const String_t& input, const Options& options);
 
         static String_t emphasis(const String_t& input, const Options& options);
 

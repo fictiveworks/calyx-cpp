@@ -10,7 +10,7 @@
 #include "rule.h"
 #include "expansion.h"
 #include "cycle.h"
-#include "filters.h"
+#include "include/filters.h"
 #include "include/string_converter.h"
 
 namespace calyx
