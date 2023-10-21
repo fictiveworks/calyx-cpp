@@ -15,7 +15,7 @@ Rule::Rule(String_t term, std::shared_ptr<ProductionBranch> production):
 Rule
 Rule::empty(String_t term)
 {
-    return Rule(term, std::make_unique<EmptyBranch>());
+    return Rule(term, std::make_shared<EmptyBranch>());
 }
 
 std::optional<Rule>
@@ -33,7 +33,7 @@ Rule::build(
         return {};
     }
 
-    return Rule(std::move(term), std::make_unique<UniformBranch>(*branch));
+    return Rule(std::move(term), std::make_shared<UniformBranch>(*branch));
 }
 
 std::optional<Rule>
@@ -51,7 +51,7 @@ Rule::build(
         return {};
     }
 
-    return Rule(std::move(term), std::make_unique<WeightedBranch>(*branch));
+    return Rule(std::move(term), std::make_shared<WeightedBranch>(*branch));
 }
 
 std::optional<Expansion>
