@@ -37,6 +37,7 @@ Registry& Registry::operator=(Registry&& other) noexcept
         _memos = std::move(other._memos);
         _cycles = std::move(other._cycles);
         _options = std::move(other._options);
+        _filters = std::move(other._filters);
     }
     return *this;
 }

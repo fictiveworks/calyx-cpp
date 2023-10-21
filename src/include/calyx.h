@@ -10,6 +10,7 @@
 
 #include <string>
 
+#include "filters.h"
 #include "../registry.h"
 #include "../options.h"
 #include "string_converter.h"
@@ -36,7 +37,7 @@ namespace calyx
          * 
          * @return Returns a reference to the expansion tree of this result  
          */
-        const Expansion& getTree();
+        const Expansion& getTree() const;
 
         /**
          * @brief Flattens the text into a new string, and returns it
@@ -44,7 +45,7 @@ namespace calyx
          * @param options Options for evaluating the text.
          * @return Returns a new string_t
          */
-        String_t text(const Options& options);
+        String_t getText(const Options& options) const;
 
     private:
         Expansion _tree;
@@ -76,7 +77,7 @@ namespace calyx
          * 
          * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
          */
-        explicit Grammar(bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured random number generator (rng) and strict mode. The random number generator
@@ -233,6 +234,10 @@ namespace calyx
          * errors does not have an error.
          */
         [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
+
+        void filters(const FiltersProvider& provider) noexcept;
+
+        Options& getOptions() const noexcept;
 
     private:
         Registry _registry;

@@ -6,19 +6,19 @@ using namespace calyx;
 
 TEST_CASE("Can apply filters")
 {
-    Registry registry;
-    Options& ops = registry.getOptions();
+    Grammar grammar = Grammar();
+    Options& ops = grammar.getOptions();
     ErrorHolder errs;
 
-    registry.defineRule(ops.fromString("start"), { "greekLetter.uppercase" }, errs);
+    grammar.rule(ops.fromString("start"), "greekLetter.uppercase", errs);
     REQUIRE_FALSE(errs.hasError());
-    registry.defineRule(ops.fromString("greekLetter"), { "alpha" }, errs);
+    grammar.rule(ops.fromString("greekLetter"), "alpha", errs);
     REQUIRE_FALSE(errs.hasError());
 
-    std::optional<Expansion> exp = registry.evaluate(ops.fromString("start"), errs);
+    std::optional<Result> exp = grammar.generate(errs);
     REQUIRE(exp.has_value());
     REQUIRE_FALSE(errs.hasError());
 
-    REQUIRE(exp->getSymbol() == Exp::RESULT);
-    REQUIRE(exp->flatten(ops) == ops.fromString("ALPHA"));
+    REQUIRE(exp->getTree().getSymbol() == Exp::RESULT);
+    REQUIRE(exp->getText(ops) == ops.fromString("ALPHA"));
 }

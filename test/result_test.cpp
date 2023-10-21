@@ -30,7 +30,7 @@ TEST_CASE("Flattens expression tree to string")
     Result result = Result(tripleAtomTree);
 
     Options ops;
-    std::string text = result.text(ops);
+    std::string text = result.getText(ops);
 
     REQUIRE("O N E | T W O" == text);
 }

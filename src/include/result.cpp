@@ -12,13 +12,13 @@ Result::Result(Expansion tree):
 
 
 const Expansion& 
-Result::getTree()
+Result::getTree() const
 {
     return _tree;
 }
 
 String_t 
-Result::text(const Options& options)
+Result::getText(const Options& options) const
 {
     return _tree.flatten(options);
 }
