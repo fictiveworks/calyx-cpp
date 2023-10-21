@@ -2,6 +2,7 @@
 
 #include <include/calyx.h>
 #include <options.h>
+#include <stdint.h>
 
 using namespace calyx;
 
@@ -19,10 +20,20 @@ TEST_CASE("Strict on with flag set")
 
 TEST_CASE("Seeded rng is deterministic")
 {
-    int seed = 123;
+    constexpr unsigned int seed = 123;
     Options ops(seed);
     Options other(seed);
 
-    REQUIRE(ops.randInt() == other.randInt());
+    REQUIRE(ops.randomInteger<int>() == other.randomInteger<int>());
 }
 
+TEST_CASE("Seeded rng generates a particular value")
+{
+    constexpr unsigned int seed = 123;
+    Options ops(seed);
+
+    REQUIRE(ops.randomInteger<std::int32_t>() == -1303654914);
+    REQUIRE(ops.randomInteger<std::int32_t>() == -1232847507);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 1228959102);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 1840268610);
+}

@@ -15,11 +15,16 @@ Rule::Rule(String_t term, std::shared_ptr<ProductionBranch> production):
 Rule
 Rule::empty(String_t term)
 {
-    return Rule(term, std::make_unique<EmptyBranch>());
+    return Rule(term, std::make_shared<EmptyBranch>());
 }
 
 std::optional<Rule>
-Rule::build(String_t term, const std::vector<String_t>& productions, const Registry& registry, ErrorHolder& errors)
+Rule::build(
+    String_t term,
+    const std::vector<String_t>& productions,
+    const Registry& registry,
+    ErrorHolder& errors
+)
 {
     std::optional<UniformBranch> branch = UniformBranch::parse(productions, registry, errors);
 
@@ -28,7 +33,25 @@ Rule::build(String_t term, const std::vector<String_t>& productions, const Regis
         return {};
     }
 
-    return Rule(std::move(term), std::make_unique<UniformBranch>(*branch));
+    return Rule(std::move(term), std::make_shared<UniformBranch>(*branch));
+}
+
+std::optional<Rule>
+Rule::build(
+    String_t term,
+    const std::map<String_t, double>& productions,
+    const Registry& registry,
+    ErrorHolder& errors
+)
+{
+    std::optional<WeightedBranch> branch = WeightedBranch::parse(productions, registry, errors);
+
+    if (!branch)
+    {
+        return {};
+    }
+
+    return Rule(std::move(term), std::make_shared<WeightedBranch>(*branch));
 }
 
 std::optional<Expansion>
@@ -43,7 +66,7 @@ Rule::evaluate(
 
 std::optional<Expansion>
 Rule::evaluateAt(
-    int index,
+    std::size_t index,
     Registry& registry,
     Options& options,
     ErrorHolder& errors

@@ -42,6 +42,8 @@ namespace calyx
         void addFilter(String_t name, Filter_t filter);
 
         std::optional<const Filter_t> getFilter(const String_t& name) const;
+        
+        void defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
 
@@ -59,7 +61,7 @@ namespace calyx
         std::map<String_t, std::shared_ptr<Rule>> _rules;
         std::map<String_t, std::shared_ptr<Rule>> _context;
         std::map<String_t, std::shared_ptr<Expansion>> _memos;
-        std::map<String_t, std::unique_ptr<Cycle>> _cycles;
+        std::map<String_t, std::shared_ptr<Cycle>> _cycles;
 
         std::map<String_t, Filter_t> _filters;
         std::shared_ptr<Options> _options;

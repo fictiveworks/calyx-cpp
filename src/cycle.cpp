@@ -4,92 +4,95 @@
 
 using namespace calyx;
 
-Cycle::Cycle(std::shared_ptr<Options> options, size_t count)
-    : _options(options),
-    _count(count), // assume count greater than 1
-    _sequence(new int[count])
+Cycle::Cycle() noexcept:
+    _count(1),
+    _index(0)
 {
-    _index = _count - 1;  // defer shuffling until the first poll()
 }
 
-Cycle::Cycle(const Cycle& old)
-    : _options(old._options),
-    _index(old._index),
-    _count(old._count),
-    _sequence(new int[_count])
-{
-
-}
-
-Cycle::~Cycle()
-{
-    delete[] _sequence;
-}
-
-std::optional<Cycle>
-Cycle::create(std::shared_ptr<Options> options, size_t count, ErrorHolder& errors)
+std::optional<Cycle> Cycle::create(std::size_t count, StringConverter<String_t>& converter, ErrorHolder& errs) noexcept
 {
     if (count < 1)
     {
-        errors.setError(options->fromString("'count' must be greater than zero!"));
+        errs.setError(converter.fromString("Cycle count must be greater than zero!"));
         return {};
     }
-
-    return Cycle(options, count);
+    
+    return Cycle(count);
 }
 
-Cycle&
-Cycle::operator=(const Cycle& other)
+Cycle::Cycle(std::size_t count) noexcept: 
+    _count(count)
 {
-    if (this == &other)
+    _index = _count - 1;
+}
+
+Cycle::Cycle(Cycle&& other) noexcept: 
+    _count(other._count),
+    _index(other._index),
+    _sequence(std::move(other._sequence))
+{
+    other._sequence.clear();
+    other._count = 0;
+    other._index = 0;
+}
+
+Cycle& Cycle::operator=(const Cycle& other) noexcept
+{
+    if (this != &other)
     {
-        return *this;
+        _count = other._count;
+        _index = other._index;
+        _sequence = other._sequence;
     }
     
-    delete[] _sequence;
+    return *this;
+}
 
-    _options = other._options;
-    _index = other._index;
-
-    _count = other._count;
-    _sequence = new int[other._count];
+Cycle& Cycle::operator=(Cycle&& other) noexcept
+{
+    if (this != &other)
+    {
+        _count = other._count;
+        _index = other._index;
+        _sequence = std::move(other._sequence);
+    }
     
-    std::copy(other._sequence, other._sequence + _count, _sequence);
-
     return *this;
 }
 
 void
-Cycle::shuffle()
+Cycle::shuffle(Options& options) noexcept
 {
     this->populateSequence();
-    size_t current = _count;
-
-    while (current > 1)
-    {
-        size_t target = _options->randInt(current);
-        current--;
-        std::swap(_sequence[current], _sequence[target]);
-    }
+    options.shuffle(_sequence);
 }
 
-int
-Cycle::poll()
+std::size_t
+Cycle::poll(Options& options) noexcept
 {
     _index++;
     if (_index >= _count)
     {
-        this->shuffle();
+        this->shuffle(options);
         _index = 0;
     }
     return _sequence[_index];
 }
 
 void
-Cycle::populateSequence()
+Cycle::populateSequence() noexcept
 {
+    _sequence.clear();
+    _sequence.reserve(_count);
     for (size_t i = 0; i < _count; i++)
     {
-        _sequence[i] = i;
+        _sequence.push_back(i);
     }
+}
+
+const std::vector<std::size_t>&
+Cycle::getSequence() const noexcept
+{
+    return _sequence;
 }

@@ -1,11 +1,9 @@
 #pragma once
 
 #include "include/string_converter.h"
-#include "options.h"
 
 namespace calyx
 {
-    class Options;
 
     /**
      * @brief Stores commonly used error message factories. Note that these are not proper error holders!
@@ -13,11 +11,11 @@ namespace calyx
      */
     struct Errors
     {
-        static String_t undefinedRule(const String_t& symbol, const Options& options);
+        static String_t undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter);
 
-        static String_t undefinedFilter(const String_t& symbol, const Options& options);
+        static String_t undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter);
 
-        static String_t incorrectFilterSignature(const String_t& symbol, const Options& options);
+        static String_t incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter);
     };
 
     /**

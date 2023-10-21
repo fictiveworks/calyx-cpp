@@ -11,11 +11,12 @@ Options::Options(bool strict, std::unique_ptr<StringConverter> converter):
 {
 }
 
-Options::Options(unsigned long seed, bool strict, std::unique_ptr<StringConverter> converter):
+Options::Options(std::uint32_t seed, bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
-    _rng(seed),
+    _rng(),
     _converter(std::move(converter))
 {
+    _rng.seed(seed);
 }
 
 Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter> converter):
@@ -32,74 +33,16 @@ Options::Options(Options&& other) noexcept:
 {
 }
 
-
-int
-Options::randInt()
+Options& Options::operator=(Options&& old) noexcept
 {
-    std::uniform_int_distribution distribution(
-        std::numeric_limits<int>::min(),
-        std::numeric_limits<int>::max()
-    );
-
-    return distribution(_rng);
-}
-
-double
-Options::randDouble()
-{
-    std::uniform_real_distribution distribution(0.0, 1.0);
-
-    return distribution(_rng);
-}
-
-int
-Options::randInt(int max, ErrorHolder& errorHolder)
-{
-    if (max <= 0)
+    if (this != &old)
     {
-        const String_t msg = _converter->fromString("Max bound must be positive");
-        errorHolder.setError(msg);
-        return 0;
+        _strict = old._strict;
+        _rng = old._rng;
+        _converter = std::move(old._converter);
     }
 
-    std::uniform_int_distribution distribution(0, max - 1);
-    return distribution(_rng);
-}
-
-int
-Options::randInt(int min, int max, ErrorHolder& errorHolder)
-{
-    if (max <= 0)
-    {
-        String_t msg = _converter->fromString("Max bound must be positive");
-        errorHolder.setError(msg);
-        return 0;
-    }
-
-    if (max <= min)
-    {
-        String_t msg = _converter->fromString("Max bound must be greater than min!");
-        errorHolder.setError(msg);
-        return 0;
-    }
-    std::uniform_int_distribution distribution(min, max);
-    return distribution(_rng);
-}
-
-int
-Options::randInt(int max)
-{
-    ErrorHolder errs;
-
-    return randInt(max, errs);
-}
-
-int
-Options::randInt(int min, int max)
-{
-    ErrorHolder errs;
-
-    return randInt(min, max, errs);
+    return *this;
 }
 
 bool

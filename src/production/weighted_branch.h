@@ -18,15 +18,22 @@ namespace calyx
          */
         struct WeightedProduction
         {
-            double weight;
-            const std::shared_ptr<Production> production;
+            WeightedProduction(double weight, std::shared_ptr<Production> production);
+            
+            double _weight;
+            std::shared_ptr<Production> _production;
         };
 
     public:
-
         WeightedBranch(const WeightedBranch& old);
 
         ~WeightedBranch() override = default;
+
+        static std::optional<WeightedBranch> parse(
+            const std::map<String_t, double>& raw,
+            const Registry& registry,
+            ErrorHolder& errors
+        );
 
         std::optional<Expansion> evaluate(
             Registry& registry,
@@ -44,7 +51,6 @@ namespace calyx
         size_t length() const override;
 
     private:
-
         std::vector<WeightedProduction> _productions;
         double _sumOfWeights;
 

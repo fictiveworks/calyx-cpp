@@ -34,7 +34,7 @@ namespace calyx
             ErrorHolder& errors
         ) const = 0;
 
-        virtual size_t length() const = 0;
+        virtual std::size_t length() const = 0;
         
     };
 

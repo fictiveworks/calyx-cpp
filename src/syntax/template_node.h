@@ -14,7 +14,7 @@ namespace calyx
 
         TemplateNode(std::vector<std::shared_ptr<Production>> concatNodes);
 
-        ~TemplateNode() = default;
+        ~TemplateNode() override = default;
 
         virtual std::optional<Expansion> evaluate(
             Registry& registry,
