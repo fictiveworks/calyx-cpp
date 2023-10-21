@@ -32,9 +32,8 @@ TEST_CASE("Seeded rng generates a particular value")
     constexpr unsigned int seed = 123;
     Options ops(seed);
 
-    REQUIRE(ops.randomInteger<std::int32_t>() == 843828734);
-    REQUIRE(ops.randomInteger<std::int32_t>() == 914636141);
-    REQUIRE(ops.randomInteger<std::int32_t>() == -918524546);
-    REQUIRE(ops.randomInteger<std::int32_t>() == -307215038);
+    REQUIRE(ops.randomInteger<std::int32_t>() == -1303654914);
+    REQUIRE(ops.randomInteger<std::int32_t>() == -1232847507);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 1228959102);
+    REQUIRE(ops.randomInteger<std::int32_t>() == 1840268610);
 }
-

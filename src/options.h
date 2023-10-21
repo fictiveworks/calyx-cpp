@@ -176,12 +176,7 @@ namespace calyx
         T randomInteger()
         {
             static_assert(std::is_integral_v<T>, "T must be an integral (integer) type");
-            std::uniform_int_distribution distribution(
-                std::numeric_limits<T>::min(),
-                std::numeric_limits<T>::max()
-            );
-
-            return distribution(_rng);
+            return _rng();
         }
 
         /**
@@ -229,9 +224,9 @@ namespace calyx
          */
         String_t fromString(const std::string& stdString) const override;
 
-        std::mt19937 _rng;
     private:
         bool _strict;
+        std::mt19937 _rng;
         std::unique_ptr<StringConverter> _converter;
     };
 }
