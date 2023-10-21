@@ -75,7 +75,7 @@ namespace calyx
         /**
          * @brief Constructs a grammar with a configured strict mode.
          * 
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict. 
          */
         explicit Grammar(bool strict) noexcept;
 

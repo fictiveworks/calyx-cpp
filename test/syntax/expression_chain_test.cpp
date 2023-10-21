@@ -10,7 +10,7 @@ TEST_CASE("Can apply filters")
     Options& ops = grammar.getOptions();
     ErrorHolder errs;
 
-    grammar.rule(ops.fromString("start"), "greekLetter.uppercase", errs);
+    grammar.rule(ops.fromString("start"), "{greekLetter.uppercase}", errs);
     REQUIRE_FALSE(errs.hasError());
     grammar.rule(ops.fromString("greekLetter"), "alpha", errs);
     REQUIRE_FALSE(errs.hasError());
@@ -21,4 +21,23 @@ TEST_CASE("Can apply filters")
 
     REQUIRE(exp->getTree().getSymbol() == Exp::RESULT);
     REQUIRE(exp->getText(ops) == ops.fromString("ALPHA"));
+}
+
+TEST_CASE("Can apply chained filters")
+{
+    Grammar grammar = Grammar();
+    Options& ops = grammar.getOptions();
+    ErrorHolder errs;
+
+    grammar.rule(ops.fromString("start"), "{greekLetter.uppercase.emphasis}", errs);
+    REQUIRE_FALSE(errs.hasError());
+    grammar.rule(ops.fromString("greekLetter"), "alpha", errs);
+    REQUIRE_FALSE(errs.hasError());
+
+    std::optional<Result> exp = grammar.generate(errs);
+    REQUIRE(exp.has_value());
+    REQUIRE_FALSE(errs.hasError());
+
+    REQUIRE(exp->getTree().getSymbol() == Exp::RESULT);
+    REQUIRE(exp->getText(ops) == ops.fromString("*ALPHA*"));
 }

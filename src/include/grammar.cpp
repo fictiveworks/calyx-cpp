@@ -10,35 +10,35 @@ Grammar::Grammar() noexcept :
 Grammar::Grammar(Options opts) noexcept :
     _registry(std::move(opts))
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
 }
 
 Grammar::Grammar(bool strict) noexcept :
     _registry(strict)
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
 }
 
 Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
     _registry(Options(rng, strict))
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
 }
 
 Grammar::Grammar(unsigned long seed, bool strict) noexcept :
     _registry(Options(seed, strict))
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
 }
 
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept :
     Grammar(strict)
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
     initializeCallback(*this);
 }
@@ -46,7 +46,7 @@ Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool s
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict) noexcept :
     Grammar(rng, strict)
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
     initializeCallback(*this);
 }
@@ -54,7 +54,7 @@ Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::m
 Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, unsigned long seed, bool strict) noexcept :
     Grammar(seed, strict)
 {
-    const BaseFilters baseFilters = BaseFilters();
+    const DefaultFilters baseFilters = DefaultFilters();
     this->filters(baseFilters);
     initializeCallback(*this);
 }

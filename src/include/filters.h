@@ -33,16 +33,18 @@ namespace calyx
         virtual ~FiltersProvider() = default;
     };
 
-    class BaseFilters: public FiltersProvider
+    class DefaultFilters: public FiltersProvider
     {
     public:
         const std::map<String_t, Filter_t> getFilters(const Options& options) const override;
 
         static String_t uppercase(const String_t& input, const Options& options);
 
-        BaseFilters();
+        static String_t emphasis(const String_t& input, const Options& options);
+
+        DefaultFilters();
         
-        ~BaseFilters() override = default;
+        ~DefaultFilters() override = default;
     };
     
 }
