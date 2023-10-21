@@ -21,14 +21,6 @@ Errors::undefinedFilter(const String_t& symbol, const StringConverter<String_t>&
     return converter.fromString(stream.str());
 }
 
-String_t
-Errors::incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter)
-{
-    std::ostringstream stream;
-    stream << "Incorrect method signature for filter: '" << converter.toString(symbol) << "'";
-    return converter.fromString(stream.str());
-}
-
 bool
 ErrorHolder::hasError() const
 {
