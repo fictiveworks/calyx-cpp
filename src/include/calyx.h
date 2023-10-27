@@ -235,6 +235,15 @@ namespace calyx
          */
         [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
 
+        /**
+         * @brief Adds filters to the grammar, as a map of filter names to filter functions.
+         *
+         * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
+         * upper case. See filters.h for more details.
+         * 
+         * @param filters The filters to add to the grammar. The values of the map are copied into the grammar, and so the original
+         * map may be discarded by the caller.
+         */
         void filters(const std::map<String_t, filters::Filter_t>& filters) noexcept;
 
         Options& getOptions() const noexcept;

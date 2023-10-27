@@ -62,7 +62,7 @@ Registry::defineRule(String_t term, const std::vector<String_t>& production, Err
 
 void Registry::addFilter(String_t name, filters::Filter_t filter)
 {
-    _filters.emplace(std::move(name), filter);
+    _filters.emplace(std::move(name), std::move(filter));
 }
 
 std::optional<const filters::Filter_t>
