@@ -235,7 +235,7 @@ namespace calyx
          */
         [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
 
-        void filters(const FiltersProvider& provider) noexcept;
+        void filters(const std::map<String_t, filters::Filter_t>& filters) noexcept;
 
         Options& getOptions() const noexcept;
 

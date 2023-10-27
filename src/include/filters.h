@@ -8,52 +8,25 @@ namespace calyx
 {
     class Options;
 
-    using Filter_t = std::function<String_t(const String_t&, const Options&)>;
-    
-    class FiltersProvider
+    namespace filters
     {
-    public:
-        const std::map<String_t, Filter_t>& getFilters() const;
+        /**
+         * @brief A custom type for filters. A filter is a function that takes two constant references to a String_t and Options,
+         * and returns a String_t value. The purpose of a filter is to transform the String_t input into a new string, for example
+         * to return an uppercase copy.
+         *
+         * See FiltersProvider for more details.
+         */
+        using Filter_t = std::function<String_t(const String_t&, const Options&)>;
 
-        FiltersProvider() = default;
-        
-        FiltersProvider(const FiltersProvider& other) = delete;
+        std::map<String_t, Filter_t> createBuiltinFilters(const StringConverter<String_t>& converter);
 
-        FiltersProvider(FiltersProvider&& other) noexcept
-        {
-        }
+        String_t uppercase(const String_t& input, const Options& options);
 
-        FiltersProvider& operator=(const FiltersProvider& other) = delete;
+        String_t lowercase(const String_t& input, const Options& options);
 
-        FiltersProvider& operator=(FiltersProvider&& other) noexcept
-        {
-            if (this == &other)
-                return *this;
-            return *this;
-        }
+        String_t length(const String_t& input, const Options& options);
 
-        virtual ~FiltersProvider() = default;
-    protected:
-        std::map<String_t, Filter_t> _filters;
-    };
-
-    class BuiltinFilters: public FiltersProvider
-    {
-    public:
-        
-        static String_t uppercase(const String_t& input, const Options& options);
-        
-        static String_t lowercase(const String_t& input, const Options& options);
-        
-        static String_t length(const String_t& input, const Options& options);
-
-        static String_t emphasis(const String_t& input, const Options& options);
-        
-        BuiltinFilters();
-
-        BuiltinFilters(const StringConverter<String_t>& converter);
-        
-        ~BuiltinFilters() override = default;
-    };
-    
+        String_t emphasis(const String_t& input, const Options& options);
+    }
 }

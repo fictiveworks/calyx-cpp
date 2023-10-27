@@ -34,7 +34,7 @@ ExpressionChain::evaluate(Registry& registry, Options& options, ErrorHolder& err
     const std::string modified = std::accumulate(
         begin, _components.end(), initial,
         [&](const std::string& accumulator, const std::string& filterName) -> String_t {
-            const std::optional<const Filter_t> filter = registry.getFilter(options.fromString(filterName));
+            const std::optional<const filters::Filter_t> filter = registry.getFilter(options.fromString(filterName));
 
             if (filter)
             {

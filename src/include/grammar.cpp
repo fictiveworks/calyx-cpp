@@ -10,8 +10,8 @@ Grammar::Grammar() noexcept :
 Grammar::Grammar(Options opts) noexcept :
     _registry(std::move(opts))
 {
-    const BuiltinFilters baseFilters = BuiltinFilters();
-    this->filters(baseFilters);
+    const std::map<String_t, filters::Filter_t> filters = filters::createBuiltinFilters(_registry.getOptions());
+    this->filters(filters);
 }
 
 Grammar::Grammar(bool strict) noexcept :
@@ -115,10 +115,8 @@ Grammar::generate(ErrorHolder& errors) noexcept
 }
 
 void
-Grammar::filters(const FiltersProvider& provider) noexcept
+Grammar::filters(const std::map<String_t, filters::Filter_t>& filters) noexcept
 {
-    const std::map<String_t, Filter_t>& filters = provider.getFilters();
-
     for (const auto& pair : filters)
     {
         _registry.addFilter(pair.first, pair.second);

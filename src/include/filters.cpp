@@ -1,40 +1,24 @@
 #include "filters.h"
 
 #include <sstream>
-
+#include <algorithm>
 #include "../production/uniform_branch.h"
 
 using namespace calyx;
 
-
-const std::map<String_t, Filter_t>&
-FiltersProvider::getFilters() const
+std::map<String_t, filters::Filter_t>
+filters::createBuiltinFilters(const StringConverter<String_t>& converter)
 {
-    return _filters;
-}
-
-
-BuiltinFilters::BuiltinFilters():
-    BuiltinFilters(DEFAULT_STRING_CONVERTER())
-{
-
-}
-
-BuiltinFilters::BuiltinFilters(const StringConverter<String_t>& converter)
-{
-    auto builtin = std::map<String_t, Filter_t> {
-            { converter.fromString("uppercase"), &uppercase },
-            { converter.fromString("lowercase"), &lowercase },
-            { converter.fromString("emphasis"), &emphasis },
-            { converter.fromString("length"), &length }
+    return std::map<String_t, Filter_t> {
+        { converter.fromString("uppercase"), &uppercase },
+        { converter.fromString("lowercase"), &lowercase },
+        { converter.fromString("emphasis"), &emphasis },
+        { converter.fromString("length"), &length }
     };
-
-    _filters.insert(builtin.begin(), builtin.end());
 }
-
 
 String_t
-BuiltinFilters::uppercase(const String_t& input, const Options& options)
+filters::uppercase(const String_t& input, const Options& options)
 {
     std::string str = options.toString(input);
 
@@ -50,7 +34,7 @@ BuiltinFilters::uppercase(const String_t& input, const Options& options)
 }
 
 String_t
-BuiltinFilters::lowercase(const String_t& input, const Options& options)
+filters::lowercase(const String_t& input, const Options& options)
 {
     std::string str = options.toString(input);
 
@@ -66,7 +50,7 @@ BuiltinFilters::lowercase(const String_t& input, const Options& options)
 }
 
 String_t
-BuiltinFilters::length(const String_t& input, const Options& options)
+filters::length(const String_t& input, const Options& options)
 {
     std::ostringstream oss;
     oss << options.toString(input).length();
@@ -75,7 +59,7 @@ BuiltinFilters::length(const String_t& input, const Options& options)
 }
 
 String_t
-BuiltinFilters::emphasis(const String_t& input, const Options& options)
+filters::emphasis(const String_t& input, const Options& options)
 {
     std::ostringstream oss;
 

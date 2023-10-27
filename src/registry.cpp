@@ -60,12 +60,12 @@ Registry::defineRule(String_t term, const std::vector<String_t>& production, Err
     _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
 }
 
-void Registry::addFilter(String_t name, Filter_t filter)
+void Registry::addFilter(String_t name, filters::Filter_t filter)
 {
     _filters.emplace(std::move(name), filter);
 }
 
-std::optional<const Filter_t>
+std::optional<const filters::Filter_t>
 Registry::getFilter(const String_t& name) const
 {
     if (_filters.contains(name))

@@ -9,7 +9,7 @@ TEST_CASE("Upper case filter")
     const Options ops;
     const String_t base = ops.fromString("String");
 
-    const String_t upper = BuiltinFilters::uppercase(base, ops);
+    const String_t upper = filters::uppercase(base, ops);
 
     REQUIRE(upper == ops.fromString("STRING"));
 }
@@ -19,7 +19,7 @@ TEST_CASE("Lower case filter")
     const Options ops;
     const String_t base = ops.fromString("String");
 
-    const String_t lower = BuiltinFilters::lowercase(base, ops);
+    const String_t lower = filters::lowercase(base, ops);
 
     REQUIRE(lower == ops.fromString("string"));
 }
@@ -29,7 +29,7 @@ TEST_CASE("Emphasis filter")
     const Options ops;
     const String_t base = ops.fromString("String");
 
-    const String_t filtered = BuiltinFilters::emphasis(base, ops);
+    const String_t filtered = filters::emphasis(base, ops);
 
     REQUIRE(filtered == ops.fromString("*String*"));
 }
@@ -39,7 +39,7 @@ TEST_CASE("Length filter")
     const Options ops;
     const String_t base = ops.fromString("String");
 
-    const String_t filtered = BuiltinFilters::length(base, ops);
+    const String_t filtered = filters::length(base, ops);
 
     REQUIRE(filtered == ops.fromString("6"));
 }
