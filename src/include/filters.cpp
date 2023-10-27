@@ -6,24 +6,53 @@
 
 using namespace calyx;
 
-DefaultFilters::DefaultFilters()
+
+const std::map<String_t, Filter_t>&
+FiltersProvider::getFilters() const
+{
+    return _filters;
+}
+
+
+BuiltinFilters::BuiltinFilters():
+    BuiltinFilters(DEFAULT_STRING_CONVERTER())
 {
 }
 
-const std::map<String_t, Filter_t>
-DefaultFilters::getFilters(const Options& options) const
+BuiltinFilters::BuiltinFilters(const StringConverter<String_t>& converter)
 {
-    return std::map<String_t, Filter_t> {
-        { options.fromString("uppercase"), &uppercase },
-        { options.fromString("lowercase"), &lowercase },
-        { options.fromString("emphasis"), &emphasis },
-        { options.fromString("length"), &length }
+    auto builtin = std::map<String_t, Filter_t> {
+        { converter.fromString("uppercase"), &uppercase },
+        { converter.fromString("lowercase"), &lowercase },
+        {
+            converter.fromString("emphasis"),
+            [](auto s, auto o) {
+                std::ostringstream oss;
+
+                oss << o.fromString("*")
+                    << o.toString(s)
+                    << o.fromString("*");
+
+                return o.fromString(oss.str());
+            }
+        },
+        {
+            converter.fromString("length"),
+            [](auto s, auto o) {
+                std::ostringstream oss;
+                oss << o.toString(s).length();
+
+                return o.fromString(oss.str());
+            }
+        }
     };
+
+    _filters.insert(builtin.begin(), builtin.end());
 }
 
 
 String_t
-DefaultFilters::uppercase(const String_t& input, const Options& options)
+BuiltinFilters::uppercase(const String_t& input, const Options& options)
 {
     std::string str = options.toString(input);
 
@@ -39,7 +68,7 @@ DefaultFilters::uppercase(const String_t& input, const Options& options)
 }
 
 String_t
-DefaultFilters::lowercase(const String_t& input, const Options& options)
+BuiltinFilters::lowercase(const String_t& input, const Options& options)
 {
     std::string str = options.toString(input);
 
@@ -52,25 +81,4 @@ DefaultFilters::lowercase(const String_t& input, const Options& options)
     );
 
     return options.fromString(str);
-}
-
-String_t
-DefaultFilters::length(const String_t& input, const Options& options)
-{
-    std::ostringstream oss;
-    oss << options.toString(input).length();
-
-    return options.fromString(oss.str());
-}
-
-String_t
-DefaultFilters::emphasis(const String_t& input, const Options& options)
-{
-    std::ostringstream oss;
-
-    oss << options.fromString("*")
-        << options.toString(input)
-        << options.fromString("*");
-
-    return options.fromString(oss.str());
 }

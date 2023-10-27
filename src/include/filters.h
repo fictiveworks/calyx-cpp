@@ -8,14 +8,12 @@ namespace calyx
 {
     class Options;
 
-    using Filter_t = String_t(*)(const String_t&, const Options&);
+    using Filter_t = std::function<String_t(const String_t&, const Options&)>;
     
     class FiltersProvider
     {
     public:
-        virtual const std::map<String_t, Filter_t> getFilters(
-            const Options& options
-        ) const = 0;
+        const std::map<String_t, Filter_t>& getFilters() const;
 
         FiltersProvider() = default;
         
@@ -35,24 +33,23 @@ namespace calyx
         }
 
         virtual ~FiltersProvider() = default;
+    protected:
+        std::map<String_t, Filter_t> _filters;
     };
 
-    class DefaultFilters: public FiltersProvider
+    class BuiltinFilters: public FiltersProvider
     {
     public:
-        const std::map<String_t, Filter_t> getFilters(const Options& options) const override;
-
+        
         static String_t uppercase(const String_t& input, const Options& options);
         
         static String_t lowercase(const String_t& input, const Options& options);
         
-        static String_t length(const String_t& input, const Options& options);
+        BuiltinFilters();
 
-        static String_t emphasis(const String_t& input, const Options& options);
-
-        DefaultFilters();
+        BuiltinFilters(const StringConverter<String_t>& converter);
         
-        ~DefaultFilters() override = default;
+        ~BuiltinFilters() override = default;
     };
     
 }
