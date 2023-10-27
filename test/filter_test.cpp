@@ -6,7 +6,7 @@ using namespace calyx;
 
 TEST_CASE("Upper case filter")
 {
-    const Options ops;
+    Options ops;
     const String_t base = ops.fromString("String");
 
     const String_t upper = filters::uppercase(base, ops);
@@ -16,7 +16,7 @@ TEST_CASE("Upper case filter")
 
 TEST_CASE("Lower case filter")
 {
-    const Options ops;
+    Options ops;
     const String_t base = ops.fromString("String");
 
     const String_t lower = filters::lowercase(base, ops);
@@ -26,7 +26,7 @@ TEST_CASE("Lower case filter")
 
 TEST_CASE("Emphasis filter")
 {
-    const Options ops;
+    Options ops;
     const String_t base = ops.fromString("String");
 
     const String_t filtered = filters::emphasis(base, ops);
@@ -36,7 +36,7 @@ TEST_CASE("Emphasis filter")
 
 TEST_CASE("Length filter")
 {
-    const Options ops;
+    Options ops;
     const String_t base = ops.fromString("String");
 
     const String_t filtered = filters::length(base, ops);
@@ -54,7 +54,7 @@ TEST_CASE("Can define custom filter as lambda")
         std::map<String_t, filters::Filter_t> {
             {
                 options.fromString("backwards"),
-                [](const String_t& input, const Options& options) -> String_t {
+                [](const String_t& input, Options& options) -> String_t {
                     std::string str = options.toString(input);
 
                     std::ranges::reverse(str.begin(), str.end());

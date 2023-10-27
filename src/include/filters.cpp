@@ -18,7 +18,7 @@ filters::createBuiltinFilters(const StringConverter<String_t>& converter)
 }
 
 String_t
-filters::uppercase(const String_t& input, const Options& options)
+filters::uppercase(const String_t& input, Options& options)
 {
     std::string str = options.toString(input);
 
@@ -34,7 +34,7 @@ filters::uppercase(const String_t& input, const Options& options)
 }
 
 String_t
-filters::lowercase(const String_t& input, const Options& options)
+filters::lowercase(const String_t& input, Options& options)
 {
     std::string str = options.toString(input);
 
@@ -50,7 +50,7 @@ filters::lowercase(const String_t& input, const Options& options)
 }
 
 String_t
-filters::length(const String_t& input, const Options& options)
+filters::length(const String_t& input, Options& options)
 {
     std::ostringstream oss;
     oss << options.toString(input).length();
@@ -59,7 +59,7 @@ filters::length(const String_t& input, const Options& options)
 }
 
 String_t
-filters::emphasis(const String_t& input, const Options& options)
+filters::emphasis(const String_t& input, Options& options)
 {
     std::ostringstream oss;
 
