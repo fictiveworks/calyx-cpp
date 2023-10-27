@@ -45,6 +45,10 @@ namespace calyx
         
         static String_t lowercase(const String_t& input, const Options& options);
         
+        static String_t length(const String_t& input, const Options& options);
+
+        static String_t emphasis(const String_t& input, const Options& options);
+        
         BuiltinFilters();
 
         BuiltinFilters(const StringConverter<String_t>& converter);

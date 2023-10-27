@@ -17,34 +17,16 @@ FiltersProvider::getFilters() const
 BuiltinFilters::BuiltinFilters():
     BuiltinFilters(DEFAULT_STRING_CONVERTER())
 {
+
 }
 
 BuiltinFilters::BuiltinFilters(const StringConverter<String_t>& converter)
 {
     auto builtin = std::map<String_t, Filter_t> {
-        { converter.fromString("uppercase"), &uppercase },
-        { converter.fromString("lowercase"), &lowercase },
-        {
-            converter.fromString("emphasis"),
-            [](auto s, auto o) {
-                std::ostringstream oss;
-
-                oss << o.fromString("*")
-                    << o.toString(s)
-                    << o.fromString("*");
-
-                return o.fromString(oss.str());
-            }
-        },
-        {
-            converter.fromString("length"),
-            [](auto s, auto o) {
-                std::ostringstream oss;
-                oss << o.toString(s).length();
-
-                return o.fromString(oss.str());
-            }
-        }
+            { converter.fromString("uppercase"), &uppercase },
+            { converter.fromString("lowercase"), &lowercase },
+            { converter.fromString("emphasis"), &emphasis },
+            { converter.fromString("length"), &length }
     };
 
     _filters.insert(builtin.begin(), builtin.end());
@@ -81,4 +63,25 @@ BuiltinFilters::lowercase(const String_t& input, const Options& options)
     );
 
     return options.fromString(str);
+}
+
+String_t
+BuiltinFilters::length(const String_t& input, const Options& options)
+{
+    std::ostringstream oss;
+    oss << options.toString(input).length();
+
+    return options.fromString(oss.str());
+}
+
+String_t
+BuiltinFilters::emphasis(const String_t& input, const Options& options)
+{
+    std::ostringstream oss;
+
+    oss << options.fromString("*")
+        << options.toString(input)
+        << options.fromString("*");
+
+    return options.fromString(oss.str());
 }
