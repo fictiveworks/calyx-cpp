@@ -44,7 +44,7 @@ TEST_CASE("Length filter")
     REQUIRE(filtered == ops.fromString("6"));
 }
 
-TEST_CASE("Can define custom filter")
+TEST_CASE("Can define custom filter as lambda")
 {
     Registry registry;
     Options& options = registry.getOptions();
@@ -74,9 +74,50 @@ TEST_CASE("Can define custom filter")
     );
     REQUIRE_FALSE(errs.hasError());
 
-    std::optional<Expansion> s = registry.evaluate(options.fromString("start"), errs);
-    REQUIRE(s.has_value());
+    std::optional<Expansion> exp = registry.evaluate(options.fromString("start"), errs);
+    REQUIRE(exp.has_value());
     REQUIRE_FALSE(errs.hasError());
 
-    REQUIRE(s->flatten(options) == options.fromString("dog"));
+    REQUIRE(exp->flatten(options) == options.fromString("dog"));
+}
+
+String_t backwards(const String_t& input, const Options& options)
+{
+    std::string str = options.toString(input);
+
+    std::ranges::reverse(str.begin(), str.end());
+
+    return options.fromString(str);
+}
+
+TEST_CASE("Can define custom filter as function")
+{
+    // very similar to the test before, but with a function ptr instead of a lambda
+    Registry registry;
+    Options& options = registry.getOptions();
+
+    registry.addFilter(
+        options.fromString("backwards"),
+        &backwards
+    );
+
+    ErrorHolder errs;
+    registry.defineRule(
+        options.fromString("start"),
+        std::vector { options.fromString("{prod.backwards}") },
+        errs
+    );
+    REQUIRE_FALSE(errs.hasError());
+    registry.defineRule(
+        options.fromString("prod"),
+        std::vector { options.fromString("god") },
+        errs
+    );
+    REQUIRE_FALSE(errs.hasError());
+
+    std::optional<Expansion> exp = registry.evaluate(options.fromString("start"), errs);
+    REQUIRE(exp.has_value());
+    REQUIRE_FALSE(errs.hasError());
+
+    REQUIRE(exp->flatten(options) == options.fromString("dog"));
 }
