@@ -43,3 +43,40 @@ TEST_CASE("Length filter")
 
     REQUIRE(filtered == ops.fromString("6"));
 }
+
+TEST_CASE("Can define custom filter")
+{
+    Registry registry;
+    Options& options = registry.getOptions();
+
+    registry.addFilter(
+        options.fromString("backwards"),
+        [](const String_t& input, const Options& options) -> String_t {
+            std::string str = options.toString(input);
+
+            std::ranges::reverse(str.begin(), str.end());
+
+            return options.fromString(str);
+        }
+    );
+
+    ErrorHolder errs;
+    registry.defineRule(
+        options.fromString("start"),
+        std::vector { options.fromString("{prod.backwards}") },
+        errs
+    );
+    REQUIRE_FALSE(errs.hasError());
+    registry.defineRule(
+        options.fromString("prod"),
+        std::vector { options.fromString("god") },
+        errs
+    );
+    REQUIRE_FALSE(errs.hasError());
+
+    std::optional<Expansion> s = registry.evaluate(options.fromString("start"), errs);
+    REQUIRE(s.has_value());
+    REQUIRE_FALSE(errs.hasError());
+
+    REQUIRE(s->flatten(options) == options.fromString("dog"));
+}
