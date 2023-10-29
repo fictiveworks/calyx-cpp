@@ -123,6 +123,12 @@ Grammar::filters(const std::map<String_t, filters::Filter_t>& filters) noexcept
     }
 }
 
+void Grammar::filter(String_t filterName, filters::Filter_t filter) noexcept
+{
+    _registry.addFilter(std::move(filterName), std::move(filter));
+}
+
+
 Options& Grammar::getOptions() const noexcept
 {
     return _registry.getOptions();

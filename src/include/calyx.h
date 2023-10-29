@@ -246,6 +246,17 @@ namespace calyx
          */
         void filters(const std::map<String_t, filters::Filter_t>& filters) noexcept;
 
+        /**
+        * @brief Add a filters to the grammar.
+         *
+         * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
+         * upper case. See filters.h for more details.
+         * 
+         * @param filterName The name of the filter to be added
+         * @param filter The filter function itself
+         */
+        void filter(String_t filterName, filters::Filter_t filter) noexcept;
+
         Options& getOptions() const noexcept;
 
     private:
