@@ -22,6 +22,7 @@ Registry::Registry(Registry&& old) noexcept:
     _context(std::move(old._context)),
     _memos(std::move(old._memos)),
     _cycles(std::move(old._cycles)),
+    _filters(std::move(old._filters)),
     _options(std::move(old._options))
 {
 }
@@ -35,6 +36,7 @@ Registry& Registry::operator=(Registry&& other) noexcept
         _memos = std::move(other._memos);
         _cycles = std::move(other._cycles);
         _options = std::move(other._options);
+        _filters = std::move(other._filters);
     }
     return *this;
 }
@@ -56,6 +58,21 @@ Registry::defineRule(String_t term, const std::vector<String_t>& production, Err
     }
 
     _rules.emplace(std::move(term), std::make_shared<Rule>(*rule));
+}
+
+void Registry::addFilter(String_t name, filters::Filter_t filter)
+{
+    _filters.emplace(std::move(name), std::move(filter));
+}
+
+std::optional<const filters::Filter_t>
+Registry::getFilter(const String_t& name) const
+{
+    if (_filters.contains(name))
+    {
+        return _filters.at(name);
+    }
+    return {};
 }
 
 void

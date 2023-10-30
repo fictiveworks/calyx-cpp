@@ -6,6 +6,7 @@
 #include <string>
 
 #include "atom_node.h"
+#include "expression_chain.h"
 #include "expression_node.h"
 
 using namespace calyx;
@@ -18,14 +19,17 @@ using namespace calyx;
 std::vector<std::string>
 split(const std::string& s, const char delim)
 {
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream tokenStream(s);
-    while (std::getline(tokenStream, token, delim))
+    // from https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+    std::vector<std::string> result;
+    std::stringstream ss(s);
+    std::string item;
+
+    while (std::getline(ss, item, delim))
     {
-        tokens.push_back(token);
+        result.push_back(item);
     }
-    return tokens;
+
+    return result;
 }
 
 std::vector<std::string>
@@ -98,7 +102,8 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
 
             if (components.size() > 1)
             {
-                // TODO: expr chains
+                std::shared_ptr<Production> prod = std::make_shared<ExpressionChain>(std::move(components));
+                concatNodes.push_back(prod);
             }
             else
             {

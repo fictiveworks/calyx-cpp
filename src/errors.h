@@ -14,8 +14,6 @@ namespace calyx
         static String_t undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter);
 
         static String_t undefinedFilter(const String_t& symbol, const StringConverter<String_t>& converter);
-
-        static String_t incorrectFilterSignature(const String_t& symbol, const StringConverter<String_t>& converter);
     };
 
     /**

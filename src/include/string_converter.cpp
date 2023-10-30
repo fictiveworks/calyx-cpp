@@ -1,31 +1,30 @@
-
 #include <cstring>
 
 #include "string_converter.h"
 
 using namespace calyx;
 
-std::string 
+std::string
 StdStringConverter::toString(const std::string& stringLike) const
 {
-    return stringLike;
+    return { stringLike };
 }
 
 
-std::string 
+std::string
 StdStringConverter::fromString(const std::string& stdString) const
 {
-    return stdString;
+    return { stdString };
 }
 
-std::string 
+std::string
 CStrConverter::toString(const C_Str& stringLike) const
 {
-    return {stringLike};
+    return { stringLike };
 }
 
 
-C_Str 
+C_Str
 CStrConverter::fromString(const std::string& stdString) const
 {
     auto buffer = new char[stdString.length() + 1];

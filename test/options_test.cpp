@@ -27,7 +27,7 @@ TEST_CASE("Seeded rng is deterministic")
     REQUIRE(ops.randomInteger<int>() == other.randomInteger<int>());
 }
 
-TEST_CASE("Seeded rng generates a particular value")
+TEST_CASE("Seeded rng generates same value")
 {
     constexpr unsigned int seed = 123;
     Options ops(seed);

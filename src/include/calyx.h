@@ -10,6 +10,7 @@
 
 #include <string>
 
+#include "filters.h"
 #include "../registry.h"
 #include "../options.h"
 #include "string_converter.h"
@@ -36,7 +37,7 @@ namespace calyx
          * 
          * @return Returns a reference to the expansion tree of this result  
          */
-        const Expansion& getTree();
+        const Expansion& getTree() const;
 
         /**
          * @brief Flattens the text into a new string, and returns it
@@ -44,7 +45,7 @@ namespace calyx
          * @param options Options for evaluating the text.
          * @return Returns a new string_t
          */
-        String_t text(const Options& options);
+        String_t getText(const Options& options) const;
 
     private:
         Expansion _tree;
@@ -74,26 +75,26 @@ namespace calyx
         /**
          * @brief Constructs a grammar with a configured strict mode.
          * 
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict. 
          */
-        explicit Grammar(bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured random number generator (rng) and strict mode. The random number generator
          * can be configured as you wish.
          *
          * @param rng Mersenne-twister based random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(std::mt19937 rng, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(std::mt19937 rng, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured random seed and strict mode.
          *
          * @param seed The seed for the random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(unsigned long seed, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(unsigned long seed, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured strict mode and initialization callback.
@@ -110,9 +111,9 @@ namespace calyx
          * @endcode 
          *
          * @param initializeCallback The initialization callback
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict = Options::DEFAULT_STRICT) noexcept;
+        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured strict mode, random number generator, and initialization callback.
@@ -121,12 +122,12 @@ namespace calyx
          * 
          * @param initializeCallback The initialization callback
          * @param rng Mersenne-twister based random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict. 
          */
         explicit Grammar(
             const std::function<void(Grammar&)>& initializeCallback,
             std::mt19937 rng,
-            bool strict = Options::DEFAULT_STRICT
+            bool strict
         ) noexcept;
 
         /**
@@ -136,12 +137,12 @@ namespace calyx
          * 
          * @param initializeCallback The initialization callback
          * @param seed The seed for the random number generator.
-         * @param strict Whether or not to make this grammar strict. Optional, defaults to @link Options::DEFAULT_STRICT. 
+         * @param strict Whether or not to make this grammar strict.
          */
         explicit Grammar(
             const std::function<void(Grammar&)>& initializeCallback,
             unsigned long seed,
-            bool strict = Options::DEFAULT_STRICT
+            bool strict
         ) noexcept;
 
         Grammar(Grammar&& old) noexcept;
@@ -233,6 +234,30 @@ namespace calyx
          * errors does not have an error.
          */
         [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
+
+        /**
+         * @brief Adds filters to the grammar, as a map of filter names to filter functions.
+         *
+         * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
+         * upper case. See filters.h for more details.
+         * 
+         * @param filters The filters to add to the grammar. The values of the map are copied into the grammar, and so the original
+         * map may be discarded by the caller.
+         */
+        void filters(const std::map<String_t, filters::Filter_t>& filters) noexcept;
+
+        /**
+        * @brief Add a filters to the grammar.
+         *
+         * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
+         * upper case. See filters.h for more details.
+         * 
+         * @param filterName The name of the filter to be added
+         * @param filter The filter function itself
+         */
+        void filter(String_t filterName, filters::Filter_t filter) noexcept;
+
+        Options& getOptions() const noexcept;
 
     private:
         Registry _registry;

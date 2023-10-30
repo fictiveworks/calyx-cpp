@@ -10,20 +10,22 @@ Grammar::Grammar() noexcept :
 Grammar::Grammar(Options opts) noexcept :
     _registry(std::move(opts))
 {
+    const std::map<String_t, filters::Filter_t> filters = filters::createBuiltinFilters(_registry.getOptions());
+    this->filters(filters);
 }
 
 Grammar::Grammar(bool strict) noexcept :
-    _registry(strict)
+    Grammar(Options(strict))
 {
 }
 
 Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
-    _registry(Options(rng, strict))
+    Grammar(Options(rng, strict))
 {
 }
 
 Grammar::Grammar(unsigned long seed, bool strict) noexcept :
-    _registry(Options(seed, strict))
+    Grammar(Options(seed, strict))
 {
 }
 
@@ -111,3 +113,25 @@ Grammar::generate(ErrorHolder& errors) noexcept
     }
     return Result(*exp);
 }
+
+void
+Grammar::filters(const std::map<String_t, filters::Filter_t>& filters) noexcept
+{
+    for (const auto& pair : filters)
+    {
+        _registry.addFilter(pair.first, pair.second);
+    }
+}
+
+void Grammar::filter(String_t filterName, filters::Filter_t filter) noexcept
+{
+    _registry.addFilter(std::move(filterName), std::move(filter));
+}
+
+
+Options& Grammar::getOptions() const noexcept
+{
+    return _registry.getOptions();
+}
+
+

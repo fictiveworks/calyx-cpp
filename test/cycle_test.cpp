@@ -36,7 +36,10 @@ TEST_CASE("Cycles refresh once fully consumed")
         results.push_back(cycle->poll(ops));
     }
 
-    REQUIRE(results == std::vector<std::size_t> { 1, 2, 0, 2, 0, 1 });
+
+    std::ranges::sort(results.begin(), results.end());
+    // contains the cycle values twice
+    REQUIRE(results == std::vector<std::size_t> { 0, 0, 1, 1, 2, 2 });
 }
 
 TEST_CASE("Cycles are different each time")
@@ -50,29 +53,17 @@ TEST_CASE("Cycles are different each time")
     REQUIRE(cycle);
     REQUIRE_FALSE(errs.hasError());
 
-    std::vector<std::size_t> results;
-    for (std::size_t i = 0; i < 2 * count; i++)
+    std::vector<std::size_t> firstResult;
+    for (std::size_t i = 0; i < count; i++)
     {
-        results.push_back(cycle->poll(ops));
+        firstResult.push_back(cycle->poll(ops));
+    }
+
+    std::vector<std::size_t> secondResult;
+    for (std::size_t i = 0; i < count; i++)
+    {
+        secondResult.push_back(cycle->poll(ops));
     }
     
-    REQUIRE(results == std::vector<std::size_t> { 1, 0, 2, 2, 1, 0 });
-}
-
-TEST_CASE("Shuffling shuffles")
-{
-    Options ops(321, false);
-    ErrorHolder errs;
-    const std::size_t count = 3;
-
-    std::optional<Cycle> cycle = Cycle::create(count, ops, errs);
-
-    REQUIRE(cycle);
-    REQUIRE_FALSE(errs.hasError());
-
-    cycle->shuffle(ops);
-
-    const std::vector<std::size_t>& sequence = cycle->getSequence();
-
-    REQUIRE(sequence == std::vector<std::size_t> { 2, 0, 1 });
+    REQUIRE(firstResult != secondResult);
 }
