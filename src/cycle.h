@@ -2,7 +2,7 @@
 
 #include <optional>
 
-#include "options.h"
+#include "calyx/options.h"
 
 namespace calyx
 {

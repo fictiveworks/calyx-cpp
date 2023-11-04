@@ -3,7 +3,7 @@
 #include <calyx/grammar.h>
 #include <expansion.h>
 #include <vector>
-#include <options.h>
+#include <calyx/options.h>
 
 using namespace calyx;
 

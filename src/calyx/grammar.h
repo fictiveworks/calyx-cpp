@@ -12,7 +12,7 @@
 
 #include "filters.h"
 #include "../registry.h"
-#include "../options.h"
+#include "options.h"
 #include "string_converter.h"
 #include "../errors.h"
 #include "result.h"

@@ -6,7 +6,7 @@
 #include <memory>
 #include <optional>
 
-#include "options.h"
+#include "calyx/options.h"
 #include "rule.h"
 #include "expansion.h"
 #include "cycle.h"

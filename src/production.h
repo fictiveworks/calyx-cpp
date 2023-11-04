@@ -4,7 +4,7 @@
 #include <optional>
 
 #include "expansion.h"
-#include "options.h"
+#include "calyx/options.h"
 
 namespace calyx
 {

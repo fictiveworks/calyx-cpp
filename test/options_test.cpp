@@ -1,7 +1,6 @@
 ﻿#include <catch2/catch_all.hpp>
 
 #include <calyx/grammar.h>
-#include <options.h>
 #include <stdint.h>
 
 using namespace calyx;

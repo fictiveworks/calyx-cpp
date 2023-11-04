@@ -1,11 +1,10 @@
 #pragma once
 
-#include <functional>
 #include <random>
 #include <memory>
 #include <stdint.h>
-#include "calyx/string_converter.h"
-#include "errors.h"
+#include "string_converter.h"
+#include "../errors.h"
 
 
 namespace calyx

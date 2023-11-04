@@ -4,7 +4,6 @@
 
 #include "filters.h"
 #include "../registry.h"
-#include "../options.h"
 #include "string_converter.h"
 
 namespace calyx

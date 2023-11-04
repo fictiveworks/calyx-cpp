@@ -5,7 +5,7 @@
 #include "../production.h"
 #include "../expansion.h"
 #include "../calyx/string_converter.h"
-#include "../options.h"
+#include "../calyx/options.h"
 
 namespace calyx
 {
