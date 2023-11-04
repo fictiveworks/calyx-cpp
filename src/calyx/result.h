@@ -31,10 +31,10 @@ namespace calyx
         /**
          * @brief Flattens the text into a new string, and returns it
          *
-         * @param options Options for evaluating the text.
+         * @param converter String converter to deal with converting calyx Strings to std::strings for flattening 
          * @return Returns a new string_t
          */
-        String_t getText(const Options& options) const;
+        String_t getText(const StringConverter<String_t>& converter) const;
 
     private:
         Expansion _tree;

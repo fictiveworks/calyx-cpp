@@ -18,7 +18,7 @@ Result::getTree() const
 }
 
 String_t 
-Result::getText(const Options& options) const
+Result::getText(const StringConverter<String_t>& converter) const
 {
-    return _tree.flatten(options);
+    return _tree.flatten(converter);
 }

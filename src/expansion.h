@@ -36,9 +36,7 @@ namespace calyx
 
         Expansion& operator=(const Expansion& other);
         
-        void collectAtoms(String_t& concat) const;
-        
-        [[nodiscard]] String_t flatten(const Options& options) const;
+        [[nodiscard]] String_t flatten(const StringConverter<String_t>& converter) const;
 
         [[nodiscard]] const String_t& getTerm() const;
 
@@ -50,5 +48,7 @@ namespace calyx
         std::vector<Expansion> _tail;
         String_t _term;
         Exp _symbol;
+
+        void collectAtoms(std::string& concat) const;
     };
 }
