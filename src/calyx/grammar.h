@@ -205,6 +205,16 @@ namespace calyx
         [[nodiscard]] std::optional<Result> generate(ErrorHolder& errors) noexcept;
 
         /**
+         * @brief Randomly generates some text using this Grammar's rules, starting from a given rule.
+         *
+         * @param start The name of the rule to start generating from.
+         * @param errors Error handler containing errors messages that may arise when generating text.
+         * @return Returns an optional that contains the randomly generated result. This optional contains a value if and only if
+         * errors does not have an error.
+         */
+        [[nodiscard]] std::optional<Result> generate(const String_t& start, ErrorHolder& errors) noexcept;
+
+        /**
          * @brief Adds filters to the grammar, as a map of filter names to filter functions.
          *
          * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to

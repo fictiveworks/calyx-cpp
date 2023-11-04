@@ -105,8 +105,13 @@ Grammar::rule(String_t term, const std::map<String_t, double>& productions, Erro
 std::optional<Result>
 Grammar::generate(ErrorHolder& errors) noexcept
 {
-    const Options& ops = _registry.getOptions();
-    std::optional<Expansion> exp = _registry.evaluate(ops.fromString("start"), errors);
+    return generate(getOptions().fromString("start"), errors);
+}
+
+std::optional<Result>
+Grammar::generate(const String_t& start, ErrorHolder& errors) noexcept
+{
+    std::optional<Expansion> exp = _registry.evaluate(start, errors);
     if (!exp || errors.hasError())
     {
         return {};
