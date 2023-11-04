@@ -39,12 +39,12 @@ Expansion::operator=(const Expansion& other)
 String_t
 Expansion::flatten(const StringConverter<String_t>& converter) const
 {
-    std::string concat;
+    String_t concat = converter.fromString("");
     collectAtoms(concat);
-    return converter.toString(concat);
+    return concat;
 }
 
-void Expansion::collectAtoms(std::string& concat) const
+void Expansion::collectAtoms(String_t& concat) const
 {
     if (_symbol == Exp::ATOM)
     {

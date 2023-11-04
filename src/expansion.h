@@ -49,6 +49,6 @@ namespace calyx
         String_t _term;
         Exp _symbol;
 
-        void collectAtoms(std::string& concat) const;
+        void collectAtoms(String_t& concat) const;
     };
 }
