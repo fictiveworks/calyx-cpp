@@ -6,7 +6,7 @@
 #include "../production.h"
 #include "../registry.h"
 #include "../expansion.h"
-#include "../include/string_converter.h"
+#include "../calyx/string_converter.h"
 
 namespace calyx
 {

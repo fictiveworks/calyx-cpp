@@ -1,7 +1,7 @@
 #include <catch2/catch_all.hpp>
 #include <memory>
 
-#include <include/calyx.h>
+#include <calyx/grammar.h>
 #include <syntax/atom_node.h>
 #include <errors.h>
 

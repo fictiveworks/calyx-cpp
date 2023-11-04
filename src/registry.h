@@ -10,8 +10,8 @@
 #include "rule.h"
 #include "expansion.h"
 #include "cycle.h"
-#include "include/filters.h"
-#include "include/string_converter.h"
+#include "calyx/filters.h"
+#include "calyx/string_converter.h"
 
 namespace calyx
 {

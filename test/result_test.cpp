@@ -1,6 +1,6 @@
 #include <catch2/catch_all.hpp>
 
-#include <include/calyx.h>
+#include <calyx/grammar.h>
 #include <expansion.h>
 #include <vector>
 

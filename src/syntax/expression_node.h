@@ -4,7 +4,7 @@
 
 #include "../production.h"
 #include "../expansion.h"
-#include "../include/string_converter.h"
+#include "../calyx/string_converter.h"
 #include "../options.h"
 #include "../registry.h"
 

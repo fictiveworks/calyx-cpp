@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include <include/calyx.h>
+#include <calyx/grammar.h>
 #include <syntax/expression_node.h>
 
 using namespace calyx;

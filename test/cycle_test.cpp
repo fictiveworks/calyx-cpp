@@ -1,7 +1,7 @@
 #include <catch2/catch_all.hpp>
 
 #include <memory>
-#include <include/calyx.h>
+#include <calyx/grammar.h>
 #include <cycle.h>
 
 using namespace calyx;

@@ -4,7 +4,7 @@
 #include <vector>
 #include <vector>
 
-#include "include/string_converter.h"
+#include "calyx/string_converter.h"
 #include "options.h"
 
 namespace calyx

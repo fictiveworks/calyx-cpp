@@ -4,7 +4,7 @@
 #include <random>
 #include <memory>
 #include <stdint.h>
-#include "include/string_converter.h"
+#include "calyx/string_converter.h"
 #include "errors.h"
 
 
