@@ -6,14 +6,14 @@ const bool Options::DEFAULT_STRICT = false;
 
 Options::Options(bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
-    _rng(),
     _converter(std::move(converter))
 {
+    std::random_device rd;
+    _rng.seed(rd());
 }
 
 Options::Options(std::uint32_t seed, bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
-    _rng(),
     _converter(std::move(converter))
 {
     _rng.seed(seed);
