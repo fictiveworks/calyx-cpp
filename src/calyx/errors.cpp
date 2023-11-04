@@ -5,6 +5,13 @@
 
 using namespace calyx;
 
+ErrorHolder& ErrorHolder::operator=(ErrorHolder&& old)
+{
+    _message = std::move(old._message);
+    _hasError = old._hasError;
+    return *this;
+}
+
 String_t
 Errors::undefinedRule(const String_t& symbol, const StringConverter<String_t>& converter)
 {

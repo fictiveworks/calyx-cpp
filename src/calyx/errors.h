@@ -35,6 +35,8 @@ namespace calyx
 
         ~ErrorHolder() = default;
 
+        ErrorHolder(ErrorHolder&& old) = default;
+        
         /**
          * @brief Errors should be passed by reference. The copy constructor is deleted to enforce this.
          *
@@ -49,6 +51,8 @@ namespace calyx
          * @return Error&
          */
         ErrorHolder& operator=(const ErrorHolder& other) = delete;
+
+        ErrorHolder& operator=(ErrorHolder&& old);
 
         /**
          * @brief Determine if errors are present. Errors are present if and only if {@link ErrorHolder#setError} has been called on this instance.

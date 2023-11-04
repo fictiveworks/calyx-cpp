@@ -9,7 +9,11 @@
 
 namespace calyx
 {
-
+    /**
+     * @brief Class for dealing with various options relating to grammars. For example, whether to run grammars in 'loose' or 'strict'
+     * mode, and what the primary string converter is. This class provides its own random number generation API, and also
+     * can convert `std::string`s to `String_t`s. 
+     */
     class Options : public StringConverter<String_t>
     {
     public:
@@ -82,6 +86,12 @@ namespace calyx
             return randomInteger(min, max, errs);
         }
 
+        /**
+         * @brief Shuffles a vector of items, in place.
+         * 
+         * @tparam T The type of the items in the vector 
+         * @param items The vector to shuffle
+         */
         template <typename T>
         void shuffle(std::vector<T>& items)
         {
