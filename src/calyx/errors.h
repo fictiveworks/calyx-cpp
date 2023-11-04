@@ -1,6 +1,6 @@
 #pragma once
 
-#include "calyx/string_converter.h"
+#include "string_converter.h"
 
 namespace calyx
 {

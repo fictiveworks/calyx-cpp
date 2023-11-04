@@ -4,7 +4,7 @@
 #include <memory>
 #include <stdint.h>
 #include "string_converter.h"
-#include "../errors.h"
+#include "errors.h"
 
 
 namespace calyx
