@@ -215,7 +215,7 @@ namespace calyx
         [[nodiscard]] std::optional<Result> generate(const String_t& start, ErrorHolder& errors) noexcept;
 
         /**
-         * @brief Adds filters to the grammar, as a map of filter names to filter functions.
+         * @brief Adds multiple filters to the grammar, as a map of filter names to filter functions.
          *
          * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
          * upper case. See filters.h for more details.
@@ -226,7 +226,7 @@ namespace calyx
         void filters(const std::map<String_t, filters::Filter_t>& filters) noexcept;
 
         /**
-        * @brief Add a filters to the grammar.
+        * @brief Add a single filter to the grammar.
          *
          * Filters are functions that can transform the output of an evaluated production. For example, to convert the string to
          * upper case. See filters.h for more details.

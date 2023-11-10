@@ -142,7 +142,8 @@ Each time `generate()` runs, it evaluates the tree and randomly selects variatio
 
 int main(int argc, char *argv[])
 {
-    // ...
+    // ... Grammar construction from previous example ...
+    
     calyx::Options& options = grammar.getOptions();
     std::cout << grammar.generate(errors)->getText(options) << "\n";
     // > "Hey world."

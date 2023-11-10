@@ -17,8 +17,8 @@ namespace calyx
     namespace filters
     {
         /**
-         * @brief A custom type for filters, provided for convenience. Filters transform the String_t input into a new string, for example
-         * to return an uppercase copy. 
+         * @brief A custom type for filters, provided for convenience. Filters apply some processing to transform the String_t input
+         * into a new string. For example, to return an uppercase copy. 
          */
         using Filter_t = std::function<String_t(const String_t&, Options&)>;
 

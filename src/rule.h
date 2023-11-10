@@ -11,6 +11,9 @@
 
 namespace calyx
 {
+    /**
+     * @brief A mapping of a named rule to a production.  
+     */
     class Rule
     {
     public:

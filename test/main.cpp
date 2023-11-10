@@ -2,8 +2,21 @@
 #include <catch2/catch_all.hpp>
 #include <catch2/catch_session.hpp>
 
+#include <iostream>
+#include "calyx/grammar.h"
+
 int main(int argc, char *argv[])
 {
-    int result = Catch::Session().run(argc, argv);
-    return result;
+    calyx::Grammar grammar = calyx::Grammar();
+    calyx::ErrorHolder errors;
+    grammar.rule(
+        "hello",
+        "Hello world.",
+        errors
+    );
+
+    calyx::Options& options = grammar.getOptions();
+    std::cout << grammar.generate("hello", errors)->getText(options) << "\n";
+
+    return Catch::Session().run(argc, argv);
 }
