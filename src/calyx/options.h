@@ -9,6 +9,7 @@
 
 namespace calyx
 {
+    
     /**
      * @brief Class for dealing with various options relating to grammars. For example, whether to run grammars in 'loose' or 'strict'
      * mode, and what the primary string converter is. This class provides its own random number generation API, and also
@@ -19,7 +20,8 @@ namespace calyx
     public:
         static const bool DEFAULT_STRICT;
 
-
+        using RandomSource_t = std::mt19937;
+        
         /**
          * @brief Construct a new Options object with a default random number generator
          *
@@ -52,7 +54,7 @@ namespace calyx
          * @param converter The string converter to use
          */
         Options(
-            std::mt19937 rng,
+            RandomSource_t rng,
             bool strict = DEFAULT_STRICT,
             std::unique_ptr<StringConverter> converter = std::make_unique<DEFAULT_STRING_CONVERTER>()
         );
@@ -235,7 +237,7 @@ namespace calyx
 
     private:
         bool _strict;
-        std::mt19937 _rng;
+        RandomSource_t _rng;
         std::unique_ptr<StringConverter> _converter;
     };
 }

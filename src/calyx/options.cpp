@@ -19,9 +19,9 @@ Options::Options(std::uint32_t seed, bool strict, std::unique_ptr<StringConverte
     _rng.seed(seed);
 }
 
-Options::Options(std::mt19937 rng, bool strict, std::unique_ptr<StringConverter> converter):
+Options::Options(RandomSource_t rng, bool strict, std::unique_ptr<StringConverter> converter):
     _strict(strict),
-    _rng(rng),
+    _rng(std::move(rng)),
     _converter(std::move(converter))
 {
 }

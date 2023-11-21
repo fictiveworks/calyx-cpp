@@ -51,10 +51,10 @@ namespace calyx
          * @brief Constructs a grammar with a configured random number generator (rng) and strict mode. The random number generator
          * can be configured as you wish.
          *
-         * @param rng Mersenne-twister based random number generator.
+         * @param rng Random number generator.
          * @param strict Whether or not to make this grammar strict.
          */
-        explicit Grammar(std::mt19937 rng, bool strict) noexcept;
+        explicit Grammar(Options::RandomSource_t rng, bool strict) noexcept;
 
         /**
          * @brief Constructs a grammar with a configured random seed and strict mode.
@@ -72,45 +72,54 @@ namespace calyx
          *
          * @code
          * Grammar grammar(
-         *     [](Grammar& g) -> void {
-         *         g.rule("start", { "Hello World!" });
+         *      false
+         *     [&](Grammar& g) -> void {
+         *         g.rule("start", { "Hello World!" }, errorHolder);
          *     }
          * );
          * @endcode 
-         *
-         * @param initializeCallback The initialization callback
-         * @param strict Whether or not to make this grammar strict.
-         */
-        explicit Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept;
-
-        /**
-         * @brief Constructs a grammar with a configured strict mode, random number generator, and initialization callback.
-         *
-         * @see Grammar(const std::function<void(Grammar&)>&, bool)
-         * 
-         * @param initializeCallback The initialization callback
-         * @param rng Mersenne-twister based random number generator.
-         * @param strict Whether or not to make this grammar strict. 
          */
         explicit Grammar(
-            const std::function<void(Grammar&)>& initializeCallback,
-            std::mt19937 rng,
-            bool strict
+            const std::function<void(Grammar&)>& initializeCallback
         ) noexcept;
 
         /**
-         * @brief Constructs a grammar with a configured strict mode, random seed, and initialization callback.
+         * @brief Constructs a grammar with a configured strict mode and initialization callback.
+         *
+         * @param strict Whether or not to make this grammar strict.
+         * @param initializeCallback The initialization callback
+         */
+        explicit Grammar(bool strict, const std::function<void(Grammar&)>& initializeCallback) noexcept;
+
+        /**
+         * @brief Constructs a grammar with a configured strict mode, random number generator,
+         * and initialization callback. The initialization callback is invoked after all of this grammar's members are
+         * defined.
+         * 
+         * @param rng Mersenne-twister based random number generator.
+         * @param strict Whether or not to make this grammar strict. 
+         * @param initializeCallback The initialization callback
+         */
+        explicit Grammar(
+            Options::RandomSource_t rng,
+            bool strict,
+            const std::function<void(Grammar&)>& initializeCallback
+        ) noexcept;
+
+        /**
+         * @brief Constructs a grammar with a configured strict mode, random seed, and initialization callback. The initialization
+         * callback is invoked after all of this grammar's members are defined.
          *
          * @see Grammar(const std::function<void(Grammar&)>&, bool)
          * 
-         * @param initializeCallback The initialization callback
          * @param seed The seed for the random number generator.
          * @param strict Whether or not to make this grammar strict.
+         * @param initializeCallback The initialization callback
          */
         explicit Grammar(
-            const std::function<void(Grammar&)>& initializeCallback,
             unsigned long seed,
-            bool strict
+            bool strict,
+            const std::function<void(Grammar&)>& initializeCallback
         ) noexcept;
 
         Grammar(Grammar&& old) noexcept;
@@ -221,12 +230,12 @@ namespace calyx
          * @param errors Error handler containing errors messages that may arise when generating text.
          * @return Returns an optional that contains the randomly generated result. This optional contains a value if and only if
          * errors does not have an error.
-         */        
+         */
         [[nodiscard]] std::optional<Result> generate(
             const std::map<String_t, std::vector<String_t>>& context,
             ErrorHolder& errors
         ) noexcept;
-        
+
         /**
          * @brief Randomly generates some text with dynamic context using this Grammar's rules, starting from a given rule.
          *
@@ -236,7 +245,7 @@ namespace calyx
          * @param errors Error handler containing errors messages that may arise when generating text.
          * @return Returns an optional that contains the randomly generated result. This optional contains a value if and only if
          * errors does not have an error.
-         */ 
+         */
         [[nodiscard]] std::optional<Result> generate(
             const String_t& start,
             const std::map<String_t, std::vector<String_t>>& context,

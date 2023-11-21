@@ -19,7 +19,7 @@ Grammar::Grammar(bool strict) noexcept :
 {
 }
 
-Grammar::Grammar(std::mt19937 rng, bool strict) noexcept :
+Grammar::Grammar(Options::RandomSource_t rng, bool strict) noexcept :
     Grammar(Options(rng, strict))
 {
 }
@@ -29,19 +29,36 @@ Grammar::Grammar(unsigned long seed, bool strict) noexcept :
 {
 }
 
-Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, bool strict) noexcept :
+Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback) noexcept :
+    Grammar()
+{
+    initializeCallback(*this);
+}
+
+Grammar::Grammar(
+    bool strict,
+    const std::function<void(Grammar&)>& initializeCallback
+) noexcept :
     Grammar(strict)
 {
     initializeCallback(*this);
 }
 
-Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, std::mt19937 rng, bool strict) noexcept :
+Grammar::Grammar(
+    Options::RandomSource_t rng,
+    bool strict,
+    const std::function<void(Grammar&)>& initializeCallback
+) noexcept :
     Grammar(rng, strict)
 {
     initializeCallback(*this);
 }
 
-Grammar::Grammar(const std::function<void(Grammar&)>& initializeCallback, unsigned long seed, bool strict) noexcept :
+Grammar::Grammar(
+    unsigned long seed,
+    bool strict,
+    const std::function<void(Grammar&)>& initializeCallback
+) noexcept :
     Grammar(seed, strict)
 {
     initializeCallback(*this);

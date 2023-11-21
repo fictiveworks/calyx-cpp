@@ -24,10 +24,6 @@ Calyx C++ is tested using Catch2.
 xmake run test
 ```
 
-### Build for release
-
-TBD
-
 ### Generate Visual Studio and Rider IDE files
 
 ```bash
@@ -229,8 +225,7 @@ int main(int argc, char *argv[])
             g.rule("colour", std::vector<calyx::String_t> { "red", "green", "yellow" }, errors);
             if (errors) return;
             g.rule("fruit", std::vector<calyx::String_t> { "apple", "pear", "tomato" }, errors);
-        },
-        false
+        }
     );
 
     calyx::Options& options = grammar.getOptions();
@@ -249,3 +244,58 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+# Random sampling
+
+By default, Calyx uses the Mersenne-Twister based random generator defined by [`std::mt19937`](https://cplusplus.com/reference/random/mt19937/) for random sampling. This type is assigned to a custom type, `calyx::Options::RandomGenerator_t`. A seed can be passed to a grammar in the constructor as an `unsigned long` with a strict mode. 
+
+```c++
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::Grammar grammar = calyx::Grammar(
+        1234u, // seed value
+        false  // strict mode
+    );
+
+    return 0;
+}
+```
+
+If no seed is given, then a true random seed is chosen with `std::random_device`.
+
+The random generator type cannot be updated by users, but it can be changed by maintainers to some other type.
+
+### Options Random API 
+
+The options class provides its own random API, backed by a `calyx::Options::RandomGenerator_t` source. This API allows users to generate both integers and real numbers of a variety of sizes, within some uniform ranges and bounds.
+
+For example, to generate a random `unsigned long` within the range [0, 10):
+
+```c++
+calyx::Options ops;
+
+// generates a random unsigned long in the uniform range 0 (inclusive) to 10 (exclusive). 
+std::cout << ops.randomInteger<unsigned long>(0, 10) << std::endl;
+```
+
+You can also generate random real numbers:
+
+```c++
+calyx::Options ops;
+
+// generates a random float between 0 and 1 with uniform distribution 
+std::cout << ops.randomReal<float>() << std::endl;
+```
+
+Note that if you input an invalid type to a random function, you will get a compiler error:
+
+```c++
+calyx::Options ops;
+
+// ! Error C2338: T must be a real number type (eg double or float)
+std::cout << ops.randomReal<int>() << std::endl;
+```
+
+See the options docs for more info on specific API functions. 

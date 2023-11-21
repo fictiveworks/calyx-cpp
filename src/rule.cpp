@@ -84,8 +84,12 @@ Rule::length() const
 Rule&
 Rule::operator=(const Rule& other)
 {
-    _term = other._term;
-    _production = other._production;
+
+    if (this != &other)
+    {
+        _term = other._term;
+        _production = other._production;
+    }
 
     return *this;
 }
