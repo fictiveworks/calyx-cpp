@@ -269,7 +269,7 @@ The random generator type cannot be updated by users, but it can be changed by m
 
 ### Options Random API 
 
-The options class provides its own random API, backed by a `calyx::Options::RandomGenerator_t` source. This API allows users to generate both integers and real numbers of a variety of sizes, within some uniform ranges and bounds.
+The options class provides its own random API, backed by a `calyx::Options::RandomGenerator_t` source. This API allows users to generate both integers and real numbers of a variety of sizes, within some uniform ranges and bounds. Note that the random API is not guaranteed to produce the same result for the same seed across compilers or systems, due to differences in the random distribution mappings between C++ compiler implementations. 
 
 For example, to generate a random `unsigned long` within the range [0, 10):
 
