@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-If no seed is given, then a true random seed is chosen with `std::random_device`.
+If no seed is given, then a true (if available) random seed is chosen with [`std::random_device`](https://en.cppreference.com/w/cpp/numeric/random/random_device).
 
 The random generator type cannot be updated by users, but it can be changed by maintainers to some other type.
 
