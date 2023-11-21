@@ -326,4 +326,223 @@ calyx::Options ops;
 std::cout << ops.randomReal<int>() << std::endl;
 ```
 
-See the options docs for more info on specific API functions. 
+See the [options header](/src/calyx/options.h) for more info on specific API functions. 
+
+# Filters
+
+Dot-notation is supported in template expressions, allowing you to call a variety of different processing functions on the string returned from a rule.
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::ErrorHolder errors;
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{hello.uppercase} there.", errors);
+            if (errors) return;
+            g.rule("hello", std::vector<calyx::String_t> { "Hello", "Hi" }, errors);
+        }
+    );
+
+    std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+    // > HELLO there.
+    
+    return 0;
+}
+```
+
+Multiple filters can also be chained onto the same rule, and are evaluated left to right:
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::ErrorHolder errors;
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{hello.uppercase.lowercase} there.", errors);
+            if (errors) return;
+            g.rule("hello", std::vector<calyx::String_t> { "Hello", "Hi" }, errors);
+        }
+    );
+
+    std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+    // > hello there.
+    
+    return 0;
+}
+```
+
+The full set of builtin filter functions is defined in the `calyx::filters` namespace in [`calyx/filters.h`](src/calyx/filters.h).
+
+## Custom filters
+
+Users can also define their own filters, and pass them to a grammar via a map of filter names to functions, or by passing name and function pairs one by one:
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::ErrorHolder errors;
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("I love {animal.add_s}!", errors);
+            if (errors) return;
+            g.rule("animal", std::vector<calyx::String_t> { "cat", "dog" }, errors);
+            if (errors) return;
+
+            // Add the actual filter function to the grammar
+            g.filter(
+                "add_s",
+                [](const calyx::String_t& input, calyx::Options& ops) {
+                    // It is generally recommended to use string converters for these
+                    // sorts of things...
+                    return input + ops.fromString("s");
+                }
+            );
+        }
+    );
+
+    std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+    // > I love dogs!
+    
+    return 0;
+}
+```
+
+Filter functions must be of the form `(const String_t&, Options&) -> String_t`, but can be given as lambdas, functions, or any other valid `std::function`.
+
+# Memoized functions
+
+Rule expansions can be 'memoized' so that multiple references to the same rule return the same value. This is useful for picking a noun from a list and reusing it in multiple places within a text.
+
+The `@` sigil is used to mark memoized rules. This evaluates the rule and stores it in memory the first time it's referenced. All subsequent references to the memoized rule use the same stored value.
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+
+int main(int argc, char* argv[])
+{
+    calyx::ErrorHolder errors;
+
+    // Without memoization
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{name} <{name.lowercase}>", errors);
+            if (errors) return;
+            g.rule("name", std::vector<calyx::String_t> { "Daenerys", "Tyrion", "Jon" }, errors);
+        }
+    );
+
+    for (int i = 0; i < 3; i++) 
+    {
+        std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+    }
+    // > Tyrion <jon>
+    // > Daenerys <tyrion>
+    // > Jon <daenerys>
+
+    // With memoization
+    calyx::Grammar memoizedGrammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{@name} <{@name.lowercase}>", errors);
+            if (errors) return;
+            g.rule("name", std::vector<calyx::String_t> { "Daenerys", "Tyrion", "Jon" }, errors);
+        }
+    );
+
+    for (int i = 0; i < 3; i++)
+    {
+        std::cout << memoizedGrammar.generate(errors)->getText(memoizedGrammar.getOptions()) << "\n";
+    }
+    // > Tyrion <tyrion>
+    // > Daenerys <daenerys>
+    // > Jon <jon>
+    
+    return 0;
+}
+```
+
+# Unique Rules
+
+Rule expansions can be marked as 'unique', meaning that multiple references to the same rule always return a different value. This is useful for situations where the same result appearing twice would appear awkward and messy.
+
+Unique rules are marked by the `$` sigil.
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char* argv[])
+{
+    calyx::ErrorHolder errors;
+
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{$medal} {$medal} {$medal}", errors);
+            if (errors) return;
+            g.rule("medal", std::vector<calyx::String_t> { "Gold", "Silver", "Bronze" }, errors);
+        }
+    );
+
+    std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+    // > Silver Gold Bronze
+    return 0;
+}
+```
+
+Note that if all options are exhausted, then the unique expansions cycle and begin producing the same values again, but in a different order.
+
+# Dynamically Constructing Rules
+
+Template expansions can be dynamically constructed at runtime by passing a context map of rules to the `generate()` method:
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char* argv[])
+{
+    calyx::ErrorHolder errors;
+
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start(
+                std::vector<calyx::String_t> {
+                    "Hi {username}!",
+                    "Welcome back {username}...",
+                    "Hola {username}"
+                },
+                errors
+            );
+        }
+    );
+
+    // read USERNAME environment variable 
+    const char* cstr_username = std::getenv("USERNAME");
+    std::string username = std::string(cstr_username == nullptr ? "" : cstr_username);
+    
+    // build dynamic context from environment variable
+    const std::map<calyx::String_t, std::vector<calyx::String_t>> context = {
+        { "username",  std::vector{ std::string{ username } }}
+    };
+
+    std::cout << grammar.generate(context, errors)->getText(grammar.getOptions()) << "\n";
+    // > Hello TheDeathlyCow
+    
+    return 0;
+}
+```
+
+# External File Formats
+
+Calyx C++ does not currently support external file formats for loading Grammars. 
