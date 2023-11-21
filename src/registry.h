@@ -87,28 +87,90 @@ namespace calyx
          */
         void defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors);
 
+        /**
+         * @brief Adds a filter to the registry 
+         * @param name The name of the filter 
+         * @param filter The filter function 
+         */
         void addFilter(String_t name, filters::Filter_t filter);
 
+        /**
+         * @brief Gets the filter for the given name, if it exists in the registry 
+         * @param name The name of the filter to get
+         * @return Returns an optional with the filter function, if found. Otherwise returns an empty optional.
+         */
         std::optional<const filters::Filter_t> getFilter(const String_t& name) const;
 
+        /**
+         * @brief Evaluates the productions of the registry, starting from the given startSymbol
+         * 
+         * @param startSymbol The start point of the evaluation
+         * @param errors Error holder that records any errors that may arise from evaluation.  
+         * @return Returns an optional that contains the evaluation tree if any only if no errors occurred
+         */
         std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
-
+        
+        /**
+         * @brief Evaluates the productions of the registry, starting from the given startSymbol. Uses the fallback
+         * dynamic context if attempting to expand to a rule not known to the registry.
+         * 
+         * @param startSymbol The start point of the evaluation
+         * @param context The dynamic context. Expands as a uniform branch.
+         * @param errors Error holder that records any errors that may arise from evaluation.  
+         * @return Returns an optional that contains the evaluation tree if any only if no errors occurred
+         */
         std::optional<Expansion> evaluate(
             const String_t& startSymbol,
             const std::map<String_t, std::vector<String_t>>& context,
             ErrorHolder& errors
         );
 
+        /**
+         * @brief Expands the symbol, but if it has already been expanded during this evaluation then it returns
+         * the expansion it expanded to the first time. 
+         * 
+         * @param symbol The symbol to expand
+         * @param errors Error holder that records errors that occur during evaluation
+         * @return Returns a shared pointer to the expansion tree from the evaluation. This pointer is null if and only
+         * if there are no errors.
+         */
         std::shared_ptr<Expansion> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
 
+        /**
+         * @brief Expands the symbol, but returns a different expansion each time it is called during this evaluation.
+         * 
+         * If all options are exhausted, the unique expansions will cycle and produce the same results that they already
+         * have, but in a new random order.
+         * 
+         * @param symbol The symbol to expand
+         * @param errors Error holder that records errors that occur during evaluation
+         * @return Returns an optional with the expansion tree from the evaluation. This optional is empty if and only
+         * if there are no errors.
+         */
         std::optional<Expansion> uniqueExpansion(const String_t& symbol, ErrorHolder& errors);
 
+        /**
+         * @brief Gets the rule associated with the given symbol.
+         *
+         * An error will occur if operating with options in 'strict' mode and the symbol is not a valid rule in either
+         * the static rules or dynamic context.
+         * 
+         * @param symbol The symbol to expand
+         * @param errors Error holder that records errors that occur during evaluation
+         * @return Returns an optional with the rule from the evaluation. This optional is empty if and only
+         * if there are no errors.
+         */
         std::shared_ptr<Rule> expand(const String_t& symbol, ErrorHolder& errors) const;
 
+        /**
+         * @brief Resets the evaluation-specific context variables. Namely, the context, memos, and cycles.
+         */
         void resetEvaluationContext();
 
     private:
         std::map<String_t, std::shared_ptr<Rule>> _rules;
+
+        // evaluation specific context variables
         std::map<String_t, std::shared_ptr<Rule>> _context;
         std::map<String_t, std::shared_ptr<Expansion>> _memos;
         std::map<String_t, std::shared_ptr<Cycle>> _cycles;

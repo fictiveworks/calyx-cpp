@@ -11,7 +11,7 @@ MemoNode::MemoNode(String_t symbol):
 std::optional<Expansion>
 MemoNode::evaluate(Registry& registry, Options& options, ErrorHolder& errors) const
 {
-    std::shared_ptr<Expansion> exp = registry.memoizeExpansion(_symbol, errors);
+    const std::shared_ptr<Expansion> exp = registry.memoizeExpansion(_symbol, errors);
 
     if (exp == nullptr || errors.hasError())
     {

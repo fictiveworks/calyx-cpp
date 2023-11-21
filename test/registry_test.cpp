@@ -129,8 +129,8 @@ TEST_CASE("Memoized rules return identical expression")
     REQUIRE_FALSE(errs.hasError());
     
     std::optional<Expansion> exp = registry.evaluate(start, errs);
-
-    REQUIRE_FALSE(errs.hasError());
+    
+    REQUIRE_FALSE(errs);
     REQUIRE(exp.has_value());
     REQUIRE(exp->getSymbol() == Exp::RESULT);
     REQUIRE(exp->flatten(ops) == ops.fromString(":::"));

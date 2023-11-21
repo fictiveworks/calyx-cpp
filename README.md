@@ -48,7 +48,7 @@ First, a few basics on some weird things that Calyx does at its core:
 
 Calyx does not make use of exceptions for errors. Instead, a `calyx::ErrorHolder` object is passed to all methods that may produce errors. If an error is generated, then a message will be placed into the error holder and further processing is cancelled. For potentially error-producing methods that return a value, instead of returning a regular value, they will return `std::optional` types or a nullable pointer, if relevant. The optional will have a value if and only if the error holder does not have an error. If the error holder has an error, then pointer type returns will definitely be null, though they may still be null in other cases, depending on the method contract. 
 
-Error holders must be passed by reference, and users can check if an error has occured with `calyx::ErrorHolder#hasError()`. If an error is present, the error message can be retrieved with `calyx::ErrorHolder#getMessage()`. If no message is present, then this will return an empty string. 
+Error holders must be passed by reference, and users can check if an error has occured with `calyx::ErrorHolder#hasError()` or using the bool operator. If an error is present, the error message can be retrieved with `calyx::ErrorHolder#getMessage()`. If no message is present, then this will return an empty string. 
 
 ### Strings 
 
@@ -93,7 +93,7 @@ int main()
     // You can reuse the same error holder if no errors were generated!
     std::optional<Result> tree = grammar.generate(errors);
     
-    if (!tree || errors.hasError()) {
+    if (!tree || errors) { // using the bool operator to check errors
         std::cout << "Error generating text: " << errors.getMessage() << std::endl;
         return 1;
     }
@@ -183,3 +183,69 @@ int main(int argc, char *argv[])
 }
 ```
 
+## Callback initialization
+
+As an alternative to specifying rules line by line, you can also construct rules by passing an initialization callback to the Grammar constructor. This is particularly useful for initializing grammars in static or class variables.
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::ErrorHolder errors;
+    calyx::Grammar grammar = calyx::Grammar(
+        // Capture errors object by reference
+        [&](calyx::Grammar& g) {
+            g.rule("hello", "Hello world.", errors);
+        },
+        false
+    );
+
+    calyx::Options& options = grammar.getOptions();
+    std::cout << grammar.generate("hello", errors)->getText(options) << "\n";
+    // > "Hello world."
+
+    return 0
+}
+```
+
+## Template Expressions
+
+Basic rule substitution uses single curly brackets as delimiters for template expressions:
+
+```c++
+
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::ErrorHolder errors;
+    calyx::Grammar grammar = calyx::Grammar(
+        [&](calyx::Grammar& g) {
+            g.start("{colour} {fruit}", errors);
+            if (errors) return;
+            g.rule("colour", std::vector<calyx::String_t> { "red", "green", "yellow" }, errors);
+            if (errors) return;
+            g.rule("fruit", std::vector<calyx::String_t> { "apply", "pear", "tomato" }, errors);
+        },
+        false
+    );
+
+    calyx::Options& options = grammar.getOptions();
+
+    for (int i = 0; i < 6; i++)
+    {
+        std::cout << grammar.generate("hello", errors)->getText(options) << "\n";
+    }
+    // > "yellow pear"
+    // > "red apple"
+    // > "green tomato"
+    // > "red pear"
+    // > "yellow tomato"
+    // > "green apple"
+
+    return 0;
+}
+```

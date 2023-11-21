@@ -10,7 +10,7 @@ TEST_CASE("Wrap expression tree with result")
 {
     const Result result = Result(
         Expansion(Exp::TEMPLATE, Expansion(Exp::ATOM, "A T O M"))
-        );
+    );
 
     REQUIRE(Exp::TEMPLATE == result.getTree().getSymbol());
     REQUIRE(Exp::ATOM == result.getTree().getTail()[0].getSymbol());

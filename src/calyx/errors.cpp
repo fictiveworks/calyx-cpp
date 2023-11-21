@@ -5,11 +5,16 @@
 
 using namespace calyx;
 
-ErrorHolder& ErrorHolder::operator=(ErrorHolder&& old)
+ErrorHolder& ErrorHolder::operator=(ErrorHolder&& old) noexcept
 {
     _message = std::move(old._message);
     _hasError = old._hasError;
     return *this;
+}
+
+ErrorHolder::operator bool() const
+{
+    return _hasError;
 }
 
 String_t

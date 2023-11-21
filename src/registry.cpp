@@ -153,7 +153,7 @@ Registry::memoizeExpansion(const String_t& symbol, ErrorHolder& errors)
 {
     if (!_memos.contains(symbol))
     {
-        auto rule = this->expand(symbol, errors);
+        const std::shared_ptr<Rule> rule = this->expand(symbol, errors);
         if (!rule || errors.hasError())
         {
             return nullptr;

@@ -52,7 +52,12 @@ namespace calyx
          */
         ErrorHolder& operator=(const ErrorHolder& other) = delete;
 
-        ErrorHolder& operator=(ErrorHolder&& old);
+        ErrorHolder& operator=(ErrorHolder&& old) noexcept;
+
+        /**
+         * @brief Returns true if the error holder has an error. Identical to checking hasError().  
+         */
+        explicit operator bool() const;
 
         /**
          * @brief Determine if errors are present. Errors are present if and only if {@link ErrorHolder#setError} has been called on this instance.
