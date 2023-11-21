@@ -122,7 +122,6 @@ int main(int argc, char *argv[])
         std::vector<calyx::String_t> { "Hello", "Hi", "Hey", "Yo"},
         errors
     );
-
     
     return 0;
 }
@@ -154,6 +153,35 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+In the previous example, the different greetings were picked randomly on each generation with a uniform distribution. However, we can also supply a custom weighted distribution for the different greetings:
+
+```c++
+#include <iostream>
+#include "calyx/grammar.h"
+
+int main(int argc, char *argv[])
+{
+    calyx::Grammar grammar = calyx::Grammar();
+    calyx::ErrorHolder errors;
+    grammar.start("{greeting} world.", errors);
+    grammar.rule(
+        "greeting",
+        std::map<calyx::String_t, double> {
+            {"Hello", 5},
+            {"Hi", 2},
+            {"Hey", 2},
+            {"Yo", 1}
+        },
+        errors
+    );
+    std::cout << grammar.generate(errors)->getText(grammar.getOptions()) << "\n";
+
+    return 0;
+}
+```
+
+In this case, the grammar will pick "Hello" 50% of the time, "Hi" and "Hey" 20% of the time, and "Yo" 10% of the time when greeting is expanded. 
 
 By convention, the `start` rule specifies the default starting point for generating the final text. You can start from any other named rule by passing it explicitly to the generate method.
 
