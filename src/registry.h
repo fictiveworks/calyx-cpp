@@ -17,7 +17,7 @@ namespace calyx
 {
     /**
      * @brief Central registry that tracks the rules of a grammar, as well as evaluation context like memoization, unique expansions,
-     * and evaluation mode.
+     * and filters.
      *
      * The registry stores all of the rules of a Context-Free Grammar (CFG), as well as some additional context. Consider the following example,
      * which defines a grammar that can be used to generate strings that are palindromes over the alphabet {a, b}. 
@@ -67,19 +67,37 @@ namespace calyx
 
         Registry& operator=(Registry&& other) noexcept;
 
-        Options& getOptions() const; 
+        Options& getOptions() const;
 
+        /**
+         * @brief Defines a rule with uniform expansions
+         * 
+         * @param term Name of the rule 
+         * @param production Uniform expansions
+         * @param errors Error holder, if an error occurs then the rule is not added to the registry
+         */
         void defineRule(String_t term, const std::vector<String_t>& production, ErrorHolder& errors);
+
+        /**
+         * @brief Defines a rule with weighted expansions
+         * 
+         * @param term Name of the rule 
+         * @param productions Map of expansions to weights
+         * @param errors Error holder, if an error occurs then the rule is not added to the registry
+         */
+        void defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors);
 
         void addFilter(String_t name, filters::Filter_t filter);
 
         std::optional<const filters::Filter_t> getFilter(const String_t& name) const;
-        
-        void defineRule(String_t term, const std::map<String_t, double>& productions, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(const String_t& startSymbol, ErrorHolder& errors);
 
-        std::optional<Expansion> evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors);
+        std::optional<Expansion> evaluate(
+            const String_t& startSymbol,
+            const std::map<String_t, std::vector<String_t>>& context,
+            ErrorHolder& errors
+        );
 
         std::shared_ptr<Expansion> memoizeExpansion(const String_t& symbol, ErrorHolder& errors);
 

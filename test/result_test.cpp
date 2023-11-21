@@ -8,7 +8,9 @@ using namespace calyx;
 
 TEST_CASE("Wrap expression tree with result")
 {
-    Result result = Result(Expansion(Exp::TEMPLATE, Expansion(Exp::ATOM, "A T O M")));
+    const Result result = Result(
+        Expansion(Exp::TEMPLATE, Expansion(Exp::ATOM, "A T O M"))
+        );
 
     REQUIRE(Exp::TEMPLATE == result.getTree().getSymbol());
     REQUIRE(Exp::ATOM == result.getTree().getTail()[0].getSymbol());
@@ -18,7 +20,7 @@ TEST_CASE("Wrap expression tree with result")
 
 TEST_CASE("Flattens expression tree to string")
 {
-    Expansion tripleAtomTree = Expansion(
+    const Expansion tripleAtomTree = Expansion(
         Exp::TEMPLATE,
         std::vector {
                 Expansion(Exp::ATOM, "O N E"),
@@ -27,9 +29,9 @@ TEST_CASE("Flattens expression tree to string")
         }
     );
 
-    Result result = Result(tripleAtomTree);
+    const Result result = Result(tripleAtomTree);
 
-    Options ops;
+    const Options ops;
     std::string text = result.getText(ops);
 
     REQUIRE("O N E | T W O" == text);

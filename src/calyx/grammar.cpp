@@ -119,6 +119,30 @@ Grammar::generate(const String_t& start, ErrorHolder& errors) noexcept
     return Result(*exp);
 }
 
+std::optional<Result>
+Grammar::generate(
+    const std::map<String_t, std::vector<String_t>>& context,
+    ErrorHolder& errors
+) noexcept
+{
+    return generate(getOptions().fromString("start"), context, errors);
+}
+
+std::optional<Result>
+Grammar::generate(
+    const String_t& start,
+    const std::map<String_t, std::vector<String_t>>& context,
+    ErrorHolder& errors
+) noexcept
+{
+    std::optional<Expansion> exp = _registry.evaluate(start, context, errors);
+    if (!exp || errors.hasError())
+    {
+        return {};
+    }
+    return Result(*exp);
+}
+
 void
 Grammar::filters(const std::map<String_t, filters::Filter_t>& filters) noexcept
 {
@@ -138,5 +162,3 @@ Options& Grammar::getOptions() const noexcept
 {
     return _registry.getOptions();
 }
-
-

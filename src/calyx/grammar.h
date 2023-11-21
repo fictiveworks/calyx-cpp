@@ -19,7 +19,6 @@
 
 namespace calyx
 {
-
     /**
      * @brief Defines a grammar in calyx. Grammars are a set of mutually-recursive rules that are evaluated randomly in order to
      * produce a text. Defines various constructors for configuring the generator, and methods for generating text.
@@ -213,6 +212,36 @@ namespace calyx
          * errors does not have an error.
          */
         [[nodiscard]] std::optional<Result> generate(const String_t& start, ErrorHolder& errors) noexcept;
+
+        /**
+         * @brief Randomly generates some text with dynamic context using this Grammar's rules, starting from the "start" rule. 
+         *
+         * @param context The dynamic context is a set of rules that are used as a fallback if no other rule can be found for a name.
+         * Expansions are chosen with uniform random distribution.
+         * @param errors Error handler containing errors messages that may arise when generating text.
+         * @return Returns an optional that contains the randomly generated result. This optional contains a value if and only if
+         * errors does not have an error.
+         */        
+        [[nodiscard]] std::optional<Result> generate(
+            const std::map<String_t, std::vector<String_t>>& context,
+            ErrorHolder& errors
+        ) noexcept;
+        
+        /**
+         * @brief Randomly generates some text with dynamic context using this Grammar's rules, starting from a given rule.
+         *
+         * @param start The name of the rule to start generating from.
+         * @param context The dynamic context is a set of rules that are used as a fallback if no other rule can be found for a name.
+         * Expansions are chosen with uniform random distribution.
+         * @param errors Error handler containing errors messages that may arise when generating text.
+         * @return Returns an optional that contains the randomly generated result. This optional contains a value if and only if
+         * errors does not have an error.
+         */ 
+        [[nodiscard]] std::optional<Result> generate(
+            const String_t& start,
+            const std::map<String_t, std::vector<String_t>>& context,
+            ErrorHolder& errors
+        ) noexcept;
 
         /**
          * @brief Adds multiple filters to the grammar, as a map of filter names to filter functions.

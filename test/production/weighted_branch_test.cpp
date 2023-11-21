@@ -36,7 +36,7 @@ TEST_CASE("Branch with multi choice test")
 
 TEST_CASE("Results rougly match weightings")
 {
-    Registry registry = Registry(Options());
+    auto registry = Registry(Options(1234u));
     Options& ops = registry.getOptions();
     ErrorHolder errs;
 

@@ -112,7 +112,7 @@ Registry::evaluate(const String_t& startSymbol, ErrorHolder& errors)
 }
 
 std::optional<Expansion>
-Registry::evaluate(const String_t& startSymbol, std::map<String_t, std::vector<String_t>> context, ErrorHolder& errors)
+Registry::evaluate(const String_t& startSymbol, const std::map<String_t, std::vector<String_t>>& context, ErrorHolder& errors)
 {
     this->resetEvaluationContext();
 

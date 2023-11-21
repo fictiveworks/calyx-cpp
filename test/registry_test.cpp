@@ -65,20 +65,21 @@ TEST_CASE("Evaluate recursive rules")
     REQUIRE(exp->flatten(ops) == atom);
 }
 
-TEST_CASE("Evaluate rules with initialized context")
+TEST_CASE("Evaluate rules with dynamic context")
 {
     Registry registry(std::make_shared<Options>(true));
     const Options& ops = registry.getOptions();
 
 
     String_t start = ops.fromString("start");
-    String_t prod = ops.fromString("{atom}");
     String_t atom = ops.fromString("atom");
     ErrorHolder errs;
 
-    registry.defineRule(start, std::vector { prod }, errs);
+    // define "start" -> "{atom}", without definition for atom
+    registry.defineRule(start, std::vector { ops.fromString("{atom}") }, errs);
     REQUIRE_FALSE(errs.hasError());
 
+    // add definition for atom in dynamic context
     std::map<String_t, std::vector<String_t>> context = {
         { atom, std::vector { atom } }
     };
@@ -90,12 +91,11 @@ TEST_CASE("Evaluate rules with initialized context")
     REQUIRE(exp->flatten(ops) == atom);
 }
 
-TEST_CASE("Evaluate only initialized context")
+TEST_CASE("Evaluate rules only from dynamic context")
 {
     Registry registry(std::make_shared<Options>(true));
     Options& ops = registry.getOptions();
-
-
+    
     String_t start = ops.fromString("start");
     String_t prod = ops.fromString("{atom}");
     String_t atom = ops.fromString("atom");
