@@ -228,7 +228,7 @@ int main(int argc, char *argv[])
             if (errors) return;
             g.rule("colour", std::vector<calyx::String_t> { "red", "green", "yellow" }, errors);
             if (errors) return;
-            g.rule("fruit", std::vector<calyx::String_t> { "apply", "pear", "tomato" }, errors);
+            g.rule("fruit", std::vector<calyx::String_t> { "apple", "pear", "tomato" }, errors);
         },
         false
     );
@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < 6; i++)
     {
-        std::cout << grammar.generate("hello", errors)->getText(options) << "\n";
+        std::cout << grammar.generate(errors)->getText(options) << "\n";
     }
     // > "yellow pear"
     // > "red apple"
