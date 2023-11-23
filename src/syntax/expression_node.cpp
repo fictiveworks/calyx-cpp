@@ -10,13 +10,19 @@ using namespace calyx;
 #define UNIQUE_SIGIL '$'
 
 ExpressionNode::ExpressionNode(String_t reference)
-    : _reference(reference)
+    : _reference(std::move(reference))
 {
 
 }
 
+bool
+ExpressionNode::isSigil(char character)
+{
+    return character == MEMO_SIGIL || character == UNIQUE_SIGIL;
+}
+
 std::shared_ptr<Production>
-ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder& errors)
+ExpressionNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& errors)
 {
     if (raw[0] == MEMO_SIGIL)
     {
@@ -24,7 +30,8 @@ ExpressionNode::parse(const String_t raw, const Registry& registry, ErrorHolder&
         std::string rawString = ops.toString(raw).substr(1);
         return std::make_shared<MemoNode>(MemoNode(ops.fromString(rawString)));
     }
-    else if (raw[0] == UNIQUE_SIGIL)
+    
+    if (raw[0] == UNIQUE_SIGIL)
     {
         Options& ops = registry.getOptions();
         std::string rawString = ops.toString(raw).substr(1);

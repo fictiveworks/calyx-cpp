@@ -533,7 +533,7 @@ int main(int argc, char* argv[])
     
     // build dynamic context from environment variable
     const std::map<calyx::String_t, std::vector<calyx::String_t>> context = {
-        { "username",  std::vector{ std::string{ username } }}
+        { "username",  std::vector{ username }}
     };
 
     std::cout << grammar.generate(context, errors)->getText(grammar.getOptions()) << "\n";

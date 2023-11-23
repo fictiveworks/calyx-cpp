@@ -72,7 +72,7 @@ namespace calyx
          *
          * @code
          * Grammar grammar(
-         *      false
+         *      false,
          *     [&](Grammar& g) -> void {
          *         g.rule("start", { "Hello World!" }, errorHolder);
          *     }

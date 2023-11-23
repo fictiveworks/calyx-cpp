@@ -72,7 +72,7 @@ TemplateNode::fragmentString(const std::string& raw)
 }
 
 TemplateNode::TemplateNode(std::vector<std::shared_ptr<Production>> concatNodes)
-    : _concatNodes(concatNodes)
+    : _concatNodes(std::move(concatNodes))
 {
 }
 
@@ -80,12 +80,12 @@ std::optional<TemplateNode>
 TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& errors)
 {
     const Options& ops = registry.getOptions();
-    std::string rawString = ops.toString(raw);
+    const std::string rawString = ops.toString(raw);
     std::vector<std::string> fragments = fragmentString(rawString);
 
     std::vector<std::shared_ptr<Production>> concatNodes;
 
-    for (auto atom : fragments)
+    for (std::string& atom : fragments)
     {
         if (atom.empty())
         {
@@ -102,7 +102,13 @@ TemplateNode::parse(const String_t& raw, const Registry& registry, ErrorHolder& 
 
             if (components.size() > 1)
             {
-                std::shared_ptr<Production> prod = std::make_shared<ExpressionChain>(std::move(components));
+                std::shared_ptr<Production> prod = ExpressionChain::parse(components, registry, errors);
+
+                if (prod == nullptr || errors.hasError())
+                {
+                    return {};
+                }
+                
                 concatNodes.push_back(prod);
             }
             else

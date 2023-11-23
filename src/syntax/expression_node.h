@@ -17,7 +17,9 @@ namespace calyx
 
         ~ExpressionNode() override = default;
 
-        static std::shared_ptr<Production> parse(const String_t raw, const Registry& registry, ErrorHolder& errors);
+        static bool isSigil(char character);
+
+        static std::shared_ptr<Production> parse(const String_t& raw, const Registry& registry, ErrorHolder& errors);
 
         std::optional<Expansion> evaluate(
             Registry& registry,
